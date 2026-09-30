@@ -127,6 +127,9 @@ interface ProfileDao {
     @Upsert suspend fun upsertProfile(profile: UserProfileEntity)
     @Upsert suspend fun upsertSkills(skills: List<TopicSkillEntity>)
 
+    @Query("UPDATE user_profile SET targetDate = :date WHERE id = 1")
+    suspend fun updateTargetDate(date: String?)
+
     @Query("SELECT * FROM user_profile WHERE id = 1")
     fun observeProfile(): Flow<UserProfileEntity?>
 
@@ -149,6 +152,9 @@ interface PlanDao {
 
     @Query("DELETE FROM planned_item WHERE dayIndex = :dayIndex")
     suspend fun deleteItemsForDay(dayIndex: Int)
+
+    @Query("DELETE FROM plan_day WHERE dayIndex IN (:dayIndexes)")
+    suspend fun deleteDays(dayIndexes: List<Int>)
 
     @Query("DELETE FROM plan_day_topic WHERE dayIndex = :dayIndex")
     suspend fun deleteTopicsForDay(dayIndex: Int)

@@ -105,6 +105,13 @@ private fun AppScaffold(startOnboarding: Boolean) {
             navigation<MainGraphRoute>(startDestination = TodayRoute) {
                 composable<TodayRoute> {
                     TodayScreen(
+                        onOpenPlan = {
+                            navController.navigate(PlanRoute) {
+                                popUpTo(TodayRoute) { saveState = true }
+                                launchSingleTop = true
+                                restoreState = true
+                            }
+                        },
                         onOpenTask = { item ->
                             item.taskId?.let {
                                 navController.navigate(SessionRoute(it, item.id, item.kind.toSessionType()))

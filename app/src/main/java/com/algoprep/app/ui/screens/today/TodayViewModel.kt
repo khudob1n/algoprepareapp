@@ -24,6 +24,9 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import com.algoprep.app.domain.planning.PlanRescheduler
+import java.time.Clock
+import java.time.LocalDate
 import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -34,6 +37,7 @@ class TodayViewModel @Inject constructor(
     private val tasks: TaskRepository,
     private val catalog: CatalogRepository,
     training: TrainingRepository,
+    private val clock: Clock,
 ) : ViewModel() {
 
     private val refreshTick = MutableStateFlow(0)
@@ -86,6 +90,7 @@ class TodayViewModel @Inject constructor(
                         tasks = taskList.associateBy { it.id },
                         topicTitles = topics.associate { it.id to it.title },
                         theoryText = roadmap.firstOrNull { it.dayIndex == day.dayIndex }?.theory,
+                        behindDays = PlanRescheduler.missedDays(days, LocalDate.now(clock)),
                     ),
                 )
             }

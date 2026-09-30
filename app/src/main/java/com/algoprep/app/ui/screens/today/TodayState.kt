@@ -38,6 +38,8 @@ data class TodayContent(
     val errorReview: List<TodayItem>,
     /** First unfinished task-based item, in plan order. */
     val nextTaskItem: TodayItem?,
+    /** Plan days that ended unfinished; drives the "you are behind" hint. */
+    val behindDays: Int = 0,
 ) {
     val progressPercent: Int get() = (progress * 100).roundToInt()
     val hasItems: Boolean get() = intro.isNotEmpty() || main.isNotEmpty() || review.isNotEmpty() || errorReview.isNotEmpty()
@@ -58,6 +60,7 @@ fun buildTodayContent(
     tasks: Map<Long, Task>,
     topicTitles: Map<String, String>,
     theoryText: String?,
+    behindDays: Int = 0,
 ): TodayContent {
     val items = day.items.sortedBy { it.orderIndex }.map { it.toTodayItem(tasks, theoryText) }
     val planned = items.sumOf { it.estimatedMin }
@@ -77,6 +80,7 @@ fun buildTodayContent(
         review = items.filter { it.kind == PlannedKind.REVIEW },
         errorReview = items.filter { it.kind == PlannedKind.ERROR_REVIEW },
         nextTaskItem = items.firstOrNull { !it.done && it.taskId != null },
+        behindDays = behindDays,
     )
 }
 

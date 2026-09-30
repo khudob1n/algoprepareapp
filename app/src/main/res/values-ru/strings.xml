@@ -363,4 +363,51 @@
     <string name="data_no_repeats">Пока ни одна задача не упоминалась больше одного раза.</string>
     <string name="data_mentions">упоминаний: %1$d</string>
     <string name="data_unknown_source">Источник неизвестен</string>
+
+    <string name="reason_carried_over">она была в плане вчера и осталась незавершённой</string>
+    <string name="adjust_more_weak">больше времени на слабые темы (%1$d%%): %2$s</string>
+    <string name="adjust_strong_day">темы дня даются уверенно (%1$s), поэтому часть времени отдана смешанной практике</string>
+    <plurals name="adjust_shifted">
+        <item quantity="one">сдвинуто на %1$d день из-за пропусков</item>
+        <item quantity="few">сдвинуто на %1$d дня из-за пропусков</item>
+        <item quantity="many">сдвинуто на %1$d дней из-за пропусков</item>
+        <item quantity="other">сдвинуто на %1$d дня из-за пропусков</item>
+    </plurals>
+    <plurals name="adjust_compressed">
+        <item quantity="one">пропущен %1$d день повторения/практики, чтобы успеть к дате цели</item>
+        <item quantity="few">пропущено %1$d дня повторения/практики, чтобы успеть к дате цели</item>
+        <item quantity="many">пропущено %1$d дней повторения/практики, чтобы успеть к дате цели</item>
+        <item quantity="other">пропущено %1$d дня повторения/практики, чтобы успеть к дате цели</item>
+    </plurals>
+    <string name="plan_replan_now">Пересчитать сейчас</string>
+    <string name="plan_replanning">Пересчитываем…</string>
+    <plurals name="recovery_title">
+        <item quantity="one">Вы отстаёте от плана на %1$d день</item>
+        <item quantity="few">Вы отстаёте от плана на %1$d дня</item>
+        <item quantity="many">Вы отстаёте от плана на %1$d дней</item>
+        <item quantity="other">Вы отстаёте от плана на %1$d дня</item>
+    </plurals>
+    <string name="recovery_body">План сам по себе без вашего согласия не меняется. Выберите, как продолжить:</string>
+    <string name="recovery_shift">Продолжить с того места</string>
+    <string name="recovery_compress">Пропустить дни повторения</string>
+    <string name="recovery_confirm">Применить</string>
+    <plurals name="recovery_shift_effect">
+        <item quantity="one">Все незавершённые дни подтянутся к сегодняшнему в прежнем порядке. План закончится на %1$d день позже.</item>
+        <item quantity="few">Все незавершённые дни подтянутся к сегодняшнему в прежнем порядке. План закончится на %1$d дня позже.</item>
+        <item quantity="many">Все незавершённые дни подтянутся к сегодняшнему в прежнем порядке. План закончится на %1$d дней позже.</item>
+        <item quantity="other">Все незавершённые дни подтянутся к сегодняшнему в прежнем порядке. План закончится на %1$d дня позже.</item>
+    </plurals>
+    <plurals name="recovery_compress_dropped">
+        <item quantity="one">Будет пропущен %1$d день повторения или смешанной практики, чтобы сохранить дату цели.</item>
+        <item quantity="few">Будет пропущено %1$d дня повторения или смешанной практики, чтобы сохранить дату цели.</item>
+        <item quantity="many">Будет пропущено %1$d дней повторения или смешанной практики, чтобы сохранить дату цели.</item>
+        <item quantity="other">Будет пропущено %1$d дня повторения или смешанной практики, чтобы сохранить дату цели.</item>
+    </plurals>
+    <plurals name="recovery_compress_still_late">
+        <item quantity="one">Этого мало: план всё равно закончится на %1$d день позже.</item>
+        <item quantity="few">Этого мало: план всё равно закончится на %1$d дня позже.</item>
+        <item quantity="many">Этого мало: план всё равно закончится на %1$d дней позже.</item>
+        <item quantity="other">Этого мало: план всё равно закончится на %1$d дня позже.</item>
+    </plurals>
+    <string name="today_behind_open_plan">Открыть план</string>
 </resources>

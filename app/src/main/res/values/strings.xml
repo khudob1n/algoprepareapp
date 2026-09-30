@@ -349,4 +349,39 @@
     <string name="data_no_repeats">No task has been mentioned more than once yet.</string>
     <string name="data_mentions">mentioned %1$d times</string>
     <string name="data_unknown_source">Unknown source</string>
+
+    <string name="reason_carried_over">it was planned yesterday and is still open</string>
+    <string name="adjust_more_weak">more time for weak topics (%1$d%%): %2$s</string>
+    <string name="adjust_strong_day">today\'s topics are strong (%1$s), so part of the day goes to mixed practice</string>
+    <plurals name="adjust_shifted">
+        <item quantity="one">moved %1$d day later after missed days</item>
+        <item quantity="other">moved %1$d days later after missed days</item>
+    </plurals>
+    <plurals name="adjust_compressed">
+        <item quantity="one">%1$d review/mixed day skipped to keep the target date</item>
+        <item quantity="other">%1$d review/mixed days skipped to keep the target date</item>
+    </plurals>
+    <string name="plan_replan_now">Recalculate now</string>
+    <string name="plan_replanning">Recalculating…</string>
+    <plurals name="recovery_title">
+        <item quantity="one">You are %1$d day behind the plan</item>
+        <item quantity="other">You are %1$d days behind the plan</item>
+    </plurals>
+    <string name="recovery_body">The plan never changes by itself without asking. Choose how to continue:</string>
+    <string name="recovery_shift">Continue where I stopped</string>
+    <string name="recovery_compress">Skip review days</string>
+    <string name="recovery_confirm">Apply</string>
+    <plurals name="recovery_shift_effect">
+        <item quantity="one">All unfinished days move up to today in the same order. The plan ends %1$d day later.</item>
+        <item quantity="other">All unfinished days move up to today in the same order. The plan ends %1$d days later.</item>
+    </plurals>
+    <plurals name="recovery_compress_dropped">
+        <item quantity="one">%1$d review or mixed day is skipped so you can keep the target date.</item>
+        <item quantity="other">%1$d review or mixed days are skipped so you can keep the target date.</item>
+    </plurals>
+    <plurals name="recovery_compress_still_late">
+        <item quantity="one">That is not enough: the plan still ends %1$d day later.</item>
+        <item quantity="other">That is not enough: the plan still ends %1$d days later.</item>
+    </plurals>
+    <string name="today_behind_open_plan">Open the plan</string>
 </resources>

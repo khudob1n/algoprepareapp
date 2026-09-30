@@ -26,6 +26,9 @@ data class PlannerInput(
     /** Tasks solved in the last couple of days; not offered again as fresh practice. */
     val recentTaskIds: Set<Long>,
     val now: Instant,
+    val allocation: Allocation = Allocation.DEFAULT,
+    /** Unfinished tasks of the previous day, offered first (within 30% of the practice time). */
+    val carryOver: List<Task> = emptyList(),
 )
 
 /**
@@ -44,6 +47,7 @@ object DayPlanner {
     const val ERROR_REVIEW_MIN = 10
     const val WARMUP_MAX_MIN = 20
     const val WARMUP_MIN_DAY_BUDGET = 60
+    const val CARRY_SHARE_PERCENT = 30
 
     fun estimate(task: Task): Int = task.estimatedSolveMin ?: when (task.difficulty) {
         Difficulty.EASY -> 15
@@ -103,6 +107,14 @@ object DayPlanner {
 
         val remaining = (day.targetMinutes - fixed).coerceAtLeast(0)
 
+        // 3b. tasks that were planned yesterday but not finished
+        val carryPicked = input.carryOver
+            .filter { it.id !in used && it.status != TaskStatus.MASTERED }
+            .map { TaskScorer.score(it, ctx) }
+            .let { fill(it, remaining * CARRY_SHARE_PERCENT / 100, maxCount = 2, guaranteeFirst = true) }
+        used += carryPicked.map { it.task.id }
+        val carryUsed = carryPicked.sumOf { estimate(it.task) }
+
         // 4. spaced repetition / mixed
         val due = input.tasks
             .filter { t ->
@@ -111,8 +123,8 @@ object DayPlanner {
             }
             .map { TaskScorer.score(it, ctx) }
             .sortedWith(ranking)
-        val spacedMin = remaining / 10
-        val spacedMax = remaining * 3 / 10
+        val spacedMin = (remaining * input.allocation.spacedShare).toInt()
+        val spacedMax = maxOf(remaining * 3 / 10, spacedMin)
         val spacedBudget = if (due.isEmpty()) spacedMin
         else due.take(3).sumOf { estimate(it.task) }.coerceIn(spacedMin, spacedMax)
         val spacedPicked: List<ScoredTask>
@@ -144,18 +156,24 @@ object DayPlanner {
             }
             .map { TaskScorer.score(it, ctx) }
             .sortedWith(ranking)
-        val weakPicked = fill(weakPool, remaining * 2 / 10, maxCount = 2, guaranteeFirst = false)
+        val weakPicked = fill(weakPool, (remaining * input.allocation.weakShare).toInt(), maxCount = 2, guaranteeFirst = false)
         used += weakPicked.map { it.task.id }
         val weakUsed = weakPicked.sumOf { estimate(it.task) }
 
         // 6. roadmap gets everything that is left
-        val roadmapBudget = (remaining - spacedUsed - weakUsed).coerceAtLeast(0)
+        val roadmapBudget = (remaining - carryUsed - spacedUsed - weakUsed).coerceAtLeast(0)
         val roadmapScored = roadmapPool
             .filter { it.id !in used }
             .map { TaskScorer.score(it, ctx) }
             .sortedWith(ranking)
         val roadmapPicked = fill(roadmapScored, roadmapBudget, maxCount = 5, guaranteeFirst = true)
 
+        for (s in carryPicked) {
+            drafts += Draft(
+                PlannedKind.MAIN, s.task.id, estimate(s.task), Bucket.ROADMAP,
+                listOf(PlanReason(ReasonCode.CARRIED_OVER)) + s.reasons,
+            )
+        }
         for (s in roadmapPicked) {
             val topic = s.task.topics.firstOrNull { it in dayTopics }
             drafts += Draft(

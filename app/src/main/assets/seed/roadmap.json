@@ -60,7 +60,8 @@
    "stack",
    "binary_search"
   ],
-  "theory": "Redo the tasks you struggled with; write down the pattern for each."
+  "theory": "Redo the tasks you struggled with; write down the pattern for each.",
+  "notes": "skippable"
  },
  {
   "day": 8,
@@ -118,7 +119,8 @@
    "linked_list",
    "trees"
   ],
-  "theory": "Redo weak tasks from days 8-13."
+  "theory": "Redo weak tasks from days 8-13.",
+  "notes": "skippable"
  },
  {
   "day": 15,
@@ -227,7 +229,8 @@
    "graphs",
    "dp"
   ],
-  "theory": "Unlabelled problems: identify the pattern before coding."
+  "theory": "Unlabelled problems: identify the pattern before coding.",
+  "notes": "skippable"
  },
  {
   "day": 28,
@@ -237,7 +240,8 @@
    "heap",
    "greedy"
   ],
-  "theory": "Unlabelled problems under a timer."
+  "theory": "Unlabelled problems under a timer.",
+  "notes": "skippable"
  },
  {
   "day": 29,

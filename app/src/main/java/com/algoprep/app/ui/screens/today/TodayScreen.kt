@@ -44,6 +44,7 @@ import java.time.format.FormatStyle
 fun TodayScreen(
     onOpenTask: (TodayItem) -> Unit,
     onOpenSession: (SolveSession) -> Unit,
+    onOpenPlan: () -> Unit,
     viewModel: TodayViewModel = hiltViewModel(),
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
@@ -65,6 +66,7 @@ fun TodayScreen(
             activeSession = activeSession,
             onOpenTask = onOpenTask,
             onOpenSession = onOpenSession,
+            onOpenPlan = onOpenPlan,
             onToggleDone = viewModel::setItemDone,
         )
     }
@@ -77,6 +79,7 @@ private fun TodayContentView(
     activeSession: SolveSession?,
     onOpenTask: (TodayItem) -> Unit,
     onOpenSession: (SolveSession) -> Unit,
+    onOpenPlan: () -> Unit,
     onToggleDone: (Long, Boolean) -> Unit,
 ) {
     var whyItem by remember { mutableStateOf<TodayItem?>(null) }
@@ -87,6 +90,9 @@ private fun TodayContentView(
             contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = 20.dp, vertical = 16.dp),
         ) {
             item { TodayHeader(content) }
+            if (content.behindDays >= BEHIND_HINT_DAYS) {
+                item { BehindBanner(content.behindDays, onOpenPlan) }
+            }
             section(R.string.today_section_intro, content.intro, onOpenTask, onToggleDone) { whyItem = it }
             section(R.string.today_section_main, content.main, onOpenTask, onToggleDone) { whyItem = it }
             section(R.string.today_section_review, content.review, onOpenTask, onToggleDone) { whyItem = it }
@@ -193,5 +199,23 @@ private fun PlaceholderMessage(text: String) {
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(text, style = MaterialTheme.typography.titleMedium, textAlign = TextAlign.Center)
+    }
+}
+
+private const val BEHIND_HINT_DAYS = 2
+
+@Composable
+private fun BehindBanner(days: Int, onOpenPlan: () -> Unit) {
+    androidx.compose.material3.Card(
+        colors = androidx.compose.material3.CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.tertiaryContainer),
+        modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
+    ) {
+        Column(modifier = Modifier.padding(12.dp)) {
+            Text(
+                androidx.compose.ui.platform.LocalContext.current.resources.getQuantityString(R.plurals.recovery_title, days, days),
+                style = MaterialTheme.typography.titleSmall,
+            )
+            androidx.compose.material3.TextButton(onClick = onOpenPlan) { Text(stringResource(R.string.today_behind_open_plan)) }
+        }
     }
 }

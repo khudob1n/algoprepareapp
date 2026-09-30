@@ -56,6 +56,7 @@ interface ProfileRepository {
     /** Saves the profile and creates initial topic skills from self ratings (1..5) atomically. */
     suspend fun saveOnboarding(profile: UserProfile, selfRatings: Map<String, Int>)
     suspend fun upsertSkills(skills: List<TopicSkill>)
+    suspend fun updateTargetDate(date: java.time.LocalDate?)
 }
 
 interface PlanRepository {
@@ -68,6 +69,9 @@ interface PlanRepository {
     suspend fun replaceDayItems(day: PlanDay)
     suspend fun setItemStatus(itemId: Long, status: PlannedStatus, sessionId: Long?)
     suspend fun setDayStatus(dayIndex: Int, status: PlanDayStatus)
+    /** Updates date, status and adjustment info of a day without touching its items. */
+    suspend fun updateDayMeta(day: PlanDay)
+    suspend fun deleteDays(dayIndexes: List<Int>)
 }
 
 interface TrainingRepository {

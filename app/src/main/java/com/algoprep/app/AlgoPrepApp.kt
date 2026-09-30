@@ -3,6 +3,7 @@ package com.algoprep.app
 import android.app.Application
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
+import com.algoprep.app.background.ReplanScheduler
 import com.algoprep.app.data.seed.SeedLoader
 import com.algoprep.app.di.ApplicationScope
 import com.algoprep.app.domain.repository.SettingsRepository
@@ -20,6 +21,7 @@ class AlgoPrepApp : Application(), Configuration.Provider {
     @Inject lateinit var seedLoader: SeedLoader
     @Inject lateinit var settings: SettingsRepository
     @Inject lateinit var reminderScheduler: ReminderScheduler
+    @Inject lateinit var replanScheduler: ReplanScheduler
     @Inject @field:ApplicationScope lateinit var appScope: CoroutineScope
 
     override val workManagerConfiguration: Configuration
@@ -28,6 +30,7 @@ class AlgoPrepApp : Application(), Configuration.Provider {
     override fun onCreate() {
         super.onCreate()
         NotificationChannels.create(this)
+        replanScheduler.schedule()
         // UI observes Room flows, so screens fill in as soon as seeding commits.
         appScope.launch { seedLoader.seedIfNeeded() }
         // (Re)schedule reminders at startup and whenever the user changes them.

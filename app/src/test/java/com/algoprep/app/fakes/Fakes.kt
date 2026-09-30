@@ -111,6 +111,10 @@ class FakeProfileRepository(
         }
     }
 
+    override suspend fun updateTargetDate(date: LocalDate?) {
+        profile.value = profile.value?.copy(targetDate = date)
+    }
+
     override suspend fun upsertSkills(skills: List<TopicSkill>) {
         val byId = this.skills.value.associateBy { it.topicId }.toMutableMap()
         skills.forEach { byId[it.topicId] = it }
@@ -143,6 +147,14 @@ class FakePlanRepository(days: List<PlanDay> = emptyList()) : PlanRepository {
 
     override suspend fun setDayStatus(dayIndex: Int, status: PlanDayStatus) {
         days.value = days.value.map { if (it.dayIndex == dayIndex) it.copy(status = status) else it }
+    }
+
+    override suspend fun updateDayMeta(day: PlanDay) {
+        days.value = days.value.map { if (it.dayIndex == day.dayIndex) day.copy(items = it.items) else it }
+    }
+
+    override suspend fun deleteDays(dayIndexes: List<Int>) {
+        days.value = days.value.filter { it.dayIndex !in dayIndexes }
     }
 }
 

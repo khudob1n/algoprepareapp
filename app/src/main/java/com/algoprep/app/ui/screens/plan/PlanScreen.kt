@@ -12,11 +12,14 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -25,6 +28,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -33,7 +37,9 @@ import com.algoprep.app.R
 import com.algoprep.app.domain.model.PlanDayStatus
 import com.algoprep.app.ui.components.PlannedItemRow
 import com.algoprep.app.ui.components.WhyDialog
+import com.algoprep.app.ui.components.adjustReasonText
 import com.algoprep.app.ui.components.formatDuration
+import com.algoprep.app.domain.usecase.AdjustMode
 import com.algoprep.app.ui.screens.today.TodayItem
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
@@ -55,8 +61,14 @@ fun PlanScreen(onOpenDay: (Int) -> Unit, viewModel: PlanViewModel = hiltViewMode
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
+                    TextButton(onClick = viewModel::replanNow, enabled = !state.replanning) {
+                        Text(stringResource(if (state.replanning) R.string.plan_replanning else R.string.plan_replan_now))
+                    }
                 }
             }
+        }
+        state.recovery?.let { recovery ->
+            item { RecoveryCard(recovery, onApply = viewModel::apply) }
         }
         items(state.rows, key = { it.day.dayIndex }) { row ->
             val d = row.day
@@ -94,8 +106,9 @@ fun PlanScreen(onOpenDay: (Int) -> Unit, viewModel: PlanViewModel = hiltViewMode
                         )
                     }
                     if (d.isAdjusted) {
+                        val reason = adjustReasonText(d.adjustReason, state.topicTitles)
                         Text(
-                            stringResource(R.string.plan_adjusted) + (d.adjustReason?.let { ": $it" } ?: ""),
+                            stringResource(R.string.plan_adjusted) + (reason?.let { ": $it" } ?: ""),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.tertiary,
                         )
@@ -103,6 +116,49 @@ fun PlanScreen(onOpenDay: (Int) -> Unit, viewModel: PlanViewModel = hiltViewMode
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun RecoveryCard(recovery: RecoveryOptions, onApply: (AdjustMode) -> Unit) {
+    var pending by remember { mutableStateOf<AdjustMode?>(null) }
+    Card(colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.tertiaryContainer)) {
+        Column(modifier = Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+            Text(
+                LocalContext.current.resources.getQuantityString(R.plurals.recovery_title, recovery.missedDays, recovery.missedDays),
+                style = MaterialTheme.typography.titleSmall,
+            )
+            Text(stringResource(R.string.recovery_body), style = MaterialTheme.typography.bodySmall)
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                OutlinedButton(onClick = { pending = AdjustMode.SHIFT }) { Text(stringResource(R.string.recovery_shift)) }
+                OutlinedButton(onClick = { pending = AdjustMode.COMPRESS }) { Text(stringResource(R.string.recovery_compress)) }
+            }
+        }
+    }
+    pending?.let { mode ->
+        val res = LocalContext.current.resources
+        val text = when (mode) {
+            AdjustMode.SHIFT -> res.getQuantityString(R.plurals.recovery_shift_effect, recovery.shiftEndDays, recovery.shiftEndDays)
+            AdjustMode.COMPRESS -> buildString {
+                append(res.getQuantityString(R.plurals.recovery_compress_dropped, recovery.compressDropped, recovery.compressDropped))
+                if (recovery.compressEndDays > 0) {
+                    append(' ')
+                    append(res.getQuantityString(R.plurals.recovery_compress_still_late, recovery.compressEndDays, recovery.compressEndDays))
+                }
+            }
+        }
+        AlertDialog(
+            onDismissRequest = { pending = null },
+            title = { Text(stringResource(if (mode == AdjustMode.SHIFT) R.string.recovery_shift else R.string.recovery_compress)) },
+            text = { Text(text) },
+            confirmButton = {
+                TextButton(onClick = {
+                    onApply(mode)
+                    pending = null
+                }) { Text(stringResource(R.string.recovery_confirm)) }
+            },
+            dismissButton = { TextButton(onClick = { pending = null }) { Text(stringResource(R.string.action_cancel)) } },
+        )
     }
 }
 
@@ -155,7 +211,7 @@ fun PlanDayScreen(onBack: () -> Unit, viewModel: PlanDayViewModel = hiltViewMode
                         )
                         if (state.isAdjusted) {
                             Text(
-                                stringResource(R.string.plan_adjusted) + (state.adjustReason?.let { ": $it" } ?: ""),
+                                stringResource(R.string.plan_adjusted) + (adjustReasonText(state.adjustReason, state.topicTitles)?.let { ": $it" } ?: ""),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.tertiary,
                             )

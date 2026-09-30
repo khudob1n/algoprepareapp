@@ -10,6 +10,13 @@ import com.algoprep.app.domain.model.PlannedStatus
 import com.algoprep.app.domain.repository.CatalogRepository
 import com.algoprep.app.domain.repository.PlanRepository
 import com.algoprep.app.domain.repository.TaskRepository
+import com.algoprep.app.domain.planning.PlanRescheduler
+import com.algoprep.app.domain.usecase.AdaptPlan
+import com.algoprep.app.domain.usecase.AdjustMode
+import com.algoprep.app.domain.usecase.ReplanRemainingDays
+import java.time.Clock
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.launch
 import com.algoprep.app.ui.navigation.PlanDayRoute
 import com.algoprep.app.ui.screens.today.TodayContent
 import com.algoprep.app.ui.screens.today.buildTodayContent
@@ -34,19 +41,46 @@ data class PlanRow(
 
 data class PlanUiState(
     val rows: List<PlanRow> = emptyList(),
+    val topicTitles: Map<String, String> = emptyMap(),
     val doneDays: Int = 0,
     val missedDays: Int = 0,
     val totalDays: Int = 0,
     val loading: Boolean = true,
+    /** Previews of the two ways to recover from missed days (null when nothing was missed). */
+    val recovery: RecoveryOptions? = null,
+    val replanning: Boolean = false,
+)
+
+data class RecoveryOptions(
+    val missedDays: Int,
+    val shiftEndDays: Int,
+    val compressDropped: Int,
+    /** End-date shift that remains after compressing (0 = the target date is kept). */
+    val compressEndDays: Int,
 )
 
 @HiltViewModel
 class PlanViewModel @Inject constructor(
     plans: PlanRepository,
     catalog: CatalogRepository,
+    private val adaptPlan: AdaptPlan,
+    private val replanRemainingDays: ReplanRemainingDays,
+    private val clock: Clock,
 ) : ViewModel() {
-    val uiState: StateFlow<PlanUiState> = combine(plans.observeDays(), catalog.observeTopics()) { days, topics ->
+    private val replanning = MutableStateFlow(false)
+
+    val uiState: StateFlow<PlanUiState> = combine(
+        plans.observeDays(), catalog.observeTopics(), catalog.observeRoadmap(), replanning,
+    ) { days, topics, roadmap, busy ->
         val titles = topics.associate { it.id to it.title }
+        val today = LocalDate.now(clock)
+        val missed = PlanRescheduler.missedDays(days, today)
+        val skippable = roadmap.filter { it.notes == AdaptPlan.SKIPPABLE }.map { it.dayIndex }.toSet()
+        val recovery = if (missed == 0) null else {
+            val shift = PlanRescheduler.shift(days, today)
+            val compress = PlanRescheduler.compress(days, today, skippable)
+            RecoveryOptions(missed, shift.endDateShiftDays, compress.dropped.size, compress.endDateShiftDays)
+        }
         PlanUiState(
             rows = days.map { d ->
                 PlanRow(
@@ -56,12 +90,32 @@ class PlanViewModel @Inject constructor(
                     totalItems = d.items.size,
                 )
             },
+            topicTitles = titles,
             doneDays = days.count { it.status == PlanDayStatus.DONE },
-            missedDays = days.count { it.status == PlanDayStatus.MISSED },
+            missedDays = missed,
             totalDays = days.size,
             loading = false,
+            recovery = recovery,
+            replanning = busy,
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), PlanUiState())
+
+    fun apply(mode: AdjustMode) {
+        viewModelScope.launch { adaptPlan.apply(mode) }
+    }
+
+    /** "Recalculate now": the same thing the nightly job does. */
+    fun replanNow() {
+        if (replanning.value) return
+        replanning.value = true
+        viewModelScope.launch {
+            try {
+                replanRemainingDays()
+            } finally {
+                replanning.value = false
+            }
+        }
+    }
 }
 
 data class PlanDayUiState(

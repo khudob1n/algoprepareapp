@@ -130,6 +130,8 @@ class ProfileRepositoryImpl @Inject constructor(
         val now = clock.millis()
         dao.upsertSkills(skills.map { it.toEntity(now) })
     }
+
+    override suspend fun updateTargetDate(date: LocalDate?) = dao.updateTargetDate(date?.toString())
 }
 
 @Singleton
@@ -164,6 +166,12 @@ class PlanRepositoryImpl @Inject constructor(private val db: AppDatabase) : Plan
         dao.setItemStatus(itemId, status, sessionId)
 
     override suspend fun setDayStatus(dayIndex: Int, status: PlanDayStatus) = dao.setDayStatus(dayIndex, status)
+
+    override suspend fun updateDayMeta(day: PlanDay) = dao.updateDay(day.toEntity())
+
+    override suspend fun deleteDays(dayIndexes: List<Int>) {
+        if (dayIndexes.isNotEmpty()) dao.deleteDays(dayIndexes)
+    }
 }
 
 @Singleton
