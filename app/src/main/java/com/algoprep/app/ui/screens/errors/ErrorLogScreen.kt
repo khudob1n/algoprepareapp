@@ -67,9 +67,9 @@ fun ErrorLogScreen(onBack: () -> Unit, viewModel: ErrorLogViewModel = hiltViewMo
                             style = MaterialTheme.typography.titleSmall,
                         )
                         Text(
-                            state.openByType.joinToString(" · ") { (type, n) ->
-                                stringResource(errorTypeLabel(type)) + " — " + n
-                            },
+                            state.openByType
+                                .map { (type, n) -> stringResource(errorTypeLabel(type)) + " — " + n }
+                                .joinToString(" · "),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
