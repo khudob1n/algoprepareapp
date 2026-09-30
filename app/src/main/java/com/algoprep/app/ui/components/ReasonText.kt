@@ -29,6 +29,7 @@ fun reasonText(reason: PlanReason, topicTitles: Map<String, String>): String {
         ReasonCode.ROADMAP_TOPIC -> res.getString(R.string.reason_roadmap_topic, topic)
         ReasonCode.MIXED -> res.getString(R.string.reason_mixed)
         ReasonCode.CARRIED_OVER -> res.getString(R.string.reason_carried_over)
+        ReasonCode.MOCK_DAY -> res.getString(R.string.reason_mock_day)
     }
 }
 

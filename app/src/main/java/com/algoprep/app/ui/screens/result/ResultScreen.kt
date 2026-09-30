@@ -69,55 +69,13 @@ fun ResultScreen(onDone: () -> Unit, viewModel: ResultViewModel = hiltViewModel(
         Text(stringResource(R.string.result_time), style = MaterialTheme.typography.titleSmall)
         Text(formatTimer(state.durationSec), style = MaterialTheme.typography.displaySmall, fontFamily = FontFamily.Monospace)
 
-        Text(stringResource(R.string.result_how), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 8.dp))
-        SolveOutcome.entries.forEach { outcome ->
-            OptionCard(
-                title = stringResource(outcomeLabel(outcome)),
-                selected = form.outcome == outcome,
-                onClick = { viewModel.setOutcome(outcome) },
-            )
-        }
-
-        Text(stringResource(R.string.result_confidence), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 8.dp))
-        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            (1..5).forEach { value ->
-                FilterChip(
-                    selected = form.confidence == value,
-                    onClick = { viewModel.setConfidence(value) },
-                    label = { Text(value.toString()) },
-                )
-            }
-        }
-        Text(
-            stringResource(R.string.result_confidence_hint),
-            style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        ResultFormFields(
+            form = form,
+            onOutcome = viewModel::setOutcome,
+            onConfidence = viewModel::setConfidence,
+            onToggleError = viewModel::toggleError,
+            onOtherNote = viewModel::setOtherNote,
         )
-
-        Text(stringResource(R.string.result_errors), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 8.dp))
-        ErrorType.entries.forEach { type ->
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .toggleable(
-                        value = type in form.errors,
-                        role = Role.Checkbox,
-                        onValueChange = { viewModel.toggleError(type) },
-                    ),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Checkbox(checked = type in form.errors, onCheckedChange = null)
-                Text(stringResource(errorTypeLabel(type)), modifier = Modifier.padding(start = 8.dp))
-            }
-        }
-        if (ErrorType.OTHER in form.errors) {
-            OutlinedTextField(
-                value = form.otherNote,
-                onValueChange = viewModel::setOtherNote,
-                label = { Text(stringResource(R.string.result_other_note)) },
-                modifier = Modifier.fillMaxWidth(),
-            )
-        }
 
         if (state.solutionIdea != null) {
             if (showSolution) {
@@ -160,4 +118,67 @@ fun errorTypeLabel(t: ErrorType) = when (t) {
     ErrorType.EDGE_CASES -> R.string.error_type_edge_cases
     ErrorType.COMPLEXITY -> R.string.error_type_complexity
     ErrorType.OTHER -> R.string.error_type_other
+}
+
+/** How did you solve it / confidence / mistakes. Shared by the normal result screen and the mock interview. */
+@Composable
+fun ResultFormFields(
+    form: ResultForm,
+    onOutcome: (SolveOutcome) -> Unit,
+    onConfidence: (Int) -> Unit,
+    onToggleError: (ErrorType) -> Unit,
+    onOtherNote: (String) -> Unit,
+) {
+    Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+        Text(stringResource(R.string.result_how), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 8.dp))
+        SolveOutcome.entries.forEach { outcome ->
+            OptionCard(
+                title = stringResource(outcomeLabel(outcome)),
+                selected = form.outcome == outcome,
+                onClick = { onOutcome(outcome) },
+            )
+        }
+
+        Text(stringResource(R.string.result_confidence), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 8.dp))
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            (1..5).forEach { value ->
+                FilterChip(
+                    selected = form.confidence == value,
+                    onClick = { onConfidence(value) },
+                    label = { Text(value.toString()) },
+                )
+            }
+        }
+        Text(
+            stringResource(R.string.result_confidence_hint),
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+
+        Text(stringResource(R.string.result_errors), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 8.dp))
+        ErrorType.entries.forEach { type ->
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .toggleable(
+                        value = type in form.errors,
+                        role = Role.Checkbox,
+                        onValueChange = { onToggleError(type) },
+                    ),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Checkbox(checked = type in form.errors, onCheckedChange = null)
+                Text(stringResource(errorTypeLabel(type)), modifier = Modifier.padding(start = 8.dp))
+            }
+        }
+        if (ErrorType.OTHER in form.errors) {
+            OutlinedTextField(
+                value = form.otherNote,
+                onValueChange = onOtherNote,
+                label = { Text(stringResource(R.string.result_other_note)) },
+                modifier = Modifier.fillMaxWidth(),
+            )
+        }
+
+    }
 }

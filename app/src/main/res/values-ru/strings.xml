@@ -410,4 +410,37 @@
         <item quantity="other">Этого мало: план всё равно закончится на %1$d дня позже.</item>
     </plurals>
     <string name="today_behind_open_plan">Открыть план</string>
+
+    <string name="today_item_mock">Мок-интервью</string>
+    <string name="today_item_mock_desc">Условия настоящего интервью, без подсказок</string>
+    <string name="today_mock_button">Мок-интервью</string>
+    <string name="reason_mock_day">сегодня день мок-интервью по вашему плану</string>
+    <string name="mock_title">Мок-интервью</string>
+    <string name="mock_rules">Обратный отсчёт, никаких подсказок и задачи из вашего же банка. Проговаривайте решение вслух: это часть тренировки.</string>
+    <string name="mock_format_quick">45 минут · 1 задача</string>
+    <string name="mock_format_quick_desc">Одна задача средней сложности</string>
+    <string name="mock_format_full">90 минут · 2 задачи</string>
+    <string name="mock_format_full_desc">Средняя и сложная задачи</string>
+    <string name="mock_not_enough">В банке всего задач: %1$d, поэтому мок будет короче выбранного формата.</string>
+    <string name="mock_begin">НАЧАТЬ</string>
+    <string name="mock_time_left">осталось времени</string>
+    <string name="mock_overtime">сверх лимита</string>
+    <string name="mock_task_n">Задача %1$d</string>
+    <string name="mock_no_hints">В мок-интервью подсказок нет.</string>
+    <string name="mock_next_task">СЛЕДУЮЩАЯ ЗАДАЧА</string>
+    <string name="mock_finish">ЗАВЕРШИТЬ ИНТЕРВЬЮ</string>
+    <string name="mock_finish_now">Завершить сейчас</string>
+    <string name="mock_finish_title">Завершить интервью?</string>
+    <string name="mock_finish_body">Таймер остановится, и вы введёте результат по каждой задаче.</string>
+    <string name="mock_leave_title">Выйти из мок-интервью?</string>
+    <string name="mock_leave_body">Прогресс в этом интервью будет потерян.</string>
+    <string name="mock_leave">Выйти</string>
+    <string name="mock_stay">Остаться</string>
+    <string name="mock_result_title">Итоги мок-интервью</string>
+    <string name="mock_total_time">Общее время %1$s из %2$s</string>
+    <string name="mock_over_limit">Превышение лимита на %1$s</string>
+    <string name="mock_result_hint">Как прошла каждая задача? Отвечайте честно: именно это вас тренирует.</string>
+    <string name="mock_task_time">Время на задачу: %1$s</string>
+    <string name="mock_saved_note">Сохранено. Результаты мока учитываются в статистике, слабых темах и расписании повторений.</string>
+    <string name="mock_back_today">Вернуться на «Сегодня»</string>
 </resources>

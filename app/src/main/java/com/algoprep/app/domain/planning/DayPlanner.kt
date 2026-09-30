@@ -48,6 +48,8 @@ object DayPlanner {
     const val WARMUP_MAX_MIN = 20
     const val WARMUP_MIN_DAY_BUDGET = 60
     const val CARRY_SHARE_PERCENT = 30
+    const val MOCK_MIN_MINUTES = 45
+    const val MOCK_MAX_MINUTES = 90
 
     fun estimate(task: Task): Int = task.estimatedSolveMin ?: when (task.difficulty) {
         Difficulty.EASY -> 15
@@ -55,7 +57,11 @@ object DayPlanner {
         Difficulty.MEDIUM, null -> 25
     }
 
+    /** Roadmap days marked with this note are the plan's mock interview day. */
+    const val MOCK_DAY_NOTE = "mock"
+
     fun plan(input: PlannerInput): List<PlannedItem> {
+        if (input.roadmapDay?.notes == MOCK_DAY_NOTE) return mockDay(input)
         val day = input.day
         val dayTopics = day.topicIds.toSet()
         val weakIds = WeakTopics.pick(input.skills.values.filter { it.topicId in input.introducedTopicIds })
@@ -208,6 +214,28 @@ object DayPlanner {
                 reasons = d.reasons,
                 completedSessionId = null,
             )
+        }
+    }
+
+    /** Theory, the mock interview itself, and the review of yesterday's mistake: nothing else competes with it. */
+    private fun mockDay(input: PlannerInput): List<PlannedItem> {
+        val day = input.day
+        val drafts = ArrayList<Draft>()
+        var fixed = 0
+        if (input.roadmapDay?.theory != null) {
+            drafts += Draft(PlannedKind.THEORY, null, THEORY_MIN, Bucket.ROADMAP, listOf(PlanReason(ReasonCode.MOCK_DAY)))
+            fixed += THEORY_MIN
+        }
+        val errorTask = input.unresolvedErrors.sortedByDescending { it.createdAt }
+            .firstNotNullOfOrNull { e -> input.tasks.firstOrNull { it.id == e.taskId } }
+        if (errorTask != null) fixed += ERROR_REVIEW_MIN
+        val mockMinutes = (day.targetMinutes - fixed).coerceIn(MOCK_MIN_MINUTES, MOCK_MAX_MINUTES)
+        drafts += Draft(PlannedKind.MOCK, null, mockMinutes, Bucket.ROADMAP, listOf(PlanReason(ReasonCode.MOCK_DAY)))
+        if (errorTask != null) {
+            drafts += Draft(PlannedKind.ERROR_REVIEW, errorTask.id, ERROR_REVIEW_MIN, Bucket.SPACED, listOf(PlanReason(ReasonCode.RECENT_FAILURE)))
+        }
+        return drafts.mapIndexed { index, d ->
+            PlannedItem(0, day.dayIndex, d.kind, d.taskId, index, d.minutes, PlannedStatus.TODO, d.bucket, d.reasons, null)
         }
     }
 

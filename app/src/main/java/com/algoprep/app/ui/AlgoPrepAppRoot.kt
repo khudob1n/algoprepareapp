@@ -29,6 +29,9 @@ import com.algoprep.app.ui.navigation.ErrorLogRoute
 import com.algoprep.app.ui.navigation.ImportDoneRoute
 import com.algoprep.app.ui.navigation.ImportReviewRoute
 import com.algoprep.app.ui.navigation.MainGraphRoute
+import com.algoprep.app.ui.navigation.MockResultRoute
+import com.algoprep.app.ui.navigation.MockSessionRoute
+import com.algoprep.app.ui.navigation.MockSetupRoute
 import com.algoprep.app.ui.navigation.OnboardingGraphRoute
 import com.algoprep.app.ui.navigation.PlanDayRoute
 import com.algoprep.app.ui.navigation.PlanRoute
@@ -40,6 +43,10 @@ import com.algoprep.app.ui.navigation.TaskDetailRoute
 import com.algoprep.app.ui.navigation.TasksRoute
 import com.algoprep.app.ui.navigation.TodayRoute
 import com.algoprep.app.ui.navigation.TopLevelDestination
+import com.algoprep.app.ui.screens.mock.MockResultScreen
+import com.algoprep.app.ui.screens.mock.MockSessionScreen
+import com.algoprep.app.ui.screens.mock.MockSetupScreen
+import com.algoprep.app.ui.screens.mock.encodeIds
 import com.algoprep.app.ui.screens.onboarding.onboardingGraph
 import com.algoprep.app.ui.screens.importer.ImportDoneScreen
 import com.algoprep.app.ui.screens.importer.ImportReviewScreen
@@ -105,6 +112,7 @@ private fun AppScaffold(startOnboarding: Boolean) {
             navigation<MainGraphRoute>(startDestination = TodayRoute) {
                 composable<TodayRoute> {
                     TodayScreen(
+                        onOpenMock = { navController.navigate(MockSetupRoute(it)) },
                         onOpenPlan = {
                             navController.navigate(PlanRoute) {
                                 popUpTo(TodayRoute) { saveState = true }
@@ -127,6 +135,29 @@ private fun AppScaffold(startOnboarding: Boolean) {
                             }
                         },
                     )
+                }
+                composable<MockSetupRoute> {
+                    MockSetupScreen(
+                        onBack = { navController.popBackStack() },
+                        onStart = { ids, limit, startedAt, itemId ->
+                            navController.navigate(MockSessionRoute(encodeIds(ids), limit, startedAt, itemId)) {
+                                popUpTo<MockSetupRoute> { inclusive = true }
+                            }
+                        },
+                    )
+                }
+                composable<MockSessionRoute> {
+                    MockSessionScreen(
+                        onFinished = { ids, limit, total ->
+                            navController.navigate(MockResultRoute(encodeIds(ids), limit, total)) {
+                                popUpTo<MockSessionRoute> { inclusive = true }
+                            }
+                        },
+                        onLeave = { navController.popBackStack() },
+                    )
+                }
+                composable<MockResultRoute> {
+                    MockResultScreen(onDone = { navController.popBackStack(TodayRoute, inclusive = false) })
                 }
                 composable<PlanRoute> {
                     PlanScreen(onOpenDay = { navController.navigate(PlanDayRoute(it)) })

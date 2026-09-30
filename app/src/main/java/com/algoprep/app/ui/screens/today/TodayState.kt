@@ -36,7 +36,7 @@ data class TodayContent(
     val main: List<TodayItem>,
     val review: List<TodayItem>,
     val errorReview: List<TodayItem>,
-    /** First unfinished task-based item, in plan order. */
+    /** First unfinished item that can be started (a task, or the mock interview), in plan order. */
     val nextTaskItem: TodayItem?,
     /** Plan days that ended unfinished; drives the "you are behind" hint. */
     val behindDays: Int = 0,
@@ -79,7 +79,7 @@ fun buildTodayContent(
         main = items.filter { it.kind == PlannedKind.MAIN || it.kind == PlannedKind.MOCK },
         review = items.filter { it.kind == PlannedKind.REVIEW },
         errorReview = items.filter { it.kind == PlannedKind.ERROR_REVIEW },
-        nextTaskItem = items.firstOrNull { !it.done && it.taskId != null },
+        nextTaskItem = items.firstOrNull { !it.done && (it.taskId != null || it.kind == PlannedKind.MOCK) },
         behindDays = behindDays,
     )
 }

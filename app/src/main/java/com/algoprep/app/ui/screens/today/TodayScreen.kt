@@ -45,6 +45,7 @@ fun TodayScreen(
     onOpenTask: (TodayItem) -> Unit,
     onOpenSession: (SolveSession) -> Unit,
     onOpenPlan: () -> Unit,
+    onOpenMock: (plannedItemId: Long?) -> Unit,
     viewModel: TodayViewModel = hiltViewModel(),
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
@@ -67,6 +68,7 @@ fun TodayScreen(
             onOpenTask = onOpenTask,
             onOpenSession = onOpenSession,
             onOpenPlan = onOpenPlan,
+            onOpenMock = onOpenMock,
             onToggleDone = viewModel::setItemDone,
         )
     }
@@ -80,6 +82,7 @@ private fun TodayContentView(
     onOpenTask: (TodayItem) -> Unit,
     onOpenSession: (SolveSession) -> Unit,
     onOpenPlan: () -> Unit,
+    onOpenMock: (Long?) -> Unit,
     onToggleDone: (Long, Boolean) -> Unit,
 ) {
     var whyItem by remember { mutableStateOf<TodayItem?>(null) }
@@ -90,18 +93,25 @@ private fun TodayContentView(
             contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = 20.dp, vertical = 16.dp),
         ) {
             item { TodayHeader(content) }
+            item {
+                androidx.compose.material3.TextButton(onClick = { onOpenMock(null) }) { Text(stringResource(R.string.today_mock_button)) }
+            }
             if (content.behindDays >= BEHIND_HINT_DAYS) {
                 item { BehindBanner(content.behindDays, onOpenPlan) }
             }
-            section(R.string.today_section_intro, content.intro, onOpenTask, onToggleDone) { whyItem = it }
-            section(R.string.today_section_main, content.main, onOpenTask, onToggleDone) { whyItem = it }
-            section(R.string.today_section_review, content.review, onOpenTask, onToggleDone) { whyItem = it }
-            section(R.string.today_section_error, content.errorReview, onOpenTask, onToggleDone) { whyItem = it }
+            section(R.string.today_section_intro, content.intro, onOpenTask, onOpenMock, onToggleDone) { whyItem = it }
+            section(R.string.today_section_main, content.main, onOpenTask, onOpenMock, onToggleDone) { whyItem = it }
+            section(R.string.today_section_review, content.review, onOpenTask, onOpenMock, onToggleDone) { whyItem = it }
+            section(R.string.today_section_error, content.errorReview, onOpenTask, onOpenMock, onToggleDone) { whyItem = it }
         }
         val next = content.nextTaskItem
         Button(
             onClick = {
-                if (activeSession != null) onOpenSession(activeSession) else next?.let(onOpenTask)
+                when {
+                    activeSession != null -> onOpenSession(activeSession)
+                    next != null && next.kind == PlannedKind.MOCK -> onOpenMock(next.id)
+                    else -> next?.let(onOpenTask)
+                }
             },
             enabled = activeSession != null || next != null,
             modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 12.dp),
@@ -157,6 +167,7 @@ private fun LazyListScope.section(
     titleRes: Int,
     list: List<TodayItem>,
     onOpenTask: (TodayItem) -> Unit,
+    onOpenMock: (Long?) -> Unit,
     onToggleDone: (Long, Boolean) -> Unit,
     onWhy: (TodayItem) -> Unit,
 ) {
@@ -174,6 +185,7 @@ private fun LazyListScope.section(
             item = item,
             onClick = when {
                 item.kind == PlannedKind.THEORY -> ({ onToggleDone(item.id, !item.done) })
+                item.kind == PlannedKind.MOCK && !item.done -> ({ onOpenMock(item.id) })
                 item.taskId != null && !item.done -> ({ onOpenTask(item) })
                 else -> null
             },

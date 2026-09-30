@@ -21,5 +21,5 @@ enum class UserLevel { BEGINNER, INTERMEDIATE, ADVANCED }
 /** Machine-readable reason a task/day was planned; the UI turns it into localized text. */
 enum class ReasonCode {
     WEAK_TOPIC, NOT_SOLVED_YET, REVIEW_DUE, RECENT_FAILURE,
-    DIFFICULTY_FIT, FREQUENT_IN_DATASET, ROADMAP_TOPIC, MIXED, CARRIED_OVER,
+    DIFFICULTY_FIT, FREQUENT_IN_DATASET, ROADMAP_TOPIC, MIXED, CARRIED_OVER, MOCK_DAY,
 }

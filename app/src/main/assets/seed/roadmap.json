@@ -252,7 +252,8 @@
    "dp",
    "trees"
   ],
-  "theory": "Simulate a real interview: no hints, talk out loud."
+  "theory": "Simulate a real interview: no hints, talk out loud.",
+  "notes": "mock"
  },
  {
   "day": 30,

@@ -384,4 +384,37 @@
         <item quantity="other">That is not enough: the plan still ends %1$d days later.</item>
     </plurals>
     <string name="today_behind_open_plan">Open the plan</string>
+
+    <string name="today_item_mock">Mock interview</string>
+    <string name="today_item_mock_desc">Real-interview conditions, no hints</string>
+    <string name="today_mock_button">Mock interview</string>
+    <string name="reason_mock_day">today is the mock interview day of your plan</string>
+    <string name="mock_title">Mock interview</string>
+    <string name="mock_rules">A countdown timer, no hints, and tasks from your own bank. Talk out loud while you solve: that is part of the practice.</string>
+    <string name="mock_format_quick">45 minutes · 1 task</string>
+    <string name="mock_format_quick_desc">One medium task</string>
+    <string name="mock_format_full">90 minutes · 2 tasks</string>
+    <string name="mock_format_full_desc">A medium and a hard task</string>
+    <string name="mock_not_enough">Your bank has only %1$d tasks, so the mock will be shorter than this format.</string>
+    <string name="mock_begin">BEGIN</string>
+    <string name="mock_time_left">time left</string>
+    <string name="mock_overtime">over the limit</string>
+    <string name="mock_task_n">Task %1$d</string>
+    <string name="mock_no_hints">No hints in a mock interview.</string>
+    <string name="mock_next_task">NEXT TASK</string>
+    <string name="mock_finish">FINISH INTERVIEW</string>
+    <string name="mock_finish_now">Finish now</string>
+    <string name="mock_finish_title">Finish the interview?</string>
+    <string name="mock_finish_body">The timer stops and you will enter the result of every task.</string>
+    <string name="mock_leave_title">Leave the mock interview?</string>
+    <string name="mock_leave_body">Your progress in this interview will be lost.</string>
+    <string name="mock_leave">Leave</string>
+    <string name="mock_stay">Stay</string>
+    <string name="mock_result_title">Mock interview result</string>
+    <string name="mock_total_time">Total time %1$s of %2$s</string>
+    <string name="mock_over_limit">Over the limit by %1$s</string>
+    <string name="mock_result_hint">How did each task go? Be honest: this is what trains you.</string>
+    <string name="mock_task_time">Time on this task: %1$s</string>
+    <string name="mock_saved_note">Saved. Mock results count in your stats, weak topics and review schedule.</string>
+    <string name="mock_back_today">Back to Today</string>
 </resources>

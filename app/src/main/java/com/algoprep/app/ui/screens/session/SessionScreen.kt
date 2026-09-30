@@ -137,7 +137,7 @@ fun SessionScreen(
 }
 
 @Composable
-private fun ProblemSection(task: Task, topicTitles: Map<String, String>) {
+internal fun ProblemSection(task: Task, topicTitles: Map<String, String>) {
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
         Text(task.title, style = MaterialTheme.typography.headlineSmall)
         val meta = buildList {

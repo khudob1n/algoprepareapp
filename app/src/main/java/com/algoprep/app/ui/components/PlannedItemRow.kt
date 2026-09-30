@@ -76,6 +76,7 @@ fun PlannedItemRow(
 @Composable
 private fun itemTitle(item: TodayItem): String = when {
     item.kind == PlannedKind.THEORY -> stringResource(R.string.today_item_theory)
+    item.kind == PlannedKind.MOCK -> stringResource(R.string.today_item_mock)
     else -> item.taskTitle ?: stringResource(R.string.today_item_removed_task)
 }
 
@@ -84,6 +85,7 @@ private fun itemSubtitle(item: TodayItem): String? = when (item.kind) {
     PlannedKind.THEORY -> item.theoryText
     PlannedKind.WARMUP -> stringResource(R.string.today_item_warmup)
     PlannedKind.ERROR_REVIEW -> stringResource(R.string.today_item_error_review)
+    PlannedKind.MOCK -> stringResource(R.string.today_item_mock_desc)
     else -> item.difficulty?.let { stringResource(difficultyLabel(it)) }
 }
 

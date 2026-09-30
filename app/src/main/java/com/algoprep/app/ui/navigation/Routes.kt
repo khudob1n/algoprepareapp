@@ -37,3 +37,13 @@ import kotlinx.serialization.Serializable
 @Serializable data class TaskDetailRoute(val taskId: Long)
 @Serializable data object ImportReviewRoute
 @Serializable data class ImportDoneRoute(val saved: Int, val merged: Int, val skipped: Int)
+
+// Mock interview. Task ids travel as "1,2,3" strings to keep the route arguments simple.
+@Serializable data class MockSetupRoute(val plannedItemId: Long? = null)
+@Serializable data class MockSessionRoute(
+    val taskIds: String,
+    val limitMinutes: Int,
+    val startedAtMillis: Long,
+    val plannedItemId: Long? = null,
+)
+@Serializable data class MockResultRoute(val sessionIds: String, val limitMinutes: Int, val totalSeconds: Long)
