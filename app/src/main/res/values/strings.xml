@@ -71,4 +71,59 @@
     <string name="reminder_streak_desc">If there has been no practice today</string>
     <string name="onboarding_saving">Building your plan…</string>
     <string name="onboarding_save_failed">Could not build the plan. Please try again.</string>
+
+    <string name="percent_format">%1$d%%</string>
+    <string name="today_day_of">DAY %1$d / %2$d</string>
+    <string name="today_time_summary">Plan: %1$s · left: %2$s</string>
+    <string name="today_section_intro">Today</string>
+    <string name="today_section_main">Main practice</string>
+    <string name="today_section_review">Review</string>
+    <string name="today_section_error">Error review</string>
+    <string name="today_start_next">START NEXT TASK</string>
+    <string name="today_all_done">All done for today</string>
+    <string name="today_nothing_planned">Nothing planned for today</string>
+    <string name="today_no_plan_title">No plan yet</string>
+    <string name="today_no_plan_body">Finish onboarding to get your 30-day plan.</string>
+    <string name="today_finished_title">Plan complete</string>
+    <string name="today_finished_body">You have reached the end of the 30-day plan. Check Stats for your progress.</string>
+    <string name="today_not_started">Your plan starts on %1$s</string>
+    <string name="today_item_theory">Theory</string>
+    <string name="today_item_warmup">Warm-up</string>
+    <string name="today_item_error_review">Review a mistake</string>
+    <string name="today_item_removed_task">Task removed</string>
+    <string name="difficulty_easy">Easy</string>
+    <string name="difficulty_medium">Medium</string>
+    <string name="difficulty_hard">Hard</string>
+
+    <string name="why_button">Why this task?</string>
+    <string name="why_title">Why was I given this?</string>
+    <string name="why_intro">Added because:</string>
+    <string name="reason_weak_topic">%1$s is one of your weak topics</string>
+    <string name="reason_not_solved">you have not solved it yet</string>
+    <string name="reason_review_due">it is due for review</string>
+    <string name="reason_recent_failure">you struggled with it recently</string>
+    <string name="reason_difficulty_fit">its difficulty fits your current level in this topic</string>
+    <string name="reason_roadmap_topic">today\'s roadmap topic: %1$s</string>
+    <string name="reason_mixed">mixed practice: helps you spot patterns without a topic hint</string>
+    <plurals name="reason_review_overdue">
+        <item quantity="one">it is due for review (%1$d day overdue)</item>
+        <item quantity="other">it is due for review (%1$d days overdue)</item>
+    </plurals>
+    <plurals name="reason_frequent">
+        <item quantity="one">it is mentioned %1$d time in your imported data</item>
+        <item quantity="other">it is mentioned %1$d times in your imported data</item>
+    </plurals>
+
+    <string name="plan_title">30-day plan</string>
+    <string name="plan_adherence">%1$d of %2$d days done · %3$d missed</string>
+    <string name="plan_day_label">Day %1$d</string>
+    <string name="plan_status_done">Done</string>
+    <string name="plan_status_missed">Missed</string>
+    <string name="plan_status_today">Today</string>
+    <string name="plan_status_upcoming">Upcoming</string>
+    <string name="plan_items_done">%1$d of %2$d items done</string>
+    <string name="plan_adjusted">Adjusted</string>
+    <string name="plan_day_topics">Topics: %1$s</string>
+    <string name="plan_day_not_generated">Tasks for this day are picked on the day itself, based on your progress by then.</string>
+    <string name="session_placeholder">Task session for task %1$d arrives in the next phase.</string>
 </resources>

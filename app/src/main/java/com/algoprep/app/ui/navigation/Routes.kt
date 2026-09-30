@@ -23,3 +23,7 @@ import kotlinx.serialization.Serializable
 @Serializable data object TasksRoute
 @Serializable data object StatsRoute
 @Serializable data object ProfileRoute
+
+// Detail screens (hide the bottom bar)
+@Serializable data class PlanDayRoute(val dayIndex: Int)
+@Serializable data class SessionRoute(val taskId: Long, val plannedItemId: Long? = null)

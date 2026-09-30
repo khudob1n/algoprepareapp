@@ -28,6 +28,7 @@ interface CatalogRepository {
 interface TaskRepository {
     fun observeAll(): Flow<List<Task>>
     fun observe(id: Long): Flow<Task?>
+    fun observeByIds(ids: Collection<Long>): Flow<List<Task>>
     suspend fun get(id: Long): Task?
     suspend fun getByTopics(topicIds: Set<String>): List<Task>
     /** Inserts a new task with its topic/pattern links and mentions in one transaction. */

@@ -54,6 +54,8 @@ class TaskRepositoryImpl @Inject constructor(
 
     override fun observeAll(): Flow<List<Task>> = dao.observeAll().map { l -> l.map { it.toDomain() } }
     override fun observe(id: Long): Flow<Task?> = dao.observe(id).map { it?.toDomain() }
+    override fun observeByIds(ids: Collection<Long>): Flow<List<Task>> =
+        dao.observeByIds(ids).map { l -> l.map { it.toDomain() } }
     override suspend fun get(id: Long): Task? = dao.get(id)?.toDomain()
 
     override suspend fun getByTopics(topicIds: Set<String>): List<Task> =

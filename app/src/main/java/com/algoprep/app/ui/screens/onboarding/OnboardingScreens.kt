@@ -45,6 +45,7 @@ import com.algoprep.app.domain.model.ReminderKind
 import com.algoprep.app.domain.model.ReminderSlot
 import com.algoprep.app.domain.model.StartOption
 import com.algoprep.app.domain.model.UserLevel
+import com.algoprep.app.ui.components.formatDuration
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle

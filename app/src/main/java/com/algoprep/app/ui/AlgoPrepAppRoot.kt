@@ -19,17 +19,24 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
 import com.algoprep.app.R
 import com.algoprep.app.ui.components.PlaceholderScreen
 import com.algoprep.app.ui.navigation.MainGraphRoute
 import com.algoprep.app.ui.navigation.OnboardingGraphRoute
+import com.algoprep.app.ui.navigation.PlanDayRoute
 import com.algoprep.app.ui.navigation.PlanRoute
 import com.algoprep.app.ui.navigation.ProfileRoute
+import com.algoprep.app.ui.navigation.SessionRoute
 import com.algoprep.app.ui.navigation.StatsRoute
 import com.algoprep.app.ui.navigation.TasksRoute
 import com.algoprep.app.ui.navigation.TodayRoute
 import com.algoprep.app.ui.navigation.TopLevelDestination
 import com.algoprep.app.ui.screens.onboarding.onboardingGraph
+import com.algoprep.app.ui.screens.plan.PlanDayScreen
+import com.algoprep.app.ui.screens.plan.PlanScreen
+import com.algoprep.app.ui.screens.session.SessionPlaceholderScreen
+import com.algoprep.app.ui.screens.today.TodayScreen
 
 @Composable
 fun AlgoPrepAppRoot(rootViewModel: RootViewModel = hiltViewModel()) {
@@ -81,10 +88,21 @@ private fun AppScaffold(startOnboarding: Boolean) {
             onboardingGraph(navController)
             navigation<MainGraphRoute>(startDestination = TodayRoute) {
                 composable<TodayRoute> {
-                    PlaceholderScreen(R.string.placeholder_today_title, R.string.placeholder_today_body)
+                    TodayScreen(onOpenTask = { taskId, itemId ->
+                        navController.navigate(SessionRoute(taskId, itemId))
+                    })
                 }
                 composable<PlanRoute> {
-                    PlaceholderScreen(R.string.placeholder_plan_title, R.string.placeholder_plan_body)
+                    PlanScreen(onOpenDay = { navController.navigate(PlanDayRoute(it)) })
+                }
+                composable<PlanDayRoute> {
+                    PlanDayScreen(onBack = { navController.popBackStack() })
+                }
+                composable<SessionRoute> { entry ->
+                    SessionPlaceholderScreen(
+                        taskId = entry.toRoute<SessionRoute>().taskId,
+                        onBack = { navController.popBackStack() },
+                    )
                 }
                 composable<TasksRoute> {
                     PlaceholderScreen(R.string.placeholder_tasks_title, R.string.placeholder_tasks_body)

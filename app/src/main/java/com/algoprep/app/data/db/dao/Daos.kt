@@ -82,6 +82,10 @@ interface TaskDao {
     suspend fun get(id: Long): TaskWithRelations?
 
     @Transaction
+    @Query("SELECT * FROM task WHERE id IN (:ids)")
+    fun observeByIds(ids: Collection<Long>): Flow<List<TaskWithRelations>>
+
+    @Transaction
     @Query("SELECT * FROM task WHERE id IN (SELECT taskId FROM task_topic WHERE topicId IN (:topicIds))")
     suspend fun getByTopics(topicIds: Collection<String>): List<TaskWithRelations>
 
