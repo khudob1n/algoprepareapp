@@ -1,0 +1,265 @@
+[
+ {
+  "day": 1,
+  "title": "Arrays + Hashing",
+  "topics": [
+   "arrays",
+   "hashing"
+  ],
+  "theory": "Trade memory for time: a hash map or set turns repeated scans into O(1) lookups."
+ },
+ {
+  "day": 2,
+  "title": "Strings + Hash maps",
+  "topics": [
+   "strings",
+   "hashing"
+  ],
+  "theory": "Count characters or build canonical keys to compare strings."
+ },
+ {
+  "day": 3,
+  "title": "Two Pointers",
+  "topics": [
+   "two_pointers"
+  ],
+  "theory": "Opposite-end pointers on sorted data; same-direction pointers for partitioning."
+ },
+ {
+  "day": 4,
+  "title": "Sliding Window",
+  "topics": [
+   "sliding_window"
+  ],
+  "theory": "Grow the right edge, shrink the left edge while the window is invalid."
+ },
+ {
+  "day": 5,
+  "title": "Stack",
+  "topics": [
+   "stack"
+  ],
+  "theory": "LIFO matching, and monotonic stacks for next-greater/smaller problems."
+ },
+ {
+  "day": 6,
+  "title": "Binary Search",
+  "topics": [
+   "binary_search"
+  ],
+  "theory": "Search a sorted space, including binary search on the answer."
+ },
+ {
+  "day": 7,
+  "title": "Review: week 1",
+  "topics": [
+   "arrays",
+   "hashing",
+   "two_pointers",
+   "sliding_window",
+   "stack",
+   "binary_search"
+  ],
+  "theory": "Redo the tasks you struggled with; write down the pattern for each."
+ },
+ {
+  "day": 8,
+  "title": "Linked List",
+  "topics": [
+   "linked_list"
+  ],
+  "theory": "Pointer rewiring; use a dummy head to simplify edge cases."
+ },
+ {
+  "day": 9,
+  "title": "Linked List: fast & slow",
+  "topics": [
+   "linked_list",
+   "two_pointers"
+  ],
+  "theory": "Cycle detection and finding the middle with two speeds."
+ },
+ {
+  "day": 10,
+  "title": "Trees: basics",
+  "topics": [
+   "trees"
+  ],
+  "theory": "Recursive structure; think what each call returns to its parent."
+ },
+ {
+  "day": 11,
+  "title": "Trees: traversals",
+  "topics": [
+   "trees"
+  ],
+  "theory": "Pre/in/post-order and how each is used."
+ },
+ {
+  "day": 12,
+  "title": "Trees + DFS",
+  "topics": [
+   "trees"
+  ],
+  "theory": "Recursive DFS: compute something bottom-up or pass state top-down."
+ },
+ {
+  "day": 13,
+  "title": "Trees + BFS",
+  "topics": [
+   "trees"
+  ],
+  "theory": "Level-order with a queue; process one level per loop iteration."
+ },
+ {
+  "day": 14,
+  "title": "Review: trees and lists",
+  "topics": [
+   "linked_list",
+   "trees"
+  ],
+  "theory": "Redo weak tasks from days 8-13."
+ },
+ {
+  "day": 15,
+  "title": "Graphs: basics",
+  "topics": [
+   "graphs"
+  ],
+  "theory": "Adjacency list, visited set, connected components."
+ },
+ {
+  "day": 16,
+  "title": "Graphs + BFS",
+  "topics": [
+   "graphs"
+  ],
+  "theory": "Shortest path in unweighted graphs; multi-source BFS."
+ },
+ {
+  "day": 17,
+  "title": "Graphs + DFS / Union-Find",
+  "topics": [
+   "graphs"
+  ],
+  "theory": "Cycle detection, topological order, disjoint sets."
+ },
+ {
+  "day": 18,
+  "title": "Heap / Priority Queue",
+  "topics": [
+   "heap"
+  ],
+  "theory": "Top-K, k-way merge, streaming median idea."
+ },
+ {
+  "day": 19,
+  "title": "Intervals",
+  "topics": [
+   "intervals"
+  ],
+  "theory": "Sort by start, then sweep and merge."
+ },
+ {
+  "day": 20,
+  "title": "Greedy",
+  "topics": [
+   "greedy"
+  ],
+  "theory": "Make the locally best choice and justify why it is safe."
+ },
+ {
+  "day": 21,
+  "title": "DP: 1D",
+  "topics": [
+   "dp"
+  ],
+  "theory": "State, transition, base case; then optimise space."
+ },
+ {
+  "day": 22,
+  "title": "DP: 1D variations",
+  "topics": [
+   "dp",
+   "binary_search"
+  ],
+  "theory": "Knapsack-style and subsequence DP."
+ },
+ {
+  "day": 23,
+  "title": "DP: 2D",
+  "topics": [
+   "dp"
+  ],
+  "theory": "Grid and two-sequence DP tables."
+ },
+ {
+  "day": 24,
+  "title": "DP: strings",
+  "topics": [
+   "dp",
+   "strings"
+  ],
+  "theory": "Edit-distance-style tables and partition DP."
+ },
+ {
+  "day": 25,
+  "title": "Backtracking",
+  "topics": [
+   "backtracking"
+  ],
+  "theory": "Choose, explore, un-choose; prune early."
+ },
+ {
+  "day": 26,
+  "title": "Backtracking + Tries",
+  "topics": [
+   "backtracking",
+   "tries"
+  ],
+  "theory": "Prefix trees to prune search."
+ },
+ {
+  "day": 27,
+  "title": "Mixed practice A",
+  "topics": [
+   "arrays",
+   "graphs",
+   "dp"
+  ],
+  "theory": "Unlabelled problems: identify the pattern before coding."
+ },
+ {
+  "day": 28,
+  "title": "Mixed practice B",
+  "topics": [
+   "trees",
+   "heap",
+   "greedy"
+  ],
+  "theory": "Unlabelled problems under a timer."
+ },
+ {
+  "day": 29,
+  "title": "Mock interview",
+  "topics": [
+   "arrays",
+   "graphs",
+   "dp",
+   "trees"
+  ],
+  "theory": "Simulate a real interview: no hints, talk out loud."
+ },
+ {
+  "day": 30,
+  "title": "Final review",
+  "topics": [
+   "arrays",
+   "strings",
+   "graphs",
+   "trees",
+   "dp"
+  ],
+  "theory": "Revisit your weakest topics and failed tasks."
+ }
+]

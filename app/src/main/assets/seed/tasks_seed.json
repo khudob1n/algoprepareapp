@@ -1,0 +1,1372 @@
+[
+ {
+  "key": "two-sum",
+  "title": "Two Sum",
+  "text": "Given an integer array and a target, return the indices of the two elements that add up to the target. Exactly one valid pair exists.",
+  "difficulty": "EASY",
+  "topics": [
+   "arrays",
+   "hashing"
+  ],
+  "patterns": [
+   "hash_map"
+  ],
+  "minutes": 15,
+  "hints": [
+   "What must you have already seen to complete a pair at the current element?",
+   "Checking all pairs is O(n^2). What gives O(1) lookup?",
+   "Scan once, storing value->index; look up target-x before inserting x."
+  ],
+  "idea": "One pass with a hash map from value to index: for each x check target-x, then record x.",
+  "time": "O(n)",
+  "space": "O(n)"
+ },
+ {
+  "key": "contains-duplicate",
+  "title": "Contains Duplicate",
+  "text": "Decide whether any value appears at least twice in an array.",
+  "difficulty": "EASY",
+  "topics": [
+   "arrays",
+   "hashing"
+  ],
+  "patterns": [
+   "hash_map"
+  ],
+  "minutes": 8,
+  "hints": [
+   "Sorting is one way; what is another that needs no sort?",
+   "A set remembers what you have seen.",
+   "Return true as soon as an insert finds the value already present."
+  ],
+  "idea": "Insert into a hash set while scanning; a repeated value means a duplicate.",
+  "time": "O(n)",
+  "space": "O(n)"
+ },
+ {
+  "key": "valid-anagram",
+  "title": "Valid Anagram",
+  "text": "Check whether one string is a rearrangement of another.",
+  "difficulty": "EASY",
+  "topics": [
+   "strings",
+   "hashing"
+  ],
+  "patterns": [
+   "hash_map"
+  ],
+  "minutes": 10,
+  "hints": [
+   "What property of the two strings must match?",
+   "Count characters instead of sorting.",
+   "One counter: add for the first string, subtract for the second; all zeros means anagram."
+  ],
+  "idea": "Compare character frequency tables (or sorted strings).",
+  "time": "O(n)",
+  "space": "O(1) for a fixed alphabet"
+ },
+ {
+  "key": "group-anagrams",
+  "title": "Group Anagrams",
+  "text": "Group the words of a list so that words in a group are anagrams of each other.",
+  "difficulty": "MEDIUM",
+  "topics": [
+   "strings",
+   "hashing"
+  ],
+  "patterns": [
+   "hash_map"
+  ],
+  "minutes": 20,
+  "hints": [
+   "Two anagrams share something identical. What?",
+   "Turn each word into a canonical key.",
+   "Key = sorted letters or a 26-count tuple; map key -> list of words."
+  ],
+  "idea": "Hash map from canonical form (sorted string or letter counts) to the group.",
+  "time": "O(n*k log k)",
+  "space": "O(n*k)"
+ },
+ {
+  "key": "top-k-frequent-elements",
+  "title": "Top K Frequent Elements",
+  "text": "Return the k values that occur most often in an array.",
+  "difficulty": "MEDIUM",
+  "topics": [
+   "arrays",
+   "hashing",
+   "heap"
+  ],
+  "patterns": [
+   "hash_map",
+   "top_k_heap"
+  ],
+  "minutes": 25,
+  "hints": [
+   "First you need frequencies. Then what selects the top k?",
+   "A heap of size k or a bucket per frequency.",
+   "Bucket sort by frequency gives O(n)."
+  ],
+  "idea": "Count with a hash map, then take top k using a size-k min-heap or frequency buckets.",
+  "time": "O(n log k) or O(n)",
+  "space": "O(n)"
+ },
+ {
+  "key": "longest-consecutive-sequence",
+  "title": "Longest Consecutive Sequence",
+  "text": "Find the length of the longest run of consecutive integers that appear in an unsorted array, in linear time.",
+  "difficulty": "MEDIUM",
+  "topics": [
+   "arrays",
+   "hashing"
+  ],
+  "patterns": [
+   "hash_map"
+  ],
+  "minutes": 25,
+  "hints": [
+   "Sorting is O(n log n). How could you avoid it?",
+   "Only start counting from numbers that begin a run.",
+   "A number x starts a run if x-1 is not in the set."
+  ],
+  "idea": "Put values in a set; for each run start, walk upward counting; every element is visited once.",
+  "time": "O(n)",
+  "space": "O(n)"
+ },
+ {
+  "key": "product-of-array-except-self",
+  "title": "Product of Array Except Self",
+  "text": "For each position, compute the product of all other elements, without using division.",
+  "difficulty": "MEDIUM",
+  "topics": [
+   "arrays"
+  ],
+  "patterns": [
+   "prefix_sum"
+  ],
+  "minutes": 25,
+  "hints": [
+   "What do the elements to the left and right of i contribute?",
+   "Build a prefix product and a suffix product.",
+   "Reuse the output array to store prefixes, then multiply by a running suffix."
+  ],
+  "idea": "Two passes: left-product prefix, then right-product suffix multiplied in.",
+  "time": "O(n)",
+  "space": "O(1) extra"
+ },
+ {
+  "key": "subarray-sum-equals-k",
+  "title": "Subarray Sum Equals K",
+  "text": "Count the contiguous subarrays whose sum equals k (values may be negative).",
+  "difficulty": "MEDIUM",
+  "topics": [
+   "arrays",
+   "hashing"
+  ],
+  "patterns": [
+   "prefix_sum",
+   "hash_map"
+  ],
+  "minutes": 30,
+  "hints": [
+   "Negative values break a sliding window. What replaces it?",
+   "Sum of a subarray = difference of two prefix sums.",
+   "Count earlier prefixes equal to current-k."
+  ],
+  "idea": "Running prefix sum with a hash map of prefix-sum frequencies.",
+  "time": "O(n)",
+  "space": "O(n)"
+ },
+ {
+  "key": "valid-palindrome",
+  "title": "Valid Palindrome",
+  "text": "Check whether a string reads the same both ways after ignoring non-alphanumeric characters and case.",
+  "difficulty": "EASY",
+  "topics": [
+   "strings",
+   "two_pointers"
+  ],
+  "patterns": [
+   "two_pointers"
+  ],
+  "minutes": 10,
+  "hints": [
+   "Where should the two pointers start?",
+   "Skip characters that do not count.",
+   "Compare in lower case and move inward."
+  ],
+  "idea": "Two pointers from both ends, skipping non-alphanumerics.",
+  "time": "O(n)",
+  "space": "O(1)"
+ },
+ {
+  "key": "3sum",
+  "title": "3Sum",
+  "text": "Return all unique triples in an array that sum to zero.",
+  "difficulty": "MEDIUM",
+  "topics": [
+   "arrays",
+   "two_pointers"
+  ],
+  "patterns": [
+   "two_pointers"
+  ],
+  "minutes": 30,
+  "hints": [
+   "Reduce it to a problem you know: fix one number.",
+   "Sort first; then it is Two Sum on a sorted array.",
+   "Skip duplicates at all three positions."
+  ],
+  "idea": "Sort, fix i, run two pointers on the rest, skip duplicate values.",
+  "time": "O(n^2)",
+  "space": "O(1) extra"
+ },
+ {
+  "key": "container-with-most-water",
+  "title": "Container With Most Water",
+  "text": "Given bar heights, choose two bars that hold the most water between them.",
+  "difficulty": "MEDIUM",
+  "topics": [
+   "arrays",
+   "two_pointers"
+  ],
+  "patterns": [
+   "two_pointers"
+  ],
+  "minutes": 20,
+  "hints": [
+   "Area depends on width and the shorter bar.",
+   "Start with the widest pair.",
+   "Move the pointer at the shorter bar; moving the taller cannot help."
+  ],
+  "idea": "Opposite-end pointers, always advancing the shorter side.",
+  "time": "O(n)",
+  "space": "O(1)"
+ },
+ {
+  "key": "trapping-rain-water",
+  "title": "Trapping Rain Water",
+  "text": "Given an elevation map, compute how much rain water is trapped.",
+  "difficulty": "HARD",
+  "topics": [
+   "arrays",
+   "two_pointers"
+  ],
+  "patterns": [
+   "two_pointers",
+   "prefix_sum"
+  ],
+  "minutes": 35,
+  "hints": [
+   "Water above a cell depends on the tallest walls on both sides.",
+   "Precompute left-max and right-max, or use two pointers.",
+   "Advance the pointer with the smaller max; its water level is determined."
+  ],
+  "idea": "Two pointers with running left/right maxima, accumulating max - height.",
+  "time": "O(n)",
+  "space": "O(1)"
+ },
+ {
+  "key": "best-time-to-buy-and-sell-stock",
+  "title": "Best Time to Buy and Sell Stock",
+  "text": "Given daily prices, find the maximum profit from one buy followed by one sell.",
+  "difficulty": "EASY",
+  "topics": [
+   "arrays",
+   "sliding_window"
+  ],
+  "patterns": [
+   "sliding_window",
+   "greedy"
+  ],
+  "minutes": 12,
+  "hints": [
+   "For each day, what is the best day to have bought?",
+   "Track the minimum price so far.",
+   "Profit today = price - minSoFar."
+  ],
+  "idea": "Scan once, tracking the minimum price and best difference.",
+  "time": "O(n)",
+  "space": "O(1)"
+ },
+ {
+  "key": "longest-substring-without-repeating-characters",
+  "title": "Longest Substring Without Repeating Characters",
+  "text": "Find the length of the longest substring in which all characters are distinct.",
+  "difficulty": "MEDIUM",
+  "topics": [
+   "strings",
+   "sliding_window"
+  ],
+  "patterns": [
+   "sliding_window",
+   "hash_map"
+  ],
+  "minutes": 25,
+  "hints": [
+   "What makes a window invalid?",
+   "Shrink from the left until the duplicate is gone.",
+   "Store last-seen index to jump the left edge."
+  ],
+  "idea": "Sliding window with a map of last positions; move left past the previous occurrence.",
+  "time": "O(n)",
+  "space": "O(min(n, alphabet))"
+ },
+ {
+  "key": "longest-repeating-character-replacement",
+  "title": "Longest Repeating Character Replacement",
+  "text": "With at most k character replacements, find the longest substring of one repeated letter.",
+  "difficulty": "MEDIUM",
+  "topics": [
+   "strings",
+   "sliding_window"
+  ],
+  "patterns": [
+   "sliding_window"
+  ],
+  "minutes": 30,
+  "hints": [
+   "A window is valid if size - (most frequent count) <= k.",
+   "You do not need to shrink the max count exactly.",
+   "Keep a running max frequency; slide, do not shrink below best size."
+  ],
+  "idea": "Window with frequency counts; grow right, move left when replacements needed exceed k.",
+  "time": "O(n)",
+  "space": "O(1)"
+ },
+ {
+  "key": "minimum-window-substring",
+  "title": "Minimum Window Substring",
+  "text": "Find the smallest substring of s that contains every character of t (with multiplicity).",
+  "difficulty": "HARD",
+  "topics": [
+   "strings",
+   "sliding_window",
+   "hashing"
+  ],
+  "patterns": [
+   "sliding_window",
+   "hash_map"
+  ],
+  "minutes": 40,
+  "hints": [
+   "Track how many required characters are still missing.",
+   "Expand until valid, then shrink while still valid.",
+   "Maintain a 'formed' counter instead of comparing maps each step."
+  ],
+  "idea": "Two pointers with need/have counts and a formed counter; record the best window when valid.",
+  "time": "O(n + m)",
+  "space": "O(m)"
+ },
+ {
+  "key": "sliding-window-maximum",
+  "title": "Sliding Window Maximum",
+  "text": "Report the maximum of every window of size k as it moves across an array.",
+  "difficulty": "HARD",
+  "topics": [
+   "sliding_window",
+   "arrays"
+  ],
+  "patterns": [
+   "sliding_window",
+   "monotonic_stack"
+  ],
+  "minutes": 40,
+  "hints": [
+   "A heap works but has stale entries. Is there something cheaper?",
+   "Keep candidates in decreasing order.",
+   "Store indices in a deque; drop the front when out of window, pop back while smaller."
+  ],
+  "idea": "Monotonic decreasing deque of indices; the front is the window max.",
+  "time": "O(n)",
+  "space": "O(k)"
+ },
+ {
+  "key": "valid-parentheses",
+  "title": "Valid Parentheses",
+  "text": "Check that brackets of three types in a string are correctly matched and nested.",
+  "difficulty": "EASY",
+  "topics": [
+   "stack"
+  ],
+  "patterns": [],
+  "minutes": 10,
+  "hints": [
+   "What is the most recent unmatched opener?",
+   "LIFO matching suggests which structure?",
+   "Push openers, pop on closer and compare; stack must be empty at the end."
+  ],
+  "idea": "Stack of open brackets matched against each closer.",
+  "time": "O(n)",
+  "space": "O(n)"
+ },
+ {
+  "key": "daily-temperatures",
+  "title": "Daily Temperatures",
+  "text": "For each day, find how many days until a warmer temperature.",
+  "difficulty": "MEDIUM",
+  "topics": [
+   "stack",
+   "arrays"
+  ],
+  "patterns": [
+   "monotonic_stack"
+  ],
+  "minutes": 20,
+  "hints": [
+   "You want the next greater element to the right.",
+   "Keep unresolved days on a stack.",
+   "Pop while the current temperature is higher, recording the gap."
+  ],
+  "idea": "Monotonic decreasing stack of indices; resolve popped days.",
+  "time": "O(n)",
+  "space": "O(n)"
+ },
+ {
+  "key": "largest-rectangle-in-histogram",
+  "title": "Largest Rectangle in Histogram",
+  "text": "Find the area of the largest rectangle under a histogram of bar heights.",
+  "difficulty": "HARD",
+  "topics": [
+   "stack",
+   "arrays"
+  ],
+  "patterns": [
+   "monotonic_stack"
+  ],
+  "minutes": 40,
+  "hints": [
+   "For each bar, how far can it extend left and right?",
+   "Next smaller element on each side.",
+   "Use a stack; when popping a bar, its width is between the new top and the current index."
+  ],
+  "idea": "Monotonic increasing stack; compute area on each pop, with a sentinel at the end.",
+  "time": "O(n)",
+  "space": "O(n)"
+ },
+ {
+  "key": "evaluate-reverse-polish-notation",
+  "title": "Evaluate Reverse Polish Notation",
+  "text": "Evaluate an arithmetic expression given in reverse Polish notation.",
+  "difficulty": "MEDIUM",
+  "topics": [
+   "stack"
+  ],
+  "patterns": [],
+  "minutes": 15,
+  "hints": [
+   "Operands come before their operator.",
+   "What do you do when you see an operator?",
+   "Pop two, apply, push the result (mind operand order)."
+  ],
+  "idea": "Stack of operands; apply each operator to the top two.",
+  "time": "O(n)",
+  "space": "O(n)"
+ },
+ {
+  "key": "binary-search",
+  "title": "Binary Search",
+  "text": "Find a target in a sorted array or report that it is absent.",
+  "difficulty": "EASY",
+  "topics": [
+   "binary_search"
+  ],
+  "patterns": [
+   "binary_search"
+  ],
+  "minutes": 10,
+  "hints": [
+   "What does each comparison let you discard?",
+   "Decide on inclusive or exclusive bounds and stay consistent.",
+   "Use mid = lo + (hi - lo) / 2 to avoid overflow."
+  ],
+  "idea": "Classic binary search halving the range.",
+  "time": "O(log n)",
+  "space": "O(1)"
+ },
+ {
+  "key": "search-in-rotated-sorted-array",
+  "title": "Search in Rotated Sorted Array",
+  "text": "Search for a value in a sorted array that has been rotated at an unknown pivot.",
+  "difficulty": "MEDIUM",
+  "topics": [
+   "binary_search",
+   "arrays"
+  ],
+  "patterns": [
+   "binary_search"
+  ],
+  "minutes": 25,
+  "hints": [
+   "At any mid, one half is sorted.",
+   "Check whether the target lies in the sorted half.",
+   "Decide which half is sorted by comparing nums[lo] and nums[mid]."
+  ],
+  "idea": "Modified binary search, discarding the half that cannot contain the target.",
+  "time": "O(log n)",
+  "space": "O(1)"
+ },
+ {
+  "key": "koko-eating-bananas",
+  "title": "Koko Eating Bananas",
+  "text": "Find the minimum eating speed that finishes all piles within h hours.",
+  "difficulty": "MEDIUM",
+  "topics": [
+   "binary_search"
+  ],
+  "patterns": [
+   "binary_search"
+  ],
+  "minutes": 25,
+  "hints": [
+   "If speed s works, does s+1 work?",
+   "That monotonicity allows searching over speeds.",
+   "Feasibility check sums ceil(pile / s)."
+  ],
+  "idea": "Binary search on the answer with a linear feasibility check.",
+  "time": "O(n log M)",
+  "space": "O(1)"
+ },
+ {
+  "key": "find-minimum-in-rotated-sorted-array",
+  "title": "Find Minimum in Rotated Sorted Array",
+  "text": "Find the smallest element of a rotated sorted array with distinct values.",
+  "difficulty": "MEDIUM",
+  "topics": [
+   "binary_search",
+   "arrays"
+  ],
+  "patterns": [
+   "binary_search"
+  ],
+  "minutes": 20,
+  "hints": [
+   "Compare mid with the right end.",
+   "If nums[mid] > nums[hi] the minimum is to the right.",
+   "Converge lo and hi without skipping the answer."
+  ],
+  "idea": "Binary search comparing mid to hi to locate the rotation point.",
+  "time": "O(log n)",
+  "space": "O(1)"
+ },
+ {
+  "key": "median-of-two-sorted-arrays",
+  "title": "Median of Two Sorted Arrays",
+  "text": "Find the median of two sorted arrays in logarithmic time.",
+  "difficulty": "HARD",
+  "topics": [
+   "binary_search",
+   "arrays"
+  ],
+  "patterns": [
+   "binary_search"
+  ],
+  "minutes": 45,
+  "hints": [
+   "Think of partitioning both arrays so the left halves hold half of all elements.",
+   "Binary search the partition of the shorter array.",
+   "Valid when maxLeftA <= minRightB and maxLeftB <= minRightA."
+  ],
+  "idea": "Binary search on the cut position in the smaller array, checking the partition invariants.",
+  "time": "O(log(min(m,n)))",
+  "space": "O(1)"
+ },
+ {
+  "key": "reverse-linked-list",
+  "title": "Reverse Linked List",
+  "text": "Reverse a singly linked list.",
+  "difficulty": "EASY",
+  "topics": [
+   "linked_list"
+  ],
+  "patterns": [],
+  "minutes": 12,
+  "hints": [
+   "Which pointers must change for each node?",
+   "Keep prev, current and next.",
+   "Save next before overwriting current.next."
+  ],
+  "idea": "Iteratively rewire next pointers (or recurse).",
+  "time": "O(n)",
+  "space": "O(1)"
+ },
+ {
+  "key": "linked-list-cycle",
+  "title": "Linked List Cycle",
+  "text": "Determine whether a linked list contains a cycle.",
+  "difficulty": "EASY",
+  "topics": [
+   "linked_list"
+  ],
+  "patterns": [
+   "fast_slow"
+  ],
+  "minutes": 12,
+  "hints": [
+   "A set of visited nodes works. Can you use O(1) space?",
+   "Two pointers moving at different speeds.",
+   "If they ever meet there is a cycle."
+  ],
+  "idea": "Floyd's tortoise and hare.",
+  "time": "O(n)",
+  "space": "O(1)"
+ },
+ {
+  "key": "merge-two-sorted-lists",
+  "title": "Merge Two Sorted Lists",
+  "text": "Merge two sorted linked lists into one sorted list.",
+  "difficulty": "EASY",
+  "topics": [
+   "linked_list"
+  ],
+  "patterns": [
+   "two_pointers"
+  ],
+  "minutes": 15,
+  "hints": [
+   "Compare the two heads repeatedly.",
+   "A dummy head removes special cases.",
+   "Append the remainder when one list ends."
+  ],
+  "idea": "Iterative merge with a dummy node and a tail pointer.",
+  "time": "O(n + m)",
+  "space": "O(1)"
+ },
+ {
+  "key": "remove-nth-node-from-end-of-list",
+  "title": "Remove Nth Node From End of List",
+  "text": "Remove the n-th node counted from the end of a linked list in one pass.",
+  "difficulty": "MEDIUM",
+  "topics": [
+   "linked_list",
+   "two_pointers"
+  ],
+  "patterns": [
+   "fast_slow",
+   "two_pointers"
+  ],
+  "minutes": 20,
+  "hints": [
+   "How do you know where the end is without knowing the length?",
+   "Keep two pointers n apart.",
+   "Use a dummy head in case the first node is removed."
+  ],
+  "idea": "Advance the lead pointer n steps, then move both until the lead reaches the end.",
+  "time": "O(n)",
+  "space": "O(1)"
+ },
+ {
+  "key": "lru-cache",
+  "title": "LRU Cache",
+  "text": "Design a cache with get and put in O(1) that evicts the least recently used entry at capacity.",
+  "difficulty": "MEDIUM",
+  "topics": [
+   "linked_list",
+   "hashing"
+  ],
+  "patterns": [
+   "hash_map"
+  ],
+  "minutes": 35,
+  "hints": [
+   "You need O(1) lookup and O(1) reordering.",
+   "Hash map plus doubly linked list.",
+   "Move a node to the front on every access; evict from the back."
+  ],
+  "idea": "Hash map from key to node in a doubly linked list ordered by recency.",
+  "time": "O(1) per op",
+  "space": "O(capacity)"
+ },
+ {
+  "key": "maximum-depth-of-binary-tree",
+  "title": "Maximum Depth of Binary Tree",
+  "text": "Return the number of nodes on the longest root-to-leaf path.",
+  "difficulty": "EASY",
+  "topics": [
+   "trees"
+  ],
+  "patterns": [
+   "dfs"
+  ],
+  "minutes": 10,
+  "hints": [
+   "What does a null node return?",
+   "Depth of a node = 1 + max of its children.",
+   "Iterative BFS by level also works."
+  ],
+  "idea": "Recursive DFS returning 1 + max(left, right).",
+  "time": "O(n)",
+  "space": "O(h)"
+ },
+ {
+  "key": "invert-binary-tree",
+  "title": "Invert Binary Tree",
+  "text": "Mirror a binary tree by swapping left and right children everywhere.",
+  "difficulty": "EASY",
+  "topics": [
+   "trees"
+  ],
+  "patterns": [
+   "dfs"
+  ],
+  "minutes": 10,
+  "hints": [
+   "What is the operation at a single node?",
+   "Apply it recursively.",
+   "Base case: null."
+  ],
+  "idea": "Swap children, recursing into both.",
+  "time": "O(n)",
+  "space": "O(h)"
+ },
+ {
+  "key": "validate-binary-search-tree",
+  "title": "Validate Binary Search Tree",
+  "text": "Check whether a binary tree is a valid binary search tree.",
+  "difficulty": "MEDIUM",
+  "topics": [
+   "trees"
+  ],
+  "patterns": [
+   "dfs"
+  ],
+  "minutes": 20,
+  "hints": [
+   "Comparing only with the parent is not enough.",
+   "Pass down allowed (lo, hi) bounds.",
+   "In-order traversal must be strictly increasing."
+  ],
+  "idea": "DFS with min/max bounds, or an in-order check.",
+  "time": "O(n)",
+  "space": "O(h)"
+ },
+ {
+  "key": "lowest-common-ancestor-of-a-binary-tree",
+  "title": "Lowest Common Ancestor of a Binary Tree",
+  "text": "Find the lowest node that has both given nodes as descendants.",
+  "difficulty": "MEDIUM",
+  "topics": [
+   "trees"
+  ],
+  "patterns": [
+   "dfs"
+  ],
+  "minutes": 25,
+  "hints": [
+   "What does a subtree report to its parent?",
+   "Return the node if it is one of the targets.",
+   "If both sides return non-null, the current node is the answer."
+  ],
+  "idea": "Post-order DFS returning the target or the LCA found below.",
+  "time": "O(n)",
+  "space": "O(h)"
+ },
+ {
+  "key": "binary-tree-level-order-traversal",
+  "title": "Binary Tree Level Order Traversal",
+  "text": "Return the node values level by level.",
+  "difficulty": "MEDIUM",
+  "topics": [
+   "trees"
+  ],
+  "patterns": [
+   "bfs"
+  ],
+  "minutes": 15,
+  "hints": [
+   "What structure processes nodes in arrival order?",
+   "Snapshot the queue size at each level.",
+   "Loop exactly size times per level."
+  ],
+  "idea": "BFS with a queue, collecting one list per level.",
+  "time": "O(n)",
+  "space": "O(w)"
+ },
+ {
+  "key": "diameter-of-binary-tree",
+  "title": "Diameter of Binary Tree",
+  "text": "Find the length of the longest path between any two nodes in a tree.",
+  "difficulty": "EASY",
+  "topics": [
+   "trees"
+  ],
+  "patterns": [
+   "dfs"
+  ],
+  "minutes": 15,
+  "hints": [
+   "The best path bends at some node.",
+   "Path through a node = left height + right height.",
+   "Update a global best while returning height."
+  ],
+  "idea": "DFS returning height and tracking the max left+right.",
+  "time": "O(n)",
+  "space": "O(h)"
+ },
+ {
+  "key": "binary-tree-maximum-path-sum",
+  "title": "Binary Tree Maximum Path Sum",
+  "text": "Find the maximum sum over any path in a binary tree (values may be negative).",
+  "difficulty": "HARD",
+  "topics": [
+   "trees"
+  ],
+  "patterns": [
+   "dfs"
+  ],
+  "minutes": 40,
+  "hints": [
+   "Distinguish the path you return upward from the best path bending here.",
+   "Ignore negative child contributions.",
+   "Upward gain = value + max(0, best child)."
+  ],
+  "idea": "DFS computing best downward gain while updating a global answer at every node.",
+  "time": "O(n)",
+  "space": "O(h)"
+ },
+ {
+  "key": "number-of-islands",
+  "title": "Number of Islands",
+  "text": "Count connected groups of land cells in a grid of land and water.",
+  "difficulty": "MEDIUM",
+  "topics": [
+   "graphs"
+  ],
+  "patterns": [
+   "dfs",
+   "bfs"
+  ],
+  "minutes": 25,
+  "hints": [
+   "Each land cell belongs to exactly one island.",
+   "Flood-fill from an unvisited land cell.",
+   "Mark visited by mutating the grid or a set."
+  ],
+  "idea": "Scan the grid; on new land, DFS/BFS to mark the whole island and count it.",
+  "time": "O(R*C)",
+  "space": "O(R*C)"
+ },
+ {
+  "key": "clone-graph",
+  "title": "Clone Graph",
+  "text": "Create a deep copy of a connected undirected graph.",
+  "difficulty": "MEDIUM",
+  "topics": [
+   "graphs",
+   "hashing"
+  ],
+  "patterns": [
+   "dfs",
+   "bfs",
+   "hash_map"
+  ],
+  "minutes": 30,
+  "hints": [
+   "How do you avoid cloning a node twice?",
+   "Map original -> clone.",
+   "Create the clone before visiting neighbours to handle cycles."
+  ],
+  "idea": "DFS/BFS with a map from original nodes to their clones.",
+  "time": "O(V+E)",
+  "space": "O(V)"
+ },
+ {
+  "key": "course-schedule",
+  "title": "Course Schedule",
+  "text": "Given prerequisite pairs, decide whether all courses can be completed.",
+  "difficulty": "MEDIUM",
+  "topics": [
+   "graphs"
+  ],
+  "patterns": [
+   "topological_sort",
+   "dfs"
+  ],
+  "minutes": 30,
+  "hints": [
+   "Model courses as a directed graph. What makes it impossible?",
+   "A cycle.",
+   "Kahn's algorithm: process nodes of in-degree 0."
+  ],
+  "idea": "Topological sort (Kahn) or DFS cycle detection with three states.",
+  "time": "O(V+E)",
+  "space": "O(V+E)"
+ },
+ {
+  "key": "rotting-oranges",
+  "title": "Rotting Oranges",
+  "text": "Simulate rot spreading each minute across a grid and return the minutes until all fresh oranges rot, or -1.",
+  "difficulty": "MEDIUM",
+  "topics": [
+   "graphs"
+  ],
+  "patterns": [
+   "bfs"
+  ],
+  "minutes": 25,
+  "hints": [
+   "Several sources spread at the same time.",
+   "Start BFS from all rotten oranges together.",
+   "Count fresh oranges to detect the impossible case."
+  ],
+  "idea": "Multi-source BFS by levels; each level is a minute.",
+  "time": "O(R*C)",
+  "space": "O(R*C)"
+ },
+ {
+  "key": "word-ladder",
+  "title": "Word Ladder",
+  "text": "Find the shortest sequence of single-letter changes from one word to another using words from a list.",
+  "difficulty": "HARD",
+  "topics": [
+   "graphs",
+   "strings"
+  ],
+  "patterns": [
+   "bfs",
+   "hash_map"
+  ],
+  "minutes": 40,
+  "hints": [
+   "Words are nodes; edges connect words differing by one letter.",
+   "Unweighted shortest path means BFS.",
+   "Generate neighbours through wildcard patterns like h*t."
+  ],
+  "idea": "BFS over words, using pattern buckets to find neighbours quickly.",
+  "time": "O(N * L^2)",
+  "space": "O(N * L)"
+ },
+ {
+  "key": "number-of-connected-components-in-an-undirected-graph",
+  "title": "Number of Connected Components in an Undirected Graph",
+  "text": "Count the connected components given n nodes and an edge list.",
+  "difficulty": "MEDIUM",
+  "topics": [
+   "graphs"
+  ],
+  "patterns": [
+   "union_find",
+   "dfs"
+  ],
+  "minutes": 25,
+  "hints": [
+   "Each edge either merges two components or is redundant.",
+   "Union-Find tracks merges.",
+   "Start with n components and subtract one per successful union."
+  ],
+  "idea": "Union-Find with path compression, decrementing the component count on each union.",
+  "time": "O(E * alpha(n))",
+  "space": "O(n)"
+ },
+ {
+  "key": "kth-largest-element-in-an-array",
+  "title": "Kth Largest Element in an Array",
+  "text": "Return the k-th largest element of an unsorted array.",
+  "difficulty": "MEDIUM",
+  "topics": [
+   "heap",
+   "arrays"
+  ],
+  "patterns": [
+   "top_k_heap"
+  ],
+  "minutes": 20,
+  "hints": [
+   "Sorting works. Can you do better for small k?",
+   "Keep the k largest seen so far.",
+   "A min-heap of size k has the answer at its top."
+  ],
+  "idea": "Size-k min-heap (or quickselect for average O(n)).",
+  "time": "O(n log k)",
+  "space": "O(k)"
+ },
+ {
+  "key": "merge-k-sorted-lists",
+  "title": "Merge k Sorted Lists",
+  "text": "Merge k sorted linked lists into a single sorted list.",
+  "difficulty": "HARD",
+  "topics": [
+   "heap",
+   "linked_list"
+  ],
+  "patterns": [
+   "top_k_heap"
+  ],
+  "minutes": 35,
+  "hints": [
+   "At each step, which node is next?",
+   "The smallest among the k current heads.",
+   "Push (value, list index) into a heap."
+  ],
+  "idea": "Min-heap of list heads; pop the smallest and push its successor.",
+  "time": "O(N log k)",
+  "space": "O(k)"
+ },
+ {
+  "key": "merge-intervals",
+  "title": "Merge Intervals",
+  "text": "Merge all overlapping intervals in a list.",
+  "difficulty": "MEDIUM",
+  "topics": [
+   "intervals"
+  ],
+  "patterns": [
+   "merge_intervals"
+  ],
+  "minutes": 20,
+  "hints": [
+   "Order matters. What should you sort by?",
+   "After sorting by start, only the last merged interval can overlap.",
+   "Overlap when next.start <= last.end."
+  ],
+  "idea": "Sort by start and sweep, extending or appending.",
+  "time": "O(n log n)",
+  "space": "O(n)"
+ },
+ {
+  "key": "non-overlapping-intervals",
+  "title": "Non-overlapping Intervals",
+  "text": "Find the minimum number of intervals to remove so the rest do not overlap.",
+  "difficulty": "MEDIUM",
+  "topics": [
+   "intervals",
+   "greedy"
+  ],
+  "patterns": [
+   "merge_intervals",
+   "greedy"
+  ],
+  "minutes": 25,
+  "hints": [
+   "Equivalent to keeping the maximum number of compatible intervals.",
+   "Sort by end time.",
+   "Keep an interval if it starts at or after the last kept end."
+  ],
+  "idea": "Greedy by earliest end; count skipped intervals.",
+  "time": "O(n log n)",
+  "space": "O(1)"
+ },
+ {
+  "key": "jump-game",
+  "title": "Jump Game",
+  "text": "Each element is the max jump length from that position; decide if the last index is reachable.",
+  "difficulty": "MEDIUM",
+  "topics": [
+   "greedy",
+   "arrays"
+  ],
+  "patterns": [
+   "greedy"
+  ],
+  "minutes": 20,
+  "hints": [
+   "Track the furthest index reachable so far.",
+   "If the current index exceeds it, you are stuck.",
+   "Work backwards with a goal pointer as an alternative."
+  ],
+  "idea": "Greedy scan maintaining the furthest reachable index.",
+  "time": "O(n)",
+  "space": "O(1)"
+ },
+ {
+  "key": "climbing-stairs",
+  "title": "Climbing Stairs",
+  "text": "Count the distinct ways to climb n stairs taking 1 or 2 steps at a time.",
+  "difficulty": "EASY",
+  "topics": [
+   "dp"
+  ],
+  "patterns": [
+   "dp_1d"
+  ],
+  "minutes": 10,
+  "hints": [
+   "How can you arrive at step n?",
+   "From n-1 or n-2.",
+   "Only the last two values are needed."
+  ],
+  "idea": "Fibonacci-style DP: ways[n] = ways[n-1] + ways[n-2].",
+  "time": "O(n)",
+  "space": "O(1)"
+ },
+ {
+  "key": "house-robber",
+  "title": "House Robber",
+  "text": "Maximise the sum from a row of houses without picking two adjacent ones.",
+  "difficulty": "MEDIUM",
+  "topics": [
+   "dp"
+  ],
+  "patterns": [
+   "dp_1d"
+  ],
+  "minutes": 20,
+  "hints": [
+   "At each house you either take it or skip it.",
+   "State: best up to i.",
+   "best[i] = max(best[i-1], best[i-2] + value[i])."
+  ],
+  "idea": "1D DP with two rolling variables.",
+  "time": "O(n)",
+  "space": "O(1)"
+ },
+ {
+  "key": "coin-change",
+  "title": "Coin Change",
+  "text": "Find the fewest coins needed to make an amount, or -1 if impossible.",
+  "difficulty": "MEDIUM",
+  "topics": [
+   "dp"
+  ],
+  "patterns": [
+   "dp_1d"
+  ],
+  "minutes": 30,
+  "hints": [
+   "Greedy fails for some coin sets.",
+   "dp[a] = fewest coins for amount a.",
+   "dp[a] = 1 + min(dp[a - c]) over coins c."
+  ],
+  "idea": "Bottom-up unbounded knapsack DP.",
+  "time": "O(amount * coins)",
+  "space": "O(amount)"
+ },
+ {
+  "key": "longest-increasing-subsequence",
+  "title": "Longest Increasing Subsequence",
+  "text": "Find the length of the longest strictly increasing subsequence.",
+  "difficulty": "MEDIUM",
+  "topics": [
+   "dp",
+   "binary_search"
+  ],
+  "patterns": [
+   "dp_1d",
+   "binary_search"
+  ],
+  "minutes": 30,
+  "hints": [
+   "Define dp[i] as the best ending at i.",
+   "O(n^2) works; there is an O(n log n) improvement.",
+   "Maintain the smallest possible tail for each length and binary search it."
+  ],
+  "idea": "DP O(n^2), or patience sorting with binary search on tails.",
+  "time": "O(n log n)",
+  "space": "O(n)"
+ },
+ {
+  "key": "unique-paths",
+  "title": "Unique Paths",
+  "text": "Count paths from the top-left to the bottom-right of a grid moving only right or down.",
+  "difficulty": "MEDIUM",
+  "topics": [
+   "dp"
+  ],
+  "patterns": [
+   "dp_2d"
+  ],
+  "minutes": 20,
+  "hints": [
+   "Each cell is reached from above or from the left.",
+   "dp[r][c] = dp[r-1][c] + dp[r][c-1].",
+   "Keep only one row."
+  ],
+  "idea": "2D DP over the grid (or the combinatorial formula).",
+  "time": "O(R*C)",
+  "space": "O(C)"
+ },
+ {
+  "key": "longest-common-subsequence",
+  "title": "Longest Common Subsequence",
+  "text": "Find the length of the longest subsequence common to two strings.",
+  "difficulty": "MEDIUM",
+  "topics": [
+   "dp",
+   "strings"
+  ],
+  "patterns": [
+   "dp_2d"
+  ],
+  "minutes": 30,
+  "hints": [
+   "Compare the last characters of both prefixes.",
+   "Equal: 1 + dp[i-1][j-1]; otherwise take the max of dropping one.",
+   "Rolling rows reduce memory."
+  ],
+  "idea": "2D DP table over prefixes of both strings.",
+  "time": "O(n*m)",
+  "space": "O(min(n,m))"
+ },
+ {
+  "key": "edit-distance",
+  "title": "Edit Distance",
+  "text": "Compute the minimum insertions, deletions and replacements to turn one string into another.",
+  "difficulty": "HARD",
+  "topics": [
+   "dp",
+   "strings"
+  ],
+  "patterns": [
+   "dp_2d"
+  ],
+  "minutes": 40,
+  "hints": [
+   "Base cases: converting to/from the empty string.",
+   "Three choices when characters differ.",
+   "dp[i][j] = 1 + min(insert, delete, replace)."
+  ],
+  "idea": "2D DP table over prefixes.",
+  "time": "O(n*m)",
+  "space": "O(n*m)"
+ },
+ {
+  "key": "word-break",
+  "title": "Word Break",
+  "text": "Decide whether a string can be split into words from a dictionary.",
+  "difficulty": "MEDIUM",
+  "topics": [
+   "dp",
+   "strings"
+  ],
+  "patterns": [
+   "dp_1d"
+  ],
+  "minutes": 30,
+  "hints": [
+   "Define dp[i] as: the first i characters can be segmented.",
+   "Try every split point j < i.",
+   "Use a set for the dictionary."
+  ],
+  "idea": "1D DP over prefixes with dictionary lookups.",
+  "time": "O(n^2)",
+  "space": "O(n)"
+ },
+ {
+  "key": "subsets",
+  "title": "Subsets",
+  "text": "Return all subsets of a list of distinct integers.",
+  "difficulty": "MEDIUM",
+  "topics": [
+   "backtracking"
+  ],
+  "patterns": [
+   "backtracking"
+  ],
+  "minutes": 20,
+  "hints": [
+   "For each element you either include it or not.",
+   "Build the subset incrementally and record at every node.",
+   "Copy the current path when recording."
+  ],
+  "idea": "Backtracking over include/exclude choices.",
+  "time": "O(n * 2^n)",
+  "space": "O(n)"
+ },
+ {
+  "key": "permutations",
+  "title": "Permutations",
+  "text": "Return all orderings of a list of distinct integers.",
+  "difficulty": "MEDIUM",
+  "topics": [
+   "backtracking"
+  ],
+  "patterns": [
+   "backtracking"
+  ],
+  "minutes": 20,
+  "hints": [
+   "Choose an unused element for each position.",
+   "Track used elements.",
+   "Swap in place as an alternative to a used array."
+  ],
+  "idea": "Backtracking that fills positions with unused elements.",
+  "time": "O(n * n!)",
+  "space": "O(n)"
+ },
+ {
+  "key": "combination-sum",
+  "title": "Combination Sum",
+  "text": "Find all combinations of candidates (reusable) that sum to a target.",
+  "difficulty": "MEDIUM",
+  "topics": [
+   "backtracking"
+  ],
+  "patterns": [
+   "backtracking"
+  ],
+  "minutes": 25,
+  "hints": [
+   "Avoid duplicate orderings.",
+   "Only allow choosing candidates from index i onward.",
+   "Prune when the remaining sum is negative."
+  ],
+  "idea": "Backtracking with a start index; the same element may be reused.",
+  "time": "O(2^t) roughly",
+  "space": "O(t)"
+ },
+ {
+  "key": "n-queens",
+  "title": "N-Queens",
+  "text": "Place n queens on an n x n board so that none attack each other.",
+  "difficulty": "HARD",
+  "topics": [
+   "backtracking"
+  ],
+  "patterns": [
+   "backtracking"
+  ],
+  "minutes": 45,
+  "hints": [
+   "Place one queen per row.",
+   "Track columns and both diagonals.",
+   "Diagonals: r-c and r+c are constant."
+  ],
+  "idea": "Backtracking by row with column and diagonal sets.",
+  "time": "O(n!)",
+  "space": "O(n)"
+ },
+ {
+  "key": "implement-trie",
+  "title": "Implement Trie",
+  "text": "Implement a prefix tree supporting insert, search and startsWith.",
+  "difficulty": "MEDIUM",
+  "topics": [
+   "tries"
+  ],
+  "patterns": [
+   "trie"
+  ],
+  "minutes": 25,
+  "hints": [
+   "Each node maps characters to children.",
+   "Mark the end of a word explicitly.",
+   "startsWith just walks the prefix."
+  ],
+  "idea": "Trie of nodes with a children map and an end flag.",
+  "time": "O(L) per op",
+  "space": "O(total chars)"
+ },
+ {
+  "key": "word-search",
+  "title": "Word Search",
+  "text": "Check whether a word can be traced through adjacent cells of a grid without reusing a cell.",
+  "difficulty": "MEDIUM",
+  "topics": [
+   "backtracking",
+   "graphs"
+  ],
+  "patterns": [
+   "backtracking",
+   "dfs"
+  ],
+  "minutes": 30,
+  "hints": [
+   "Start a DFS from every matching first letter.",
+   "Mark a cell as visited while exploring, then unmark.",
+   "Prune as soon as a character mismatches."
+  ],
+  "idea": "Grid DFS with backtracking on the visited state.",
+  "time": "O(R*C*4^L)",
+  "space": "O(L)"
+ }
+]

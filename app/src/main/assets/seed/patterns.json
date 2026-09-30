@@ -1,0 +1,92 @@
+[
+ {
+  "id": "hash_map",
+  "title": "Hash Map",
+  "topicHint": "hashing"
+ },
+ {
+  "id": "prefix_sum",
+  "title": "Prefix Sum",
+  "topicHint": "arrays"
+ },
+ {
+  "id": "two_pointers",
+  "title": "Two Pointers",
+  "topicHint": "two_pointers"
+ },
+ {
+  "id": "sliding_window",
+  "title": "Sliding Window",
+  "topicHint": "sliding_window"
+ },
+ {
+  "id": "monotonic_stack",
+  "title": "Monotonic Stack / Deque",
+  "topicHint": "stack"
+ },
+ {
+  "id": "binary_search",
+  "title": "Binary Search (incl. on answer)",
+  "topicHint": "binary_search"
+ },
+ {
+  "id": "fast_slow",
+  "title": "Fast & Slow Pointers",
+  "topicHint": "linked_list"
+ },
+ {
+  "id": "dfs",
+  "title": "DFS",
+  "topicHint": "graphs"
+ },
+ {
+  "id": "bfs",
+  "title": "BFS",
+  "topicHint": "graphs"
+ },
+ {
+  "id": "topological_sort",
+  "title": "Topological Sort",
+  "topicHint": "graphs"
+ },
+ {
+  "id": "union_find",
+  "title": "Union-Find",
+  "topicHint": "graphs"
+ },
+ {
+  "id": "top_k_heap",
+  "title": "Top-K with Heap",
+  "topicHint": "heap"
+ },
+ {
+  "id": "merge_intervals",
+  "title": "Merge Intervals",
+  "topicHint": "intervals"
+ },
+ {
+  "id": "greedy",
+  "title": "Greedy Choice",
+  "topicHint": "greedy"
+ },
+ {
+  "id": "dp_1d",
+  "title": "DP (1D)",
+  "topicHint": "dp"
+ },
+ {
+  "id": "dp_2d",
+  "title": "DP (2D)",
+  "topicHint": "dp"
+ },
+ {
+  "id": "backtracking",
+  "title": "Backtracking",
+  "topicHint": "backtracking"
+ },
+ {
+  "id": "trie",
+  "title": "Trie",
+  "topicHint": "tries"
+ }
+]
