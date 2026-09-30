@@ -1,14 +1,17 @@
 package com.algoprep.app.ui.screens.today
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.LinearProgressIndicator
@@ -21,6 +24,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -37,6 +43,8 @@ import com.algoprep.app.ui.components.PlaceholderScreen
 import com.algoprep.app.ui.components.PlannedItemRow
 import com.algoprep.app.ui.components.WhyDialog
 import com.algoprep.app.ui.components.formatDuration
+import com.algoprep.app.ui.theme.HeroBrush
+import com.algoprep.app.ui.theme.Lime
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 
@@ -114,7 +122,9 @@ private fun TodayContentView(
                 }
             },
             enabled = activeSession != null || next != null,
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 12.dp),
+            modifier = Modifier.fillMaxWidth().height(60.dp).padding(horizontal = 20.dp),
+            shape = CircleShape,
+            colors = androidx.compose.material3.ButtonDefaults.buttonColors(containerColor = Lime, contentColor = androidx.compose.ui.graphics.Color(0xFF1B2900)),
         ) {
             Text(
                 stringResource(
@@ -126,6 +136,7 @@ private fun TodayContentView(
                         else -> R.string.today_nothing_planned
                     },
                 ),
+                style = MaterialTheme.typography.titleMedium,
             )
         }
     }
@@ -135,20 +146,44 @@ private fun TodayContentView(
 
 @Composable
 private fun TodayHeader(content: TodayContent) {
-    Column(modifier = Modifier.padding(bottom = 8.dp)) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = 8.dp)
+            .clip(MaterialTheme.shapes.extraLarge)
+            .background(HeroBrush)
+            .padding(24.dp),
+    ) {
         Text(
-            stringResource(R.string.today_day_of, content.dayIndex, content.totalDays),
+            stringResource(R.string.today_day_of, content.dayIndex, content.totalDays).uppercase(),
             style = MaterialTheme.typography.labelLarge,
-            color = MaterialTheme.colorScheme.primary,
+            color = Color.White.copy(alpha = 0.8f),
         )
-        Text(content.title, style = MaterialTheme.typography.headlineMedium)
+        Text(
+            content.title,
+            style = MaterialTheme.typography.headlineLarge,
+            color = Color.White,
+            modifier = Modifier.padding(top = 4.dp),
+        )
         Row(
-            modifier = Modifier.fillMaxWidth().padding(top = 12.dp),
+            modifier = Modifier.fillMaxWidth().padding(top = 20.dp),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            horizontalArrangement = Arrangement.spacedBy(14.dp),
         ) {
-            LinearProgressIndicator(progress = { content.progress }, modifier = Modifier.weight(1f))
-            Text(stringResource(R.string.percent_format, content.progressPercent), style = MaterialTheme.typography.titleMedium)
+            LinearProgressIndicator(
+                progress = { content.progress },
+                modifier = Modifier.weight(1f).height(10.dp).clip(CircleShape),
+                color = Lime,
+                trackColor = Color.White.copy(alpha = 0.25f),
+                strokeCap = StrokeCap.Round,
+                gapSize = 0.dp,
+                drawStopIndicator = {},
+            )
+            Text(
+                stringResource(R.string.percent_format, content.progressPercent),
+                style = MaterialTheme.typography.headlineSmall,
+                color = Color.White,
+            )
         }
         Text(
             text = stringResource(
@@ -157,8 +192,8 @@ private fun TodayHeader(content: TodayContent) {
                 formatDuration(content.remainingMinutes),
             ),
             style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            modifier = Modifier.padding(top = 4.dp),
+            color = Color.White.copy(alpha = 0.85f),
+            modifier = Modifier.padding(top = 10.dp),
         )
     }
 }

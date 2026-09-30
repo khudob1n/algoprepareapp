@@ -1,5 +1,6 @@
 package com.algoprep.app.ui.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -19,6 +20,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
@@ -34,21 +36,27 @@ fun PlannedItemRow(
     onWhy: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val clickable = if (onClick != null) modifier.clickable(onClick = onClick) else modifier
+    val shape = MaterialTheme.shapes.medium
+    val card = modifier
+        .fillMaxWidth()
+        .padding(vertical = 4.dp)
+        .clip(shape)
+        .background(if (item.done) MaterialTheme.colorScheme.surfaceContainerLow else MaterialTheme.colorScheme.surfaceContainerHigh)
+    val clickable = if (onClick != null) card.clickable(onClick = onClick) else card
     Row(
-        modifier = clickable.fillMaxWidth().padding(horizontal = 4.dp, vertical = 8.dp),
+        modifier = clickable.padding(horizontal = 14.dp, vertical = 10.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         Icon(
             imageVector = if (item.done) Icons.Filled.CheckCircle else Icons.Outlined.RadioButtonUnchecked,
             contentDescription = null,
-            tint = if (item.done) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline,
+            tint = if (item.done) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.outline,
         )
         Column(modifier = Modifier.weight(1f)) {
             Text(
                 text = itemTitle(item),
-                style = MaterialTheme.typography.bodyLarge,
+                style = MaterialTheme.typography.titleMedium,
                 textDecoration = if (item.done) TextDecoration.LineThrough else null,
                 color = if (item.done) MaterialTheme.colorScheme.onSurfaceVariant else MaterialTheme.colorScheme.onSurface,
             )

@@ -4,12 +4,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavDestination.Companion.hasRoute
@@ -82,7 +85,7 @@ private fun AppScaffold(startOnboarding: Boolean) {
                 currentDestination?.hierarchy?.any { it.hasRoute(dest.routeClass) } == true
             }
             if (isTopLevel) {
-                NavigationBar {
+                NavigationBar(containerColor = MaterialTheme.colorScheme.surfaceContainerLow, tonalElevation = 0.dp) {
                     TopLevelDestination.entries.forEach { dest ->
                         val selected =
                             currentDestination?.hierarchy?.any { it.hasRoute(dest.routeClass) } == true
@@ -96,6 +99,11 @@ private fun AppScaffold(startOnboarding: Boolean) {
                                 }
                             },
                             icon = { Icon(dest.icon, contentDescription = null) },
+                            colors = NavigationBarItemDefaults.colors(
+                                indicatorColor = MaterialTheme.colorScheme.secondary,
+                                selectedIconColor = MaterialTheme.colorScheme.onSecondary,
+                                selectedTextColor = MaterialTheme.colorScheme.secondary,
+                            ),
                             label = { Text(stringResource(dest.labelRes)) },
                         )
                     }
