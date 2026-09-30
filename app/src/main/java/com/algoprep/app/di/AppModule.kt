@@ -7,10 +7,13 @@ import androidx.datastore.preferences.preferencesDataStore
 import androidx.room.Room
 import com.algoprep.app.data.db.AppDatabase
 import com.algoprep.app.data.db.dao.CatalogDao
+import com.algoprep.app.data.db.dao.ImportDao
 import com.algoprep.app.data.db.dao.PlanDao
 import com.algoprep.app.data.db.dao.ProfileDao
 import com.algoprep.app.data.db.dao.TaskDao
 import com.algoprep.app.data.db.dao.TrainingDao
+import com.algoprep.app.domain.ai.AiAssistant
+import com.algoprep.app.domain.ai.NoAiAssistant
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -52,4 +55,8 @@ object AppModule {
     @Provides fun provideProfileDao(db: AppDatabase): ProfileDao = db.profileDao()
     @Provides fun providePlanDao(db: AppDatabase): PlanDao = db.planDao()
     @Provides fun provideTrainingDao(db: AppDatabase): TrainingDao = db.trainingDao()
+    @Provides fun provideImportDao(db: AppDatabase): ImportDao = db.importDao()
+
+    @Provides @Singleton
+    fun provideAiAssistant(): AiAssistant = NoAiAssistant()
 }

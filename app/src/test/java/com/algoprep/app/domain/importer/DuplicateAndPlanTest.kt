@@ -69,8 +69,8 @@ class DuplicateAndPlanTest {
             draft("b", dup = bank(6), choice = DuplicateChoice.KEEP_SEPARATE),
         ))
         assertTrue(plan.entries.all { it is SaveEntry.NewTask })
-        assertEquals(emptyList<Long>(), (plan.entries[0] as SaveEntry.NewTask).keptSeparateFrom)
-        assertEquals(listOf(6L), (plan.entries[1] as SaveEntry.NewTask).keptSeparateFrom)
+        assertEquals(emptyList<SeparatePair>(), (plan.entries[0] as SaveEntry.NewTask).keptSeparateFrom)
+        assertEquals(listOf(SeparatePair(6L, 0.9)), (plan.entries[1] as SaveEntry.NewTask).keptSeparateFrom)
     }
 
     @Test fun mergeIntoBankAddsAMention() {

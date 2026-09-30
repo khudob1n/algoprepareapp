@@ -2,12 +2,24 @@ package com.algoprep.app.data.repository
 
 import androidx.room.withTransaction
 import com.algoprep.app.data.db.AppDatabase
+import com.algoprep.app.data.db.entity.DuplicateCandidateEntity
+import com.algoprep.app.data.db.entity.ImportBatchEntity
 import com.algoprep.app.data.db.entity.PlanDayTopicEntity
+import com.algoprep.app.data.db.entity.TaskEntity
+import com.algoprep.app.data.db.entity.TaskMentionEntity
 import com.algoprep.app.data.db.entity.TaskPatternEntity
 import com.algoprep.app.data.db.entity.TaskTopicEntity
 import com.algoprep.app.data.db.mapper.toDomain
 import com.algoprep.app.data.db.mapper.toEntity
+import com.algoprep.app.domain.importer.ImportSavePlan
+import com.algoprep.app.domain.importer.NewMention
+import com.algoprep.app.domain.importer.SaveEntry
+import com.algoprep.app.domain.model.BatchStatus
+import com.algoprep.app.domain.model.DuplicateDecision
 import com.algoprep.app.domain.model.ErrorEntry
+import com.algoprep.app.domain.model.ImportBatch
+import com.algoprep.app.domain.model.TaskBrief
+import com.algoprep.app.domain.model.TaskOrigin
 import com.algoprep.app.domain.model.Pattern
 import com.algoprep.app.domain.model.PlanDay
 import com.algoprep.app.domain.model.PlanDayStatus
@@ -22,11 +34,13 @@ import com.algoprep.app.domain.model.Topic
 import com.algoprep.app.domain.model.TopicSkill
 import com.algoprep.app.domain.model.UserProfile
 import com.algoprep.app.domain.repository.CatalogRepository
+import com.algoprep.app.domain.repository.ImportRepository
 import com.algoprep.app.domain.repository.PlanRepository
 import com.algoprep.app.domain.repository.ProfileRepository
 import com.algoprep.app.domain.repository.TaskRepository
 import com.algoprep.app.domain.repository.TrainingRepository
 import com.algoprep.app.domain.repository.TransactionRunner
+import com.algoprep.app.domain.util.TitleNormalizer
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import java.time.Clock
@@ -204,4 +218,99 @@ class TrainingRepositoryImpl @Inject constructor(
 @Singleton
 class RoomTransactionRunner @Inject constructor(private val db: AppDatabase) : TransactionRunner {
     override suspend fun <T> run(block: suspend () -> T): T = db.withTransaction { block() }
+}
+
+@Singleton
+class ImportRepositoryImpl @Inject constructor(
+    private val db: AppDatabase,
+    private val clock: Clock,
+) : ImportRepository {
+    private val importDao = db.importDao()
+    private val taskDao = db.taskDao()
+
+    override suspend fun taskBriefs(): List<TaskBrief> = importDao.taskBriefs().map { TaskBrief(it.id, it.title, it.text) }
+
+    override fun observeBatches(): Flow<List<ImportBatch>> = importDao.observeBatches().map { l -> l.map { it.toDomain() } }
+
+    override suspend fun save(plan: ImportSavePlan): ImportBatch = db.withTransaction {
+        val now = clock.millis()
+        val batchEntity = ImportBatchEntity(
+            createdAt = now,
+            sourceName = plan.sourceName,
+            format = plan.format.name,
+            rawSize = plan.rawSize,
+            candidatesFound = plan.candidatesFound,
+            saved = plan.newTasks,
+            merged = plan.merged,
+            skipped = plan.skipped,
+            status = BatchStatus.SAVED,
+        )
+        val batchId = importDao.insertBatch(batchEntity)
+        val created = HashMap<String, Long>()
+
+        fun mention(taskId: Long, m: NewMention) = TaskMentionEntity(
+            taskId = taskId,
+            batchId = batchId,
+            rawTitle = m.rawTitle,
+            rawText = m.rawText,
+            source = m.source,
+            sourceUrl = m.sourceUrl,
+            companyTag = m.companyTag,
+            interviewStage = m.interviewStage,
+            roleLevel = m.roleLevel,
+            reportedDate = m.reportedDate?.toString(),
+            createdAt = now,
+        )
+
+        for (entry in plan.entries) {
+            when (entry) {
+                is SaveEntry.NewTask -> {
+                    val d = entry.draft
+                    val id = taskDao.insert(
+                        TaskEntity(
+                            title = d.title,
+                            originalText = d.text,
+                            canonicalKey = TitleNormalizer.canonicalKey(d.title),
+                            difficulty = d.difficulty,
+                            roleLevel = d.roleLevel,
+                            personalNotes = d.notes,
+                            origin = TaskOrigin.IMPORTED,
+                            createdAt = now,
+                            updatedAt = now,
+                        ),
+                    )
+                    taskDao.insertTopicLinks(d.topics.map { TaskTopicEntity(id, it) })
+                    taskDao.insertPatternLinks(d.patterns.map { TaskPatternEntity(id, it) })
+                    taskDao.insertMentions(listOf(mention(id, entry.mention)))
+                    created[entry.tempId] = id
+                    for (other in entry.keptSeparateFrom) {
+                        importDao.insertDuplicate(
+                            DuplicateCandidateEntity(
+                                taskAId = minOf(id, other.taskId),
+                                taskBId = maxOf(id, other.taskId),
+                                similarity = other.score,
+                                decision = DuplicateDecision.KEPT_SEPARATE,
+                            ),
+                        )
+                    }
+                }
+                is SaveEntry.MergeIntoTask -> taskDao.insertMentions(listOf(mention(entry.taskId, entry.mention)))
+                is SaveEntry.MergeIntoBatch -> {
+                    val target = checkNotNull(created[entry.targetTempId]) { "merge target ${entry.targetTempId} was not created" }
+                    taskDao.insertMentions(listOf(mention(target, entry.mention)))
+                }
+            }
+        }
+        batchEntity.copy(id = batchId).toDomain()
+    }
+
+    override suspend fun rollback(batchId: Long) {
+        db.withTransaction {
+            val batch = importDao.getBatch(batchId) ?: return@withTransaction
+            if (batch.status != BatchStatus.SAVED) return@withTransaction
+            importDao.deleteTasksCreatedByBatch(batchId)
+            importDao.deleteMentionsOfBatch(batchId)
+            importDao.setBatchStatus(batchId, BatchStatus.ROLLED_BACK)
+        }
+    }
 }

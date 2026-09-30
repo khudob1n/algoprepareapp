@@ -2,6 +2,7 @@ package com.algoprep.app.di
 
 import com.algoprep.app.data.prefs.DataStoreSettingsRepository
 import com.algoprep.app.data.repository.CatalogRepositoryImpl
+import com.algoprep.app.data.repository.ImportRepositoryImpl
 import com.algoprep.app.data.repository.PlanRepositoryImpl
 import com.algoprep.app.data.repository.ProfileRepositoryImpl
 import com.algoprep.app.data.repository.RoomTransactionRunner
@@ -10,6 +11,7 @@ import com.algoprep.app.data.repository.TrainingRepositoryImpl
 import com.algoprep.app.data.seed.AssetHintProvider
 import com.algoprep.app.domain.hints.HintProvider
 import com.algoprep.app.domain.repository.CatalogRepository
+import com.algoprep.app.domain.repository.ImportRepository
 import com.algoprep.app.domain.repository.PlanRepository
 import com.algoprep.app.domain.repository.ProfileRepository
 import com.algoprep.app.domain.repository.SettingsRepository
@@ -31,5 +33,6 @@ abstract class RepositoryModule {
     @Binds abstract fun training(impl: TrainingRepositoryImpl): TrainingRepository
     @Binds abstract fun settings(impl: DataStoreSettingsRepository): SettingsRepository
     @Binds abstract fun hints(impl: AssetHintProvider): HintProvider
+    @Binds abstract fun imports(impl: ImportRepositoryImpl): ImportRepository
     @Binds abstract fun transactions(impl: RoomTransactionRunner): TransactionRunner
 }

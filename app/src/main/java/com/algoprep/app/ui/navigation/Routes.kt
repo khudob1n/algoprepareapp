@@ -34,3 +34,6 @@ import kotlinx.serialization.Serializable
 )
 @Serializable data class ResultRoute(val sessionId: Long)
 @Serializable data object ErrorLogRoute
+@Serializable data class TaskDetailRoute(val taskId: Long)
+@Serializable data object ImportReviewRoute
+@Serializable data class ImportDoneRoute(val saved: Int, val merged: Int, val skipped: Int)

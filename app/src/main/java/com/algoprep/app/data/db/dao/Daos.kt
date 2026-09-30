@@ -7,7 +7,9 @@ import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
 import androidx.room.Upsert
+import com.algoprep.app.data.db.entity.DuplicateCandidateEntity
 import com.algoprep.app.data.db.entity.ErrorEntryEntity
+import com.algoprep.app.data.db.entity.ImportBatchEntity
 import com.algoprep.app.data.db.entity.PatternEntity
 import com.algoprep.app.data.db.entity.PlanDayEntity
 import com.algoprep.app.data.db.entity.PlanDayTopicEntity
@@ -24,6 +26,7 @@ import com.algoprep.app.data.db.entity.TaskWithRelations
 import com.algoprep.app.data.db.entity.TopicEntity
 import com.algoprep.app.data.db.entity.TopicSkillEntity
 import com.algoprep.app.data.db.entity.UserProfileEntity
+import com.algoprep.app.domain.model.BatchStatus
 import com.algoprep.app.domain.model.PlanDayStatus
 import com.algoprep.app.domain.model.PlannedStatus
 import com.algoprep.app.domain.model.TaskStatus
@@ -221,4 +224,41 @@ interface TrainingDao {
 
     @Query("SELECT * FROM review_state WHERE dueAt <= :now ORDER BY dueAt")
     suspend fun getDueReviews(now: Long): List<ReviewStateEntity>
+}
+
+data class TaskBriefRow(val id: Long, val title: String, val text: String)
+
+@Dao
+interface ImportDao {
+    @Insert suspend fun insertBatch(batch: ImportBatchEntity): Long
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertDuplicate(row: DuplicateCandidateEntity)
+
+    @Query("SELECT * FROM import_batch ORDER BY createdAt DESC, id DESC")
+    fun observeBatches(): Flow<List<ImportBatchEntity>>
+
+    @Query("SELECT * FROM import_batch WHERE id = :id")
+    suspend fun getBatch(id: Long): ImportBatchEntity?
+
+    @Query("UPDATE import_batch SET status = :status WHERE id = :id")
+    suspend fun setBatchStatus(id: Long, status: BatchStatus)
+
+    @Query("SELECT id, title, originalText AS text FROM task")
+    suspend fun taskBriefs(): List<TaskBriefRow>
+
+    /**
+     * Tasks created by this import: imported, all of whose mentions come from this batch,
+     * and never attempted. Deleting them cascades to their mentions and links.
+     */
+    @Query(
+        "DELETE FROM task WHERE origin = 'IMPORTED' " +
+            "AND id IN (SELECT taskId FROM task_mention WHERE batchId = :batchId) " +
+            "AND id NOT IN (SELECT taskId FROM task_mention WHERE batchId IS NULL OR batchId != :batchId) " +
+            "AND id NOT IN (SELECT taskId FROM solve_session)",
+    )
+    suspend fun deleteTasksCreatedByBatch(batchId: Long)
+
+    @Query("DELETE FROM task_mention WHERE batchId = :batchId")
+    suspend fun deleteMentionsOfBatch(batchId: Long)
 }

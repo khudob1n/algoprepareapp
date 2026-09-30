@@ -19,12 +19,15 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
 import com.algoprep.app.R
 import com.algoprep.app.domain.model.SessionPhase
 import com.algoprep.app.domain.model.phase
 import com.algoprep.app.domain.model.toSessionType
 import com.algoprep.app.ui.components.PlaceholderScreen
 import com.algoprep.app.ui.navigation.ErrorLogRoute
+import com.algoprep.app.ui.navigation.ImportDoneRoute
+import com.algoprep.app.ui.navigation.ImportReviewRoute
 import com.algoprep.app.ui.navigation.MainGraphRoute
 import com.algoprep.app.ui.navigation.OnboardingGraphRoute
 import com.algoprep.app.ui.navigation.PlanDayRoute
@@ -33,10 +36,13 @@ import com.algoprep.app.ui.navigation.ResultRoute
 import com.algoprep.app.ui.navigation.ProfileRoute
 import com.algoprep.app.ui.navigation.SessionRoute
 import com.algoprep.app.ui.navigation.StatsRoute
+import com.algoprep.app.ui.navigation.TaskDetailRoute
 import com.algoprep.app.ui.navigation.TasksRoute
 import com.algoprep.app.ui.navigation.TodayRoute
 import com.algoprep.app.ui.navigation.TopLevelDestination
 import com.algoprep.app.ui.screens.onboarding.onboardingGraph
+import com.algoprep.app.ui.screens.importer.ImportDoneScreen
+import com.algoprep.app.ui.screens.importer.ImportReviewScreen
 import com.algoprep.app.ui.screens.plan.PlanDayScreen
 import com.algoprep.app.ui.screens.plan.PlanScreen
 import com.algoprep.app.ui.screens.profile.ProfileScreen
@@ -44,6 +50,8 @@ import com.algoprep.app.ui.screens.errors.ErrorLogScreen
 import com.algoprep.app.ui.screens.result.ResultScreen
 import com.algoprep.app.ui.screens.stats.StatsScreen
 import com.algoprep.app.ui.screens.session.SessionScreen
+import com.algoprep.app.ui.screens.tasks.TaskDetailScreen
+import com.algoprep.app.ui.screens.tasks.TasksScreen
 import com.algoprep.app.ui.screens.today.TodayScreen
 
 @Composable
@@ -138,7 +146,35 @@ private fun AppScaffold(startOnboarding: Boolean) {
                     ResultScreen(onDone = { navController.popBackStack(TodayRoute, inclusive = false) })
                 }
                 composable<TasksRoute> {
-                    PlaceholderScreen(R.string.placeholder_tasks_title, R.string.placeholder_tasks_body)
+                    TasksScreen(
+                        onOpenTask = { navController.navigate(TaskDetailRoute(it)) },
+                        onOpenReview = { navController.navigate(ImportReviewRoute) },
+                    )
+                }
+                composable<TaskDetailRoute> {
+                    TaskDetailScreen(
+                        onBack = { navController.popBackStack() },
+                        onSolve = { navController.navigate(SessionRoute(it)) },
+                    )
+                }
+                composable<ImportReviewRoute> {
+                    ImportReviewScreen(
+                        onBack = { navController.popBackStack() },
+                        onSaved = { batch ->
+                            navController.navigate(ImportDoneRoute(batch.saved, batch.merged, batch.skipped)) {
+                                popUpTo<ImportReviewRoute> { inclusive = true }
+                            }
+                        },
+                    )
+                }
+                composable<ImportDoneRoute> { entry ->
+                    val done = entry.toRoute<ImportDoneRoute>()
+                    ImportDoneScreen(
+                        saved = done.saved,
+                        merged = done.merged,
+                        skipped = done.skipped,
+                        onOpenBank = { navController.popBackStack(TasksRoute, inclusive = false) },
+                    )
                 }
                 composable<StatsRoute> {
                     StatsScreen(onOpenErrors = { navController.navigate(ErrorLogRoute) })

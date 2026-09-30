@@ -2,6 +2,7 @@ package com.algoprep.app.data.db.mapper
 
 import com.algoprep.app.core.AppJson
 import com.algoprep.app.data.db.entity.ErrorEntryEntity
+import com.algoprep.app.data.db.entity.ImportBatchEntity
 import com.algoprep.app.data.db.entity.PatternEntity
 import com.algoprep.app.data.db.entity.PlanDayEntity
 import com.algoprep.app.data.db.entity.PlanDayWithDetails
@@ -18,6 +19,7 @@ import com.algoprep.app.data.db.entity.UserProfileEntity
 import com.algoprep.app.domain.model.Complexity
 import com.algoprep.app.domain.model.ErrorEntry
 import com.algoprep.app.domain.model.Example
+import com.algoprep.app.domain.model.ImportBatch
 import com.algoprep.app.domain.model.Mention
 import com.algoprep.app.domain.model.Pattern
 import com.algoprep.app.domain.model.PlanDay
@@ -250,3 +252,6 @@ fun ReviewStateEntity.toDomain() =
 
 fun ReviewState.toEntity() =
     ReviewStateEntity(taskId, intervalDays, ease, repetitions, lapses, dueAt.toEpochMilli(), lastOutcome)
+
+fun ImportBatchEntity.toDomain() =
+    ImportBatch(id, createdAt.toInstant(), sourceName, candidatesFound, saved, merged, skipped, status)

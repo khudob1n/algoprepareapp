@@ -160,3 +160,17 @@ fun PlannedKind.toSessionType(): SessionType = when (this) {
     PlannedKind.ERROR_REVIEW -> SessionType.ERROR_REVIEW
     PlannedKind.MOCK -> SessionType.MOCK
 }
+
+data class ImportBatch(
+    val id: Long,
+    val createdAt: Instant,
+    val sourceName: String,
+    val candidatesFound: Int,
+    val saved: Int,
+    val merged: Int,
+    val skipped: Int,
+    val status: BatchStatus,
+)
+
+/** Just enough of a bank task to look for duplicates. */
+data class TaskBrief(val id: Long, val title: String, val text: String)

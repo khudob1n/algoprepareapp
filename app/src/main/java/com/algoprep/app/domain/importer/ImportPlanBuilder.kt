@@ -24,6 +24,9 @@ data class NewTaskDraft(
     val notes: String,
 )
 
+/** A bank task the user explicitly marked as different from a new one. */
+data class SeparatePair(val taskId: Long, val score: Double)
+
 sealed interface SaveEntry {
     val mention: NewMention
 
@@ -32,7 +35,7 @@ sealed interface SaveEntry {
         val tempId: String,
         val draft: NewTaskDraft,
         override val mention: NewMention,
-        val keptSeparateFrom: List<Long> = emptyList(),
+        val keptSeparateFrom: List<SeparatePair> = emptyList(),
     ) : SaveEntry
 
     /** Adds one more mention to a task that is already in the bank. */
@@ -104,7 +107,9 @@ object ImportPlanBuilder {
                         tempId = d.tempId,
                         draft = taskOf(d),
                         mention = mention,
-                        keptSeparateFrom = if (bank != null && d.choice == DuplicateChoice.KEEP_SEPARATE) listOf(bank.taskId) else emptyList(),
+                        keptSeparateFrom = if (bank != null && d.choice == DuplicateChoice.KEEP_SEPARATE) {
+                            listOf(SeparatePair(bank.taskId, d.duplicate?.score ?: 0.0))
+                        } else emptyList(),
                     )
                 }
             }

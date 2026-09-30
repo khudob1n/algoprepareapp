@@ -1,6 +1,8 @@
 package com.algoprep.app.domain.repository
 
+import com.algoprep.app.domain.importer.ImportSavePlan
 import com.algoprep.app.domain.model.ErrorEntry
+import com.algoprep.app.domain.model.ImportBatch
 import com.algoprep.app.domain.model.Pattern
 import com.algoprep.app.domain.model.ReminderSettings
 import com.algoprep.app.domain.model.PlanDay
@@ -11,6 +13,7 @@ import com.algoprep.app.domain.model.RoadmapDay
 import com.algoprep.app.domain.model.SessionType
 import com.algoprep.app.domain.model.SolveSession
 import com.algoprep.app.domain.model.Task
+import com.algoprep.app.domain.model.TaskBrief
 import com.algoprep.app.domain.model.TaskStatus
 import com.algoprep.app.domain.model.Topic
 import com.algoprep.app.domain.model.TopicSkill
@@ -97,4 +100,13 @@ interface TransactionRunner {
 interface SettingsRepository {
     fun observeReminders(): Flow<ReminderSettings>
     suspend fun saveReminders(settings: ReminderSettings)
+}
+
+interface ImportRepository {
+    suspend fun taskBriefs(): List<TaskBrief>
+    /** Saves a reviewed import atomically: new tasks, extra mentions and the batch record. */
+    suspend fun save(plan: ImportSavePlan): ImportBatch
+    fun observeBatches(): Flow<List<ImportBatch>>
+    /** Undoes a saved import: removes its mentions and the tasks only it created (if never attempted). */
+    suspend fun rollback(batchId: Long)
 }

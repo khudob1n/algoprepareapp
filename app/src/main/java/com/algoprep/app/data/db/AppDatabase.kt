@@ -3,6 +3,7 @@ package com.algoprep.app.data.db
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.algoprep.app.data.db.dao.CatalogDao
+import com.algoprep.app.data.db.dao.ImportDao
 import com.algoprep.app.data.db.dao.PlanDao
 import com.algoprep.app.data.db.dao.ProfileDao
 import com.algoprep.app.data.db.dao.TaskDao
@@ -54,6 +55,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun profileDao(): ProfileDao
     abstract fun planDao(): PlanDao
     abstract fun trainingDao(): TrainingDao
+    abstract fun importDao(): ImportDao
 
     companion object {
         const val NAME = "algoprep.db"
