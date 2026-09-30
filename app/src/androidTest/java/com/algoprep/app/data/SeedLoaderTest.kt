@@ -9,7 +9,7 @@ import com.algoprep.app.data.seed.SeedLoader
 import com.algoprep.app.domain.model.TaskOrigin
 import java.time.Clock
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -27,7 +27,7 @@ class SeedLoaderTest {
 
     @After fun tearDown() = db.close()
 
-    @Test fun seedingIsIdempotentAndLinksAreValid() = runTest {
+    @Test fun seedingIsIdempotentAndLinksAreValid() = runBlocking {
         val loader = SeedLoader(context, db, Clock.systemUTC())
         loader.seedIfNeeded()
         val repo = TaskRepositoryImpl(db, Clock.systemUTC())
@@ -41,7 +41,7 @@ class SeedLoaderTest {
         assertEquals(30, db.catalogDao().getRoadmap().size)
     }
 
-    @Test fun deletingTaskCascadesToLinks() = runTest {
+    @Test fun deletingTaskCascadesToLinks() = runBlocking {
         SeedLoader(context, db, Clock.systemUTC()).seedIfNeeded()
         val repo = TaskRepositoryImpl(db, Clock.systemUTC())
         val task = repo.observeAll().first().first()
