@@ -41,7 +41,7 @@ import com.algoprep.app.ui.screens.plan.PlanDayScreen
 import com.algoprep.app.ui.screens.plan.PlanScreen
 import com.algoprep.app.ui.screens.errors.ErrorLogScreen
 import com.algoprep.app.ui.screens.result.ResultScreen
-import com.algoprep.app.ui.screens.stats.StatsPlaceholderScreen
+import com.algoprep.app.ui.screens.stats.StatsScreen
 import com.algoprep.app.ui.screens.session.SessionScreen
 import com.algoprep.app.ui.screens.today.TodayScreen
 
@@ -140,7 +140,7 @@ private fun AppScaffold(startOnboarding: Boolean) {
                     PlaceholderScreen(R.string.placeholder_tasks_title, R.string.placeholder_tasks_body)
                 }
                 composable<StatsRoute> {
-                    StatsPlaceholderScreen(onOpenErrors = { navController.navigate(ErrorLogRoute) })
+                    StatsScreen(onOpenErrors = { navController.navigate(ErrorLogRoute) })
                 }
                 composable<ErrorLogRoute> {
                     ErrorLogScreen(onBack = { navController.popBackStack() })

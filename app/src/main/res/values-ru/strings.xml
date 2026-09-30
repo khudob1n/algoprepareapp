@@ -181,4 +181,37 @@
     <string name="errors_open_summary">Открытых ошибок: %1$d</string>
     <string name="errors_empty">Пока пусто. Ошибки, которые вы отметите после сессии, появятся здесь.</string>
     <string name="errors_mark_resolved">Отметить разобранной</string>
+
+    <string name="stats_title">Статистика</string>
+    <string name="stats_overview">Обзор</string>
+    <string name="stats_no_data">Завершённых сессий пока нет. Цифры появятся после первой задачи.</string>
+    <string name="stats_streak">дней подряд</string>
+    <string name="stats_solved">решено</string>
+    <string name="stats_independent">самостоятельно</string>
+    <string name="stats_avg_time">среднее время решения</string>
+    <string name="stats_total_time">всего времени</string>
+    <string name="stats_longest_streak">лучшая серия</string>
+    <string name="stats_attempts_unique">Попыток: %1$d · решено разных задач: %2$d</string>
+    <string name="stats_not_practiced_today">Сегодня ещё не было тренировки. Одна сессия сохранит серию.</string>
+    <string name="stats_progress_title">Улучшаюсь ли я?</string>
+    <string name="stats_progress_unknown">Данных пока мало. Сравнение последних 7 дней с предыдущими 7 появится, когда в каждом периоде будет хотя бы 3 попытки.</string>
+    <string name="stats_progress_compare">Решено самостоятельно: %1$d%% за последние 7 дней против %2$d%% за предыдущие 7</string>
+    <string name="stats_trend_up">Результаты растут.</string>
+    <string name="stats_trend_down">Результаты снижаются. Стоит больше повторять и брать задачи полегче.</string>
+    <string name="stats_trend_flat">Примерно на том же уровне.</string>
+    <string name="stats_adherence_title">План на 30 дней</string>
+    <string name="stats_no_plan">Плана пока нет.</string>
+    <string name="stats_adherence_days">Выполнено %1$d из %2$d прошедших дней (%3$d%%)</string>
+    <string name="stats_adherence_none_yet">Завершённых дней плана пока нет.</string>
+    <string name="stats_adherence_minutes">Занимались %1$s из %2$s по плану на данный момент</string>
+    <string name="stats_activity_title">Последние 30 дней</string>
+    <string name="stats_activity_caption">Минут в день, самый высокий столбец = %1$d мин</string>
+    <string name="stats_topics">Темы</string>
+    <string name="topic_level_weak">Слабая</string>
+    <string name="topic_level_developing">Растёт</string>
+    <string name="topic_level_strong">Сильная</string>
+    <string name="topic_level_no_data">Не практиковались</string>
+    <string name="stats_topic_detail">Решено %1$d из %2$d попыток</string>
+    <string name="stats_no_open_errors">Открытых ошибок нет.</string>
+    <string name="stats_open_error_log">Открыть журнал ошибок</string>
 </resources>

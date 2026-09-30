@@ -177,4 +177,37 @@
     <string name="errors_open_summary">Open mistakes: %1$d</string>
     <string name="errors_empty">Nothing here yet. Mistakes you mark after a session appear in this log.</string>
     <string name="errors_mark_resolved">Mark resolved</string>
+
+    <string name="stats_title">Stats</string>
+    <string name="stats_overview">Overview</string>
+    <string name="stats_no_data">No finished sessions yet. Your numbers appear after the first task.</string>
+    <string name="stats_streak">day streak</string>
+    <string name="stats_solved">solved</string>
+    <string name="stats_independent">on your own</string>
+    <string name="stats_avg_time">avg. solve time</string>
+    <string name="stats_total_time">total time</string>
+    <string name="stats_longest_streak">longest streak</string>
+    <string name="stats_attempts_unique">%1$d attempts · %2$d different tasks solved</string>
+    <string name="stats_not_practiced_today">No practice yet today. A session keeps your streak going.</string>
+    <string name="stats_progress_title">Am I improving?</string>
+    <string name="stats_progress_unknown">Not enough data yet. This compares your last 7 days with the 7 before, once there are at least 3 attempts in each.</string>
+    <string name="stats_progress_compare">Solved on your own: %1$d%% in the last 7 days vs %2$d%% in the 7 days before</string>
+    <string name="stats_trend_up">Trending up.</string>
+    <string name="stats_trend_down">Trending down. Consider more review and easier tasks.</string>
+    <string name="stats_trend_flat">About the same.</string>
+    <string name="stats_adherence_title">30-day plan</string>
+    <string name="stats_no_plan">No plan yet.</string>
+    <string name="stats_adherence_days">%1$d of %2$d finished days completed (%3$d%%)</string>
+    <string name="stats_adherence_none_yet">No finished plan days yet.</string>
+    <string name="stats_adherence_minutes">Practised %1$s of %2$s planned so far</string>
+    <string name="stats_activity_title">Last 30 days</string>
+    <string name="stats_activity_caption">Minutes per day, tallest bar = %1$d min</string>
+    <string name="stats_topics">Topics</string>
+    <string name="topic_level_weak">Weak</string>
+    <string name="topic_level_developing">Developing</string>
+    <string name="topic_level_strong">Strong</string>
+    <string name="topic_level_no_data">Not practised</string>
+    <string name="stats_topic_detail">%1$d solved of %2$d attempts</string>
+    <string name="stats_no_open_errors">No open mistakes.</string>
+    <string name="stats_open_error_log">Open error log</string>
 </resources>
