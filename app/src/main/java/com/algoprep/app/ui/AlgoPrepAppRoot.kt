@@ -19,12 +19,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.toRoute
 import com.algoprep.app.R
 import com.algoprep.app.domain.model.SessionPhase
 import com.algoprep.app.domain.model.phase
 import com.algoprep.app.domain.model.toSessionType
 import com.algoprep.app.ui.components.PlaceholderScreen
+import com.algoprep.app.ui.navigation.ErrorLogRoute
 import com.algoprep.app.ui.navigation.MainGraphRoute
 import com.algoprep.app.ui.navigation.OnboardingGraphRoute
 import com.algoprep.app.ui.navigation.PlanDayRoute
@@ -39,7 +39,9 @@ import com.algoprep.app.ui.navigation.TopLevelDestination
 import com.algoprep.app.ui.screens.onboarding.onboardingGraph
 import com.algoprep.app.ui.screens.plan.PlanDayScreen
 import com.algoprep.app.ui.screens.plan.PlanScreen
-import com.algoprep.app.ui.screens.session.ResultPlaceholderScreen
+import com.algoprep.app.ui.screens.errors.ErrorLogScreen
+import com.algoprep.app.ui.screens.result.ResultScreen
+import com.algoprep.app.ui.screens.stats.StatsPlaceholderScreen
 import com.algoprep.app.ui.screens.session.SessionScreen
 import com.algoprep.app.ui.screens.today.TodayScreen
 
@@ -131,17 +133,17 @@ private fun AppScaffold(startOnboarding: Boolean) {
                         },
                     )
                 }
-                composable<ResultRoute> { entry ->
-                    ResultPlaceholderScreen(
-                        sessionId = entry.toRoute<ResultRoute>().sessionId,
-                        onDone = { navController.popBackStack(TodayRoute, inclusive = false) },
-                    )
+                composable<ResultRoute> {
+                    ResultScreen(onDone = { navController.popBackStack(TodayRoute, inclusive = false) })
                 }
                 composable<TasksRoute> {
                     PlaceholderScreen(R.string.placeholder_tasks_title, R.string.placeholder_tasks_body)
                 }
                 composable<StatsRoute> {
-                    PlaceholderScreen(R.string.placeholder_stats_title, R.string.placeholder_stats_body)
+                    StatsPlaceholderScreen(onOpenErrors = { navController.navigate(ErrorLogRoute) })
+                }
+                composable<ErrorLogRoute> {
+                    ErrorLogScreen(onBack = { navController.popBackStack() })
                 }
                 composable<ProfileRoute> {
                     PlaceholderScreen(R.string.placeholder_profile_title, R.string.placeholder_profile_body)

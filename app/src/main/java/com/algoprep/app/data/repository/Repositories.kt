@@ -186,7 +186,11 @@ class TrainingRepositoryImpl @Inject constructor(
     override fun observeUnresolvedErrors(): Flow<List<ErrorEntry>> =
         dao.observeUnresolvedErrors().map { l -> l.map { it.toDomain() } }
 
+    override fun observeAllErrors(): Flow<List<ErrorEntry>> =
+        dao.observeAllErrors().map { l -> l.map { it.toDomain() } }
+
     override suspend fun resolveError(id: Long) = dao.resolveError(id)
+    override suspend fun resolveErrorsForTask(taskId: Long) = dao.resolveErrorsForTask(taskId)
 
     override suspend fun getReviewState(taskId: Long): ReviewState? = dao.getReviewState(taskId)?.toDomain()
     override suspend fun upsertReviewState(state: ReviewState) = dao.upsertReviewState(state.toEntity())

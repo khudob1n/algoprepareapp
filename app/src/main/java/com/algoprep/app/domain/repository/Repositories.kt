@@ -78,7 +78,9 @@ interface TrainingRepository {
 
     suspend fun addErrors(errors: List<ErrorEntry>)
     fun observeUnresolvedErrors(): Flow<List<ErrorEntry>>
+    fun observeAllErrors(): Flow<List<ErrorEntry>>
     suspend fun resolveError(id: Long)
+    suspend fun resolveErrorsForTask(taskId: Long)
 
     suspend fun getReviewState(taskId: Long): ReviewState?
     suspend fun upsertReviewState(state: ReviewState)

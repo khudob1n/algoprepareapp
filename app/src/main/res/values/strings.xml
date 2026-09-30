@@ -148,4 +148,33 @@
     <string name="session_conflict_resume">Resume it</string>
     <string name="session_conflict_discard">Discard it</string>
     <string name="result_placeholder">The result form for session %1$d arrives in the next phase.</string>
+
+    <string name="result_title">RESULT</string>
+    <string name="result_time">Time</string>
+    <string name="result_how">How did you solve it?</string>
+    <string name="outcome_independent">On my own</string>
+    <string name="outcome_small_hint">With a small hint</string>
+    <string name="outcome_big_hint">With a significant hint</string>
+    <string name="outcome_saw_solution">Looked at the solution</string>
+    <string name="outcome_not_solved">Did not solve it</string>
+    <string name="result_confidence">Confidence</string>
+    <string name="result_confidence_hint">1 — would not repeat it, 5 — could explain it to someone</string>
+    <string name="result_errors">Mistakes</string>
+    <string name="error_type_pattern">Pattern recognition</string>
+    <string name="error_type_implementation">Implementation</string>
+    <string name="error_type_edge_cases">Edge cases</string>
+    <string name="error_type_complexity">Complexity</string>
+    <string name="error_type_other">Other</string>
+    <string name="result_other_note">What went wrong?</string>
+    <string name="result_show_solution">Show solution idea</string>
+    <string name="result_solution_idea">Solution idea</string>
+    <string name="result_complexity">Time: %1$s · Space: %2$s</string>
+    <string name="result_complete">COMPLETE</string>
+    <string name="errors_title">Error log</string>
+    <string name="errors_filter_open">Open</string>
+    <string name="errors_filter_resolved">Resolved</string>
+    <string name="errors_filter_all">All</string>
+    <string name="errors_open_summary">Open mistakes: %1$d</string>
+    <string name="errors_empty">Nothing here yet. Mistakes you mark after a session appear in this log.</string>
+    <string name="errors_mark_resolved">Mark resolved</string>
 </resources>

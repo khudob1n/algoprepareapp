@@ -33,3 +33,4 @@ import kotlinx.serialization.Serializable
     val type: SessionType = SessionType.PRACTICE,
 )
 @Serializable data class ResultRoute(val sessionId: Long)
+@Serializable data object ErrorLogRoute

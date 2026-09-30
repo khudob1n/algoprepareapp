@@ -152,4 +152,33 @@
     <string name="session_conflict_resume">Продолжить её</string>
     <string name="session_conflict_discard">Отменить её</string>
     <string name="result_placeholder">Форма результата для сессии %1$d появится на следующем этапе.</string>
+
+    <string name="result_title">РЕЗУЛЬТАТ</string>
+    <string name="result_time">Время</string>
+    <string name="result_how">Как вы решили?</string>
+    <string name="outcome_independent">Самостоятельно</string>
+    <string name="outcome_small_hint">С маленькой подсказкой</string>
+    <string name="outcome_big_hint">С существенной подсказкой</string>
+    <string name="outcome_saw_solution">Посмотрел решение</string>
+    <string name="outcome_not_solved">Не решил</string>
+    <string name="result_confidence">Уверенность</string>
+    <string name="result_confidence_hint">1 — не стал бы повторять, 5 — могу объяснить другому</string>
+    <string name="result_errors">Ошибки</string>
+    <string name="error_type_pattern">Распознавание паттерна</string>
+    <string name="error_type_implementation">Реализация</string>
+    <string name="error_type_edge_cases">Граничные случаи</string>
+    <string name="error_type_complexity">Сложность</string>
+    <string name="error_type_other">Другое</string>
+    <string name="result_other_note">Что пошло не так?</string>
+    <string name="result_show_solution">Показать идею решения</string>
+    <string name="result_solution_idea">Идея решения</string>
+    <string name="result_complexity">Время: %1$s · Память: %2$s</string>
+    <string name="result_complete">ЗАВЕРШИТЬ</string>
+    <string name="errors_title">Журнал ошибок</string>
+    <string name="errors_filter_open">Открытые</string>
+    <string name="errors_filter_resolved">Разобранные</string>
+    <string name="errors_filter_all">Все</string>
+    <string name="errors_open_summary">Открытых ошибок: %1$d</string>
+    <string name="errors_empty">Пока пусто. Ошибки, которые вы отметите после сессии, появятся здесь.</string>
+    <string name="errors_mark_resolved">Отметить разобранной</string>
 </resources>

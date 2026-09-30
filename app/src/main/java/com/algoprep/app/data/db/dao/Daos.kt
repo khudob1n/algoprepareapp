@@ -199,8 +199,14 @@ interface TrainingDao {
     @Query("SELECT * FROM error_entry WHERE resolved = 0 ORDER BY createdAt DESC")
     fun observeUnresolvedErrors(): Flow<List<ErrorEntryEntity>>
 
+    @Query("SELECT * FROM error_entry ORDER BY createdAt DESC")
+    fun observeAllErrors(): Flow<List<ErrorEntryEntity>>
+
     @Query("UPDATE error_entry SET resolved = 1 WHERE id = :id")
     suspend fun resolveError(id: Long)
+
+    @Query("UPDATE error_entry SET resolved = 1 WHERE taskId = :taskId AND resolved = 0")
+    suspend fun resolveErrorsForTask(taskId: Long)
 
     @Upsert suspend fun upsertReviewState(state: ReviewStateEntity)
 
