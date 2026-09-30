@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AlgoPrep</string>
+
+    <string name="nav_home">Сегодня</string>
+    <string name="nav_plan">План</string>
+    <string name="nav_tasks">Задачи</string>
+    <string name="nav_stats">Статистика</string>
+    <string name="nav_profile">Профиль</string>
+
+    <string name="placeholder_today_title">Сегодня</string>
+    <string name="placeholder_today_body">Здесь появится ваша ежедневная тренировка (фаза 4).</string>
+    <string name="placeholder_plan_title">План на 30 дней</string>
+    <string name="placeholder_plan_body">Здесь появится адаптивный roadmap (фазы 4 и 11).</string>
+    <string name="placeholder_tasks_title">Interview Task Bank</string>
+    <string name="placeholder_tasks_body">Здесь можно будет импортировать и просматривать свои задачи (фаза 10).</string>
+    <string name="placeholder_stats_title">Статистика</string>
+    <string name="placeholder_stats_body">Здесь появятся прогресс и слабые темы (фаза 8).</string>
+    <string name="placeholder_profile_title">Профиль</string>
+    <string name="placeholder_profile_body">Здесь появятся напоминания и настройки (фаза 9).</string>
+</resources>

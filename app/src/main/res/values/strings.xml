@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AlgoPrep</string>
+
+    <string name="nav_home">Home</string>
+    <string name="nav_plan">Plan</string>
+    <string name="nav_tasks">Tasks</string>
+    <string name="nav_stats">Stats</string>
+    <string name="nav_profile">Profile</string>
+
+    <string name="placeholder_today_title">Today</string>
+    <string name="placeholder_today_body">Your daily training plan will appear here (Phase 4).</string>
+    <string name="placeholder_plan_title">30-day plan</string>
+    <string name="placeholder_plan_body">The adaptive roadmap will appear here (Phase 4 and 11).</string>
+    <string name="placeholder_tasks_title">Interview Task Bank</string>
+    <string name="placeholder_tasks_body">Import and browse your own tasks here (Phase 10).</string>
+    <string name="placeholder_stats_title">Stats</string>
+    <string name="placeholder_stats_body">Progress and weak topics will appear here (Phase 8).</string>
+    <string name="placeholder_profile_title">Profile</string>
+    <string name="placeholder_profile_body">Reminders and settings will appear here (Phase 9).</string>
+</resources>
