@@ -210,4 +210,37 @@
     <string name="stats_topic_detail">%1$d solved of %2$d attempts</string>
     <string name="stats_no_open_errors">No open mistakes.</string>
     <string name="stats_open_error_log">Open error log</string>
+
+    <string name="channel_plan">Daily plan and progress</string>
+    <string name="channel_review">Review reminders</string>
+    <string name="channel_streak">Streak warnings</string>
+    <string name="reminder_title_morning">Today\'s plan</string>
+    <string name="reminder_title_evening">Progress today</string>
+    <string name="reminder_title_review">Time to review</string>
+    <string name="reminder_title_streak">Keep your streak</string>
+    <string name="reminder_text_morning">Today is Day %1$d: %2$s. Plan: %3$s.</string>
+    <plurals name="reminder_text_evening">
+        <item quantity="one">%1$d%% done today. %2$d task left.</item>
+        <item quantity="other">%1$d%% done today. %2$d tasks left.</item>
+    </plurals>
+    <plurals name="reminder_text_review">
+        <item quantity="one">Time to review %1$d task today.</item>
+        <item quantity="other">Time to review %1$d tasks today.</item>
+    </plurals>
+    <string name="reminder_text_streak">No practice yet today.</string>
+    <plurals name="reminder_text_streak_days">
+        <item quantity="one">No practice yet today. Your %1$d-day streak is at stake.</item>
+        <item quantity="other">No practice yet today. Your %1$d-day streak is at stake.</item>
+    </plurals>
+    <string name="reminder_test_text">Reminders work. This is a test notification.</string>
+    <string name="profile_title">Profile</string>
+    <string name="profile_reminders">Reminders</string>
+    <string name="profile_reminders_note">Times can shift by a few minutes because Android batches background work. Every reminder can be turned off.</string>
+    <string name="profile_notifications_off">Notifications are off</string>
+    <string name="profile_notifications_off_body">Reminders are scheduled but Android will not show them until you allow notifications.</string>
+    <string name="profile_allow">Allow</string>
+    <string name="profile_open_settings">Open settings</string>
+    <string name="profile_test_notification">Send a test</string>
+    <string name="profile_disable_all">Turn all off</string>
+    <string name="profile_about_local">AlgoPrep %1$s. Everything stays on your device: no account, no internet needed.</string>
 </resources>

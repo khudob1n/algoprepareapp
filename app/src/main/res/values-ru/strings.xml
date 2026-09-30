@@ -214,4 +214,43 @@
     <string name="stats_topic_detail">Решено %1$d из %2$d попыток</string>
     <string name="stats_no_open_errors">Открытых ошибок нет.</string>
     <string name="stats_open_error_log">Открыть журнал ошибок</string>
+
+    <string name="channel_plan">План дня и прогресс</string>
+    <string name="channel_review">Напоминания о повторении</string>
+    <string name="channel_streak">Предупреждения о серии</string>
+    <string name="reminder_title_morning">План на сегодня</string>
+    <string name="reminder_title_evening">Итоги дня</string>
+    <string name="reminder_title_review">Пора повторить</string>
+    <string name="reminder_title_streak">Не потеряйте серию</string>
+    <string name="reminder_text_morning">Сегодня День %1$d: %2$s. План: %3$s.</string>
+    <plurals name="reminder_text_evening">
+        <item quantity="one">Сегодня выполнено %1$d%%. Осталась %2$d задача.</item>
+        <item quantity="few">Сегодня выполнено %1$d%%. Осталось %2$d задачи.</item>
+        <item quantity="many">Сегодня выполнено %1$d%%. Осталось %2$d задач.</item>
+        <item quantity="other">Сегодня выполнено %1$d%%. Осталось %2$d задачи.</item>
+    </plurals>
+    <plurals name="reminder_text_review">
+        <item quantity="one">Сегодня пора повторить %1$d задачу.</item>
+        <item quantity="few">Сегодня пора повторить %1$d задачи.</item>
+        <item quantity="many">Сегодня пора повторить %1$d задач.</item>
+        <item quantity="other">Сегодня пора повторить %1$d задачи.</item>
+    </plurals>
+    <string name="reminder_text_streak">Сегодня ещё не было тренировки.</string>
+    <plurals name="reminder_text_streak_days">
+        <item quantity="one">Сегодня ещё не было тренировки. Под угрозой серия в %1$d день.</item>
+        <item quantity="few">Сегодня ещё не было тренировки. Под угрозой серия в %1$d дня.</item>
+        <item quantity="many">Сегодня ещё не было тренировки. Под угрозой серия в %1$d дней.</item>
+        <item quantity="other">Сегодня ещё не было тренировки. Под угрозой серия в %1$d дня.</item>
+    </plurals>
+    <string name="reminder_test_text">Напоминания работают. Это тестовое уведомление.</string>
+    <string name="profile_title">Профиль</string>
+    <string name="profile_reminders">Напоминания</string>
+    <string name="profile_reminders_note">Время может сдвигаться на несколько минут: Android группирует фоновые задачи. Любое напоминание можно отключить.</string>
+    <string name="profile_notifications_off">Уведомления выключены</string>
+    <string name="profile_notifications_off_body">Напоминания запланированы, но Android не покажет их, пока вы не разрешите уведомления.</string>
+    <string name="profile_allow">Разрешить</string>
+    <string name="profile_open_settings">Открыть настройки</string>
+    <string name="profile_test_notification">Отправить тест</string>
+    <string name="profile_disable_all">Выключить все</string>
+    <string name="profile_about_local">AlgoPrep %1$s. Всё хранится на вашем устройстве: без аккаунта и без интернета.</string>
 </resources>

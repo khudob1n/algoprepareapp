@@ -39,6 +39,7 @@ import com.algoprep.app.ui.navigation.TopLevelDestination
 import com.algoprep.app.ui.screens.onboarding.onboardingGraph
 import com.algoprep.app.ui.screens.plan.PlanDayScreen
 import com.algoprep.app.ui.screens.plan.PlanScreen
+import com.algoprep.app.ui.screens.profile.ProfileScreen
 import com.algoprep.app.ui.screens.errors.ErrorLogScreen
 import com.algoprep.app.ui.screens.result.ResultScreen
 import com.algoprep.app.ui.screens.stats.StatsScreen
@@ -146,7 +147,7 @@ private fun AppScaffold(startOnboarding: Boolean) {
                     ErrorLogScreen(onBack = { navController.popBackStack() })
                 }
                 composable<ProfileRoute> {
-                    PlaceholderScreen(R.string.placeholder_profile_title, R.string.placeholder_profile_body)
+                    ProfileScreen()
                 }
             }
         }

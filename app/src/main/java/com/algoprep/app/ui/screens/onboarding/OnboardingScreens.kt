@@ -278,7 +278,7 @@ fun RemindersScreen(
 }
 
 @Composable
-private fun ReminderRow(
+fun ReminderRow(
     title: String,
     description: String,
     slot: ReminderSlot,
@@ -354,14 +354,14 @@ private fun startTitle(o: StartOption) = when (o) {
     StartOption.NEXT_MONDAY -> R.string.start_next_monday
 }
 
-private fun reminderTitle(k: ReminderKind) = when (k) {
+fun reminderTitle(k: ReminderKind) = when (k) {
     ReminderKind.MORNING -> R.string.reminder_morning
     ReminderKind.EVENING -> R.string.reminder_evening
     ReminderKind.REVIEW -> R.string.reminder_review
     ReminderKind.STREAK -> R.string.reminder_streak
 }
 
-private fun reminderDescription(k: ReminderKind) = when (k) {
+fun reminderDescription(k: ReminderKind) = when (k) {
     ReminderKind.MORNING -> R.string.reminder_morning_desc
     ReminderKind.EVENING -> R.string.reminder_evening_desc
     ReminderKind.REVIEW -> R.string.reminder_review_desc
