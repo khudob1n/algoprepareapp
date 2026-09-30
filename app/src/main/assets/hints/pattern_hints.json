@@ -1,0 +1,218 @@
+{
+ "hash_map": {
+  "en": [
+   "Which value do you keep looking up again and again? Could you store it for O(1) access?",
+   "Think about what to use as the key and what to store as the value.",
+   "Scan once: check the map for what you need first, then add the current element."
+  ],
+  "ru": [
+   "Какое значение вы постоянно ищете заново? Можно ли хранить его для доступа за O(1)?",
+   "Подумайте, что взять ключом, а что значением.",
+   "Идите за один проход: сначала проверьте словарь на нужное значение, потом добавьте текущий элемент."
+  ]
+ },
+ "prefix_sum": {
+  "en": [
+   "Would it help to know the sum (or product) of everything before position i?",
+   "A range answer can be written as a difference of two prefix values.",
+   "Build the prefix array (or a running value) once, then answer each query in O(1)."
+  ],
+  "ru": [
+   "Помогла бы сумма (или произведение) всего, что стоит до позиции i?",
+   "Ответ на отрезке выражается как разность двух префиксных значений.",
+   "Постройте префиксы один раз, затем отвечайте на каждый запрос за O(1)."
+  ]
+ },
+ "two_pointers": {
+  "en": [
+   "Can two indices walk through the data instead of nested loops?",
+   "Does sorting, or the structure of the input, tell you which pointer to move?",
+   "Start with pointers at the ends (or same-direction) and move one based on a comparison; each step must discard candidates."
+  ],
+  "ru": [
+   "Можно ли пройти данные двумя индексами вместо вложенных циклов?",
+   "Подсказывает ли сортировка или структура входа, какой указатель двигать?",
+   "Начните с концов (или в одном направлении) и двигайте один указатель по сравнению; каждый шаг должен отбрасывать кандидатов."
+  ]
+ },
+ "sliding_window": {
+  "en": [
+   "You need something about a contiguous range. What defines whether a range is valid?",
+   "Grow the right edge; when the window becomes invalid, what should you do with the left edge?",
+   "Maintain window state (counts/sum) incrementally instead of recomputing it."
+  ],
+  "ru": [
+   "Нужно что-то про непрерывный отрезок. Что определяет, что отрезок допустим?",
+   "Расширяйте правую границу; что делать с левой, когда окно стало недопустимым?",
+   "Обновляйте состояние окна (счётчики/сумму) по ходу, а не пересчитывайте заново."
+  ]
+ },
+ "monotonic_stack": {
+  "en": [
+   "Are you looking for the next (or previous) larger/smaller element?",
+   "Which elements can never be the answer for anything later?",
+   "Keep a stack ordered by value; pop while the new element breaks the order, resolving the popped ones."
+  ],
+  "ru": [
+   "Вы ищете следующий (или предыдущий) больший/меньший элемент?",
+   "Какие элементы уже никогда не станут ответом для последующих?",
+   "Держите стек, упорядоченный по значению; извлекайте, пока новый элемент нарушает порядок, и решайте для извлечённых."
+  ]
+ },
+ "binary_search": {
+  "en": [
+   "Is the data (or the answer space) ordered in some sense?",
+   "What single yes/no question lets you discard half of the candidates?",
+   "Define what lo and hi mean, decide on inclusive/exclusive bounds, and check termination."
+  ],
+  "ru": [
+   "Упорядочены ли данные (или пространство ответов) в каком-то смысле?",
+   "Какой один вопрос «да/нет» позволяет отбросить половину кандидатов?",
+   "Определите смысл lo и hi, выберите включающие/исключающие границы и проверьте завершение цикла."
+  ]
+ },
+ "fast_slow": {
+  "en": [
+   "Can two pointers move through the structure at different speeds?",
+   "What happens when the faster pointer meets the slower one, or reaches the end?",
+   "Use the meeting point or the position of the slow pointer when fast finishes."
+  ],
+  "ru": [
+   "Можно ли двигать два указателя по структуре с разной скоростью?",
+   "Что происходит, когда быстрый указатель встречает медленный или доходит до конца?",
+   "Используйте точку встречи или позицию медленного указателя, когда быстрый закончил."
+  ]
+ },
+ "dfs": {
+  "en": [
+   "Can you describe the answer for a node/cell in terms of its neighbours or children?",
+   "What is the base case, and what must you remember to avoid visiting something twice?",
+   "Recurse (or use an explicit stack), return a value upward or update a global answer."
+  ],
+  "ru": [
+   "Можно ли выразить ответ для вершины/клетки через её соседей или детей?",
+   "Каков базовый случай и что нужно запоминать, чтобы не посещать дважды?",
+   "Рекурсия (или явный стек): возвращайте значение вверх или обновляйте глобальный ответ."
+  ]
+ },
+ "bfs": {
+  "en": [
+   "Do you need the shortest number of steps in an unweighted structure, or to process level by level?",
+   "What are the nodes, what are the edges, and where does the search start?",
+   "Use a queue and a visited set; process one level per outer iteration if distances matter."
+  ],
+  "ru": [
+   "Нужно ли минимальное число шагов в невзвешенной структуре или обработка по уровням?",
+   "Что здесь вершины, что рёбра и откуда стартует поиск?",
+   "Очередь и множество посещённых; если важны расстояния, обрабатывайте один уровень за итерацию."
+  ]
+ },
+ "topological_sort": {
+  "en": [
+   "Are there dependencies of the form 'A must come before B'?",
+   "Which nodes can be handled first, and what unlocks the next ones?",
+   "Track in-degrees, process nodes with zero in-degree; if some are never processed there is a cycle."
+  ],
+  "ru": [
+   "Есть ли зависимости вида «A должно быть раньше B»?",
+   "Какие вершины можно обработать первыми и что открывает следующие?",
+   "Считайте входящие степени, обрабатывайте вершины с нулевой степенью; необработанные вершины означают цикл."
+  ]
+ },
+ "union_find": {
+  "en": [
+   "Do you repeatedly merge groups and ask whether two items are in the same group?",
+   "How can each group be represented by one representative?",
+   "Implement find with path compression and union by rank/size."
+  ],
+  "ru": [
+   "Вы постоянно объединяете группы и спрашиваете, в одной ли группе два элемента?",
+   "Как представить каждую группу одним представителем?",
+   "Реализуйте find со сжатием путей и union по рангу/размеру."
+  ]
+ },
+ "top_k_heap": {
+  "en": [
+   "Do you only need the k best elements, not a full ordering?",
+   "Which end of the heap should hold the element that is easiest to discard?",
+   "Keep a heap of size k; push the new element and pop when the size exceeds k."
+  ],
+  "ru": [
+   "Нужны ли только k лучших элементов, а не полный порядок?",
+   "Какой конец кучи должен хранить элемент, который проще всего отбросить?",
+   "Держите кучу размера k; добавляйте элемент и извлекайте, когда размер превысил k."
+  ]
+ },
+ "merge_intervals": {
+  "en": [
+   "Does the order of intervals matter for detecting overlaps?",
+   "What does sorting by start (or end) give you?",
+   "After sorting, compare each interval only with the last one you kept."
+  ],
+  "ru": [
+   "Важен ли порядок интервалов для поиска пересечений?",
+   "Что даёт сортировка по началу (или концу)?",
+   "После сортировки сравнивайте каждый интервал только с последним сохранённым."
+  ]
+ },
+ "greedy": {
+  "en": [
+   "Is there a locally best choice that never hurts the final answer?",
+   "Can you order the items so that the best choice is always first?",
+   "Try to argue why a swap of two choices cannot improve the result; then code the greedy."
+  ],
+  "ru": [
+   "Есть ли локально лучший выбор, который никогда не вредит итоговому ответу?",
+   "Можно ли упорядочить элементы так, чтобы лучший выбор всегда был первым?",
+   "Попробуйте обосновать, что перестановка двух выборов не улучшит результат; затем пишите жадный алгоритм."
+  ]
+ },
+ "dp_1d": {
+  "en": [
+   "Can the answer for size i be built from answers for smaller sizes?",
+   "Define precisely what dp[i] means, then write the transition and the base cases.",
+   "Check whether you only need the last one or two values to reduce memory."
+  ],
+  "ru": [
+   "Можно ли получить ответ для размера i из ответов для меньших размеров?",
+   "Точно определите смысл dp[i], затем напишите переход и базовые случаи.",
+   "Проверьте, нужны ли только последние одно-два значения, чтобы сэкономить память."
+  ]
+ },
+ "dp_2d": {
+  "en": [
+   "Are there two changing parameters (positions in two sequences, or row and column)?",
+   "Define dp[i][j] in words and think about which neighbours it depends on.",
+   "Fill the table in an order that guarantees dependencies are ready; handle the first row/column as base cases."
+  ],
+  "ru": [
+   "Есть ли два изменяющихся параметра (позиции в двух последовательностях или строка и столбец)?",
+   "Опишите dp[i][j] словами и определите, от каких соседних клеток он зависит.",
+   "Заполняйте таблицу в порядке, при котором зависимости уже готовы; первая строка/столбец — базовые случаи."
+  ]
+ },
+ "backtracking": {
+  "en": [
+   "Are you asked to generate all combinations, arrangements or subsets?",
+   "What is the choice at each step, and how do you undo it?",
+   "Choose, recurse, un-choose; prune as soon as a partial solution cannot succeed."
+  ],
+  "ru": [
+   "Просят ли сгенерировать все комбинации, перестановки или подмножества?",
+   "Какой выбор делается на каждом шаге и как его отменить?",
+   "Выбрать, рекурсивно продолжить, отменить; отсекайте, как только частичное решение не может быть успешным."
+  ]
+ },
+ "trie": {
+  "en": [
+   "Do many queries share prefixes of the same strings?",
+   "What should each node store, and how do you mark the end of a word?",
+   "Walk the characters, creating children on insert; searching for a prefix is the same walk."
+  ],
+  "ru": [
+   "Многие ли запросы используют общие префиксы одних и тех же строк?",
+   "Что хранить в узле и как отметить конец слова?",
+   "Идите по символам, создавая детей при вставке; поиск префикса — тот же обход."
+  ]
+ }
+}

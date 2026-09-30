@@ -125,5 +125,27 @@
     <string name="plan_adjusted">Adjusted</string>
     <string name="plan_day_topics">Topics: %1$s</string>
     <string name="plan_day_not_generated">Tasks for this day are picked on the day itself, based on your progress by then.</string>
-    <string name="session_placeholder">Task session for task %1$d arrives in the next phase.</string>
+
+    <string name="today_resume_session">RESUME SESSION</string>
+    <string name="today_enter_result">ENTER RESULT</string>
+    <string name="session_notes">Notes</string>
+    <string name="session_start">START</string>
+    <string name="session_finish">I\'M DONE</string>
+    <string name="session_cancel">Cancel this session</string>
+    <string name="session_constraints">Constraints</string>
+    <string name="session_example">Example</string>
+    <string name="session_example_input">Input: %1$s</string>
+    <string name="session_example_output">Output: %1$s</string>
+    <string name="session_timer_ready_estimate">Ready when you are · about %1$s</string>
+    <string name="session_timer_ready">Ready when you are</string>
+    <string name="session_timer_running">Timer is running</string>
+    <string name="session_timer_overtime">Over the estimate. Keep going or ask for a hint</string>
+    <string name="session_hint_label">Hint %1$d</string>
+    <string name="session_need_hint">Need a hint (%1$d/%2$d)</string>
+    <string name="session_no_hints">No hints for this task. Use the notes to write your own.</string>
+    <string name="session_conflict_title">Unfinished session</string>
+    <string name="session_conflict_body">You have another session in progress. Resume it, or discard it to start this task.</string>
+    <string name="session_conflict_resume">Resume it</string>
+    <string name="session_conflict_discard">Discard it</string>
+    <string name="result_placeholder">The result form for session %1$d arrives in the next phase.</string>
 </resources>

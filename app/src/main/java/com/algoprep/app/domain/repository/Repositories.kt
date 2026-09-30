@@ -70,6 +70,8 @@ interface TrainingRepository {
     suspend fun getSession(id: Long): SolveSession?
     fun observeSession(id: Long): Flow<SolveSession?>
     suspend fun getActiveSession(): SolveSession?
+    fun observeActiveSession(): Flow<SolveSession?>
+    suspend fun deleteSession(id: Long)
     suspend fun saveSession(session: SolveSession)
     fun observeFinishedSessions(): Flow<List<SolveSession>>
     suspend fun sessionsForTask(taskId: Long): List<SolveSession>

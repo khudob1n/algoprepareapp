@@ -21,11 +21,15 @@ import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.algoprep.app.R
+import com.algoprep.app.domain.model.SessionPhase
+import com.algoprep.app.domain.model.phase
+import com.algoprep.app.domain.model.toSessionType
 import com.algoprep.app.ui.components.PlaceholderScreen
 import com.algoprep.app.ui.navigation.MainGraphRoute
 import com.algoprep.app.ui.navigation.OnboardingGraphRoute
 import com.algoprep.app.ui.navigation.PlanDayRoute
 import com.algoprep.app.ui.navigation.PlanRoute
+import com.algoprep.app.ui.navigation.ResultRoute
 import com.algoprep.app.ui.navigation.ProfileRoute
 import com.algoprep.app.ui.navigation.SessionRoute
 import com.algoprep.app.ui.navigation.StatsRoute
@@ -35,7 +39,8 @@ import com.algoprep.app.ui.navigation.TopLevelDestination
 import com.algoprep.app.ui.screens.onboarding.onboardingGraph
 import com.algoprep.app.ui.screens.plan.PlanDayScreen
 import com.algoprep.app.ui.screens.plan.PlanScreen
-import com.algoprep.app.ui.screens.session.SessionPlaceholderScreen
+import com.algoprep.app.ui.screens.session.ResultPlaceholderScreen
+import com.algoprep.app.ui.screens.session.SessionScreen
 import com.algoprep.app.ui.screens.today.TodayScreen
 
 @Composable
@@ -88,9 +93,22 @@ private fun AppScaffold(startOnboarding: Boolean) {
             onboardingGraph(navController)
             navigation<MainGraphRoute>(startDestination = TodayRoute) {
                 composable<TodayRoute> {
-                    TodayScreen(onOpenTask = { taskId, itemId ->
-                        navController.navigate(SessionRoute(taskId, itemId))
-                    })
+                    TodayScreen(
+                        onOpenTask = { item ->
+                            item.taskId?.let {
+                                navController.navigate(SessionRoute(it, item.id, item.kind.toSessionType()))
+                            }
+                        },
+                        onOpenSession = { session ->
+                            if (session.phase == SessionPhase.AWAITING_RESULT) {
+                                navController.navigate(ResultRoute(session.id))
+                            } else {
+                                navController.navigate(
+                                    SessionRoute(session.taskId, session.plannedItemId, session.type),
+                                )
+                            }
+                        },
+                    )
                 }
                 composable<PlanRoute> {
                     PlanScreen(onOpenDay = { navController.navigate(PlanDayRoute(it)) })
@@ -98,10 +116,25 @@ private fun AppScaffold(startOnboarding: Boolean) {
                 composable<PlanDayRoute> {
                     PlanDayScreen(onBack = { navController.popBackStack() })
                 }
-                composable<SessionRoute> { entry ->
-                    SessionPlaceholderScreen(
-                        taskId = entry.toRoute<SessionRoute>().taskId,
+                composable<SessionRoute> {
+                    SessionScreen(
                         onBack = { navController.popBackStack() },
+                        onResult = { sessionId ->
+                            navController.navigate(ResultRoute(sessionId)) {
+                                popUpTo<SessionRoute> { inclusive = true }
+                            }
+                        },
+                        onOpenOther = { other ->
+                            navController.navigate(SessionRoute(other.taskId, other.plannedItemId, other.type)) {
+                                popUpTo<SessionRoute> { inclusive = true }
+                            }
+                        },
+                    )
+                }
+                composable<ResultRoute> { entry ->
+                    ResultPlaceholderScreen(
+                        sessionId = entry.toRoute<ResultRoute>().sessionId,
+                        onDone = { navController.popBackStack(TodayRoute, inclusive = false) },
                     )
                 }
                 composable<TasksRoute> {

@@ -129,5 +129,27 @@
     <string name="plan_adjusted">Скорректировано</string>
     <string name="plan_day_topics">Темы: %1$s</string>
     <string name="plan_day_not_generated">Задачи на этот день подбираются в сам день, с учётом вашего прогресса к тому моменту.</string>
-    <string name="session_placeholder">Сессия решения задачи %1$d появится на следующем этапе.</string>
+
+    <string name="today_resume_session">ПРОДОЛЖИТЬ СЕССИЮ</string>
+    <string name="today_enter_result">ВВЕСТИ РЕЗУЛЬТАТ</string>
+    <string name="session_notes">Заметки</string>
+    <string name="session_start">СТАРТ</string>
+    <string name="session_finish">ГОТОВО</string>
+    <string name="session_cancel">Отменить эту сессию</string>
+    <string name="session_constraints">Ограничения</string>
+    <string name="session_example">Пример</string>
+    <string name="session_example_input">Вход: %1$s</string>
+    <string name="session_example_output">Выход: %1$s</string>
+    <string name="session_timer_ready_estimate">Начинайте, когда будете готовы · около %1$s</string>
+    <string name="session_timer_ready">Начинайте, когда будете готовы</string>
+    <string name="session_timer_running">Таймер идёт</string>
+    <string name="session_timer_overtime">Время больше оценки. Продолжайте или возьмите подсказку</string>
+    <string name="session_hint_label">Подсказка %1$d</string>
+    <string name="session_need_hint">Нужна подсказка (%1$d/%2$d)</string>
+    <string name="session_no_hints">Для этой задачи подсказок нет. Запишите свои в заметках.</string>
+    <string name="session_conflict_title">Незавершённая сессия</string>
+    <string name="session_conflict_body">У вас уже идёт другая сессия. Продолжите её или отмените, чтобы начать эту задачу.</string>
+    <string name="session_conflict_resume">Продолжить её</string>
+    <string name="session_conflict_discard">Отменить её</string>
+    <string name="result_placeholder">Форма результата для сессии %1$d появится на следующем этапе.</string>
 </resources>

@@ -30,6 +30,9 @@ import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.algoprep.app.R
 import com.algoprep.app.domain.model.PlannedKind
+import com.algoprep.app.domain.model.SessionPhase
+import com.algoprep.app.domain.model.SolveSession
+import com.algoprep.app.domain.model.phase
 import com.algoprep.app.ui.components.PlaceholderScreen
 import com.algoprep.app.ui.components.PlannedItemRow
 import com.algoprep.app.ui.components.WhyDialog
@@ -39,11 +42,13 @@ import java.time.format.FormatStyle
 
 @Composable
 fun TodayScreen(
-    onOpenTask: (taskId: Long, plannedItemId: Long) -> Unit,
+    onOpenTask: (TodayItem) -> Unit,
+    onOpenSession: (SolveSession) -> Unit,
     viewModel: TodayViewModel = hiltViewModel(),
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
     val topicTitles by viewModel.topicTitles.collectAsStateWithLifecycle()
+    val activeSession by viewModel.activeSession.collectAsStateWithLifecycle()
     LifecycleEventEffect(Lifecycle.Event.ON_RESUME) { viewModel.refresh() }
 
     when (val s = state) {
@@ -57,7 +62,9 @@ fun TodayScreen(
         is TodayUiState.Active -> TodayContentView(
             content = s.content,
             topicTitles = topicTitles,
+            activeSession = activeSession,
             onOpenTask = onOpenTask,
+            onOpenSession = onOpenSession,
             onToggleDone = viewModel::setItemDone,
         )
     }
@@ -67,7 +74,9 @@ fun TodayScreen(
 private fun TodayContentView(
     content: TodayContent,
     topicTitles: Map<String, String>,
-    onOpenTask: (Long, Long) -> Unit,
+    activeSession: SolveSession?,
+    onOpenTask: (TodayItem) -> Unit,
+    onOpenSession: (SolveSession) -> Unit,
     onToggleDone: (Long, Boolean) -> Unit,
 ) {
     var whyItem by remember { mutableStateOf<TodayItem?>(null) }
@@ -85,14 +94,21 @@ private fun TodayContentView(
         }
         val next = content.nextTaskItem
         Button(
-            onClick = { next?.let { n -> n.taskId?.let { onOpenTask(it, n.id) } } },
-            enabled = next != null,
+            onClick = {
+                if (activeSession != null) onOpenSession(activeSession) else next?.let(onOpenTask)
+            },
+            enabled = activeSession != null || next != null,
             modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 12.dp),
         ) {
             Text(
                 stringResource(
-                    if (next != null) R.string.today_start_next
-                    else if (content.hasItems) R.string.today_all_done else R.string.today_nothing_planned,
+                    when {
+                        activeSession != null && activeSession.phase == SessionPhase.AWAITING_RESULT -> R.string.today_enter_result
+                        activeSession != null -> R.string.today_resume_session
+                        next != null -> R.string.today_start_next
+                        content.hasItems -> R.string.today_all_done
+                        else -> R.string.today_nothing_planned
+                    },
                 ),
             )
         }
@@ -134,7 +150,7 @@ private fun TodayHeader(content: TodayContent) {
 private fun LazyListScope.section(
     titleRes: Int,
     list: List<TodayItem>,
-    onOpenTask: (Long, Long) -> Unit,
+    onOpenTask: (TodayItem) -> Unit,
     onToggleDone: (Long, Boolean) -> Unit,
     onWhy: (TodayItem) -> Unit,
 ) {
@@ -152,7 +168,7 @@ private fun LazyListScope.section(
             item = item,
             onClick = when {
                 item.kind == PlannedKind.THEORY -> ({ onToggleDone(item.id, !item.done) })
-                item.taskId != null && !item.done -> ({ onOpenTask(item.taskId, item.id) })
+                item.taskId != null && !item.done -> ({ onOpenTask(item) })
                 else -> null
             },
             onWhy = { onWhy(item) },

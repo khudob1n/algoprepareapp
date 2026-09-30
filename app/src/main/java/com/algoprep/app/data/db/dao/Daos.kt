@@ -182,6 +182,12 @@ interface TrainingDao {
     @Query("SELECT * FROM solve_session WHERE finishedAt IS NULL ORDER BY startedAt DESC LIMIT 1")
     suspend fun getActiveSession(): SolveSessionEntity?
 
+    @Query("SELECT * FROM solve_session WHERE finishedAt IS NULL ORDER BY startedAt DESC LIMIT 1")
+    fun observeActiveSession(): Flow<SolveSessionEntity?>
+
+    @Query("DELETE FROM solve_session WHERE id = :id")
+    suspend fun deleteSession(id: Long)
+
     @Query("SELECT * FROM solve_session WHERE finishedAt IS NOT NULL ORDER BY startedAt DESC")
     fun observeFinishedSessions(): Flow<List<SolveSessionEntity>>
 

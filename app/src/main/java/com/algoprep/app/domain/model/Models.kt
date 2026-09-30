@@ -138,3 +138,25 @@ data class ReviewState(
     val dueAt: Instant,
     val lastOutcome: SolveOutcome?,
 )
+
+/**
+ * Lifecycle of a session without extra schema:
+ *  - RUNNING: started, timer is running (durationSec == 0)
+ *  - AWAITING_RESULT: the user pressed "done"; the timer is frozen (durationSec > 0) but the result is not saved yet
+ *  - FINISHED: result saved (finishedAt != null)
+ */
+enum class SessionPhase { RUNNING, AWAITING_RESULT, FINISHED }
+
+val SolveSession.phase: SessionPhase
+    get() = when {
+        finishedAt != null -> SessionPhase.FINISHED
+        durationSec > 0 -> SessionPhase.AWAITING_RESULT
+        else -> SessionPhase.RUNNING
+    }
+
+fun PlannedKind.toSessionType(): SessionType = when (this) {
+    PlannedKind.THEORY, PlannedKind.WARMUP, PlannedKind.MAIN -> SessionType.PRACTICE
+    PlannedKind.REVIEW -> SessionType.REVIEW
+    PlannedKind.ERROR_REVIEW -> SessionType.ERROR_REVIEW
+    PlannedKind.MOCK -> SessionType.MOCK
+}

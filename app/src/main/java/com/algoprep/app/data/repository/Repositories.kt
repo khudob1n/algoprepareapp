@@ -171,6 +171,8 @@ class TrainingRepositoryImpl @Inject constructor(
     override suspend fun getSession(id: Long): SolveSession? = dao.getSession(id)?.toDomain()
     override fun observeSession(id: Long): Flow<SolveSession?> = dao.observeSession(id).map { it?.toDomain() }
     override suspend fun getActiveSession(): SolveSession? = dao.getActiveSession()?.toDomain()
+    override fun observeActiveSession(): Flow<SolveSession?> = dao.observeActiveSession().map { it?.toDomain() }
+    override suspend fun deleteSession(id: Long) = dao.deleteSession(id)
     override suspend fun saveSession(session: SolveSession) = dao.updateSession(session.toEntity())
 
     override fun observeFinishedSessions(): Flow<List<SolveSession>> =

@@ -14,15 +14,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.algoprep.app.R
 
-/** Replaced by the real task session in Phase 5. */
+/** Replaced by the real result screen in Phase 6. */
 @Composable
-fun SessionPlaceholderScreen(taskId: Long, onBack: () -> Unit) {
+fun ResultPlaceholderScreen(sessionId: Long, onDone: () -> Unit) {
     Column(
         modifier = Modifier.fillMaxSize().padding(24.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Text(stringResource(R.string.session_placeholder, taskId), style = MaterialTheme.typography.titleMedium)
-        Button(onClick = onBack) { Text(stringResource(R.string.action_back)) }
+        Text(stringResource(R.string.result_placeholder, sessionId), style = MaterialTheme.typography.titleMedium)
+        Button(onClick = onDone) { Text(stringResource(R.string.action_back)) }
     }
 }

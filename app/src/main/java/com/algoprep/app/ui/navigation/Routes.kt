@@ -1,5 +1,6 @@
 package com.algoprep.app.ui.navigation
 
+import com.algoprep.app.domain.model.SessionType
 import kotlinx.serialization.Serializable
 
 /**
@@ -26,4 +27,9 @@ import kotlinx.serialization.Serializable
 
 // Detail screens (hide the bottom bar)
 @Serializable data class PlanDayRoute(val dayIndex: Int)
-@Serializable data class SessionRoute(val taskId: Long, val plannedItemId: Long? = null)
+@Serializable data class SessionRoute(
+    val taskId: Long,
+    val plannedItemId: Long? = null,
+    val type: SessionType = SessionType.PRACTICE,
+)
+@Serializable data class ResultRoute(val sessionId: Long)

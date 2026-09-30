@@ -3,9 +3,11 @@ package com.algoprep.app.ui.screens.today
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.algoprep.app.domain.model.PlannedStatus
+import com.algoprep.app.domain.model.SolveSession
 import com.algoprep.app.domain.repository.CatalogRepository
 import com.algoprep.app.domain.repository.PlanRepository
 import com.algoprep.app.domain.repository.TaskRepository
+import com.algoprep.app.domain.repository.TrainingRepository
 import com.algoprep.app.domain.usecase.EnsureTodayPlan
 import com.algoprep.app.domain.usecase.TodayPlanResult
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -31,6 +33,7 @@ class TodayViewModel @Inject constructor(
     private val plans: PlanRepository,
     private val tasks: TaskRepository,
     private val catalog: CatalogRepository,
+    training: TrainingRepository,
 ) : ViewModel() {
 
     private val refreshTick = MutableStateFlow(0)
@@ -38,6 +41,10 @@ class TodayViewModel @Inject constructor(
     val topicTitles: StateFlow<Map<String, String>> = catalog.observeTopics()
         .map { topics -> topics.associate { it.id to it.title } }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), emptyMap())
+
+    /** An unfinished session (running or awaiting its result), if any. */
+    val activeSession: StateFlow<SolveSession?> = training.observeActiveSession()
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)
 
     val uiState: StateFlow<TodayUiState> = refreshTick
         .flatMapLatest {
