@@ -66,6 +66,15 @@ class FakeTaskRepository(tasks: List<Task> = emptyList()) : TaskRepository {
 
     override suspend fun updateNotes(id: Long, notes: String) = modify(id) { it.copy(personalNotes = notes) }
 
+    override suspend fun markDueTasksForReview(now: Instant) {
+        tasks.value = tasks.value.map {
+            val due = it.nextReviewAt
+            if (due != null && !due.isAfter(now) && (it.status == TaskStatus.LEARNING || it.status == TaskStatus.MASTERED)) {
+                it.copy(status = TaskStatus.REVIEW)
+            } else it
+        }
+    }
+
     override suspend fun updateProgress(
         id: Long,
         status: TaskStatus,
@@ -169,6 +178,7 @@ class FakeTrainingRepository(private val clock: Clock = fixedClock()) : Training
 
     override suspend fun sessionsForTask(taskId: Long): List<SolveSession> =
         sessions.value.filter { it.taskId == taskId && it.finishedAt != null }
+            .sortedWith(compareByDescending<SolveSession> { it.startedAt }.thenByDescending { it.id })
 
     override suspend fun addErrors(errors: List<ErrorEntry>) {
         this.errors.value = this.errors.value + errors.map { it.copy(id = nextErrorId++) }

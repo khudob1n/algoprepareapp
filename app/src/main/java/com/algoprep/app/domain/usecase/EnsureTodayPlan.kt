@@ -40,6 +40,7 @@ class EnsureTodayPlan @Inject constructor(
         if (days.isEmpty()) return TodayPlanResult.NoProfile
 
         val today = LocalDate.now(clock)
+        tasks.markDueTasksForReview(clock.instant())
         syncStatuses(days, today)
 
         val day = days.firstOrNull { it.date == today }

@@ -49,11 +49,4 @@ class SkillTrackerTest {
         repeat(3) { s = SkillTracker.update(s, "graphs", SolveOutcome.NOT_SOLVED, 2, ten, 20, NOW) }
         assertTrue(WeakTopics.isWeak(s))
     }
-
-    @Test fun statusRules() {
-        assertEquals(TaskStatus.FAILED_RECENTLY, TaskProgress.statusAfter(TaskStatus.MASTERED, SolveOutcome.NOT_SOLVED))
-        assertEquals(TaskStatus.LEARNING, TaskProgress.statusAfter(TaskStatus.NEW, SolveOutcome.SMALL_HINT))
-        assertEquals(TaskStatus.LEARNING, TaskProgress.statusAfter(TaskStatus.FAILED_RECENTLY, SolveOutcome.INDEPENDENT))
-        assertEquals(TaskStatus.REVIEW, TaskProgress.statusAfter(TaskStatus.REVIEW, SolveOutcome.INDEPENDENT))
-    }
 }

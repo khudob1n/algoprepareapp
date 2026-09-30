@@ -9,6 +9,8 @@ import com.algoprep.app.domain.model.SessionType
 import com.algoprep.app.domain.model.SolveOutcome
 import com.algoprep.app.domain.model.isSolved
 import com.algoprep.app.domain.model.phase
+import com.algoprep.app.domain.planning.Attempt
+import com.algoprep.app.domain.planning.ReviewScheduler
 import com.algoprep.app.domain.planning.SkillTracker
 import com.algoprep.app.domain.planning.TaskProgress
 import com.algoprep.app.domain.repository.PlanRepository
@@ -19,6 +21,7 @@ import com.algoprep.app.domain.repository.TransactionRunner
 import kotlinx.coroutines.flow.first
 import java.time.Clock
 import java.time.Duration
+import java.time.LocalDate
 import javax.inject.Inject
 
 data class CompleteSessionInput(
@@ -83,12 +86,23 @@ class CompleteSession @Inject constructor(
         val task = tasks.get(session.taskId)
         if (task != null) {
             val solved = input.outcome.isSolved
+            val review = ReviewScheduler.next(
+                taskId = task.id,
+                prev = training.getReviewState(task.id),
+                outcome = input.outcome,
+                confidence = confidence,
+                today = LocalDate.now(clock),
+                zone = clock.zone,
+            )
+            training.upsertReviewState(review)
+            // Finished sessions, newest first; includes the one saved above.
+            val recent = training.sessionsForTask(task.id).mapNotNull { s -> s.outcome?.let { Attempt(it, s.confidence) } }
             tasks.updateProgress(
                 id = task.id,
-                status = TaskProgress.statusAfter(task.status, input.outcome),
+                status = TaskProgress.statusAfter(review, recent),
                 timesSolved = task.timesSolved + if (solved) 1 else 0,
                 lastSolvedAt = if (solved) now else task.lastSolvedAt,
-                nextReviewAt = task.nextReviewAt,
+                nextReviewAt = review.dueAt,
                 confidence = confidence,
             )
 

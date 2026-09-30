@@ -34,6 +34,8 @@ interface TaskRepository {
     /** Inserts a new task with its topic/pattern links and mentions in one transaction. */
     suspend fun insertNew(task: Task): Long
     suspend fun updateNotes(id: Long, notes: String)
+    /** Moves LEARNING/MASTERED tasks whose review date has arrived to REVIEW. */
+    suspend fun markDueTasksForReview(now: Instant)
     suspend fun updateProgress(
         id: Long,
         status: TaskStatus,

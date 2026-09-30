@@ -25,6 +25,7 @@ import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
+import java.time.Instant
 
 class CompleteSessionTest {
     private val clock = fixedClock()
@@ -119,5 +120,40 @@ class CompleteSessionTest {
 
     @Test fun unknownSessionReturnsFalse() = runTest {
         assertFalse(useCase(CompleteSessionInput(99, SolveOutcome.INDEPENDENT, 3, emptySet(), null)))
+    }
+
+    @Test fun solvedSessionSchedulesTheNextReview() = runTest {
+        val id = startedAndStopped()
+        useCase(CompleteSessionInput(id, SolveOutcome.INDEPENDENT, 5, emptySet(), null))
+        val review = training.getReviewState(1)!!
+        assertEquals(1, review.intervalDays)
+        assertEquals(Instant.parse("2026-10-13T00:00:00Z"), review.dueAt)
+        assertEquals(review.dueAt, tasks.get(1)!!.nextReviewAt)
+    }
+
+    @Test fun failureSchedulesTomorrowAndCountsALapse() = runTest {
+        val id = startedAndStopped()
+        useCase(CompleteSessionInput(id, SolveOutcome.NOT_SOLVED, 2, emptySet(), null))
+        val review = training.getReviewState(1)!!
+        assertEquals(1, review.lapses)
+        assertEquals(Instant.parse("2026-10-13T00:00:00Z"), tasks.get(1)!!.nextReviewAt)
+    }
+
+    @Test fun fourConfidentSolvesInARowMasterTheTask() = runTest {
+        repeat(4) {
+            val id = startedAndStopped(itemId = null)
+            useCase(CompleteSessionInput(id, SolveOutcome.INDEPENDENT, 5, emptySet(), null))
+        }
+        assertEquals(TaskStatus.MASTERED, tasks.get(1)!!.status)
+        assertEquals(4, tasks.get(1)!!.timesSolved)
+    }
+
+    @Test fun aFailureAfterMasteryBringsTheTaskBack() = runTest {
+        repeat(4) {
+            useCase(CompleteSessionInput(startedAndStopped(itemId = null), SolveOutcome.INDEPENDENT, 5, emptySet(), null))
+        }
+        useCase(CompleteSessionInput(startedAndStopped(itemId = null), SolveOutcome.NOT_SOLVED, 2, emptySet(), null))
+        assertEquals(TaskStatus.FAILED_RECENTLY, tasks.get(1)!!.status)
+        assertEquals(0, training.getReviewState(1)!!.repetitions)
     }
 }

@@ -72,6 +72,8 @@ class TaskRepositoryImpl @Inject constructor(
 
     override suspend fun updateNotes(id: Long, notes: String) = dao.updateNotes(id, notes, clock.millis())
 
+    override suspend fun markDueTasksForReview(now: Instant) = dao.markDueForReview(now.toEpochMilli(), clock.millis())
+
     override suspend fun updateProgress(
         id: Long,
         status: TaskStatus,

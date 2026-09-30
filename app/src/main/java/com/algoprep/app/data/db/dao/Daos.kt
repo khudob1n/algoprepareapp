@@ -109,6 +109,12 @@ interface TaskDao {
         now: Long,
     )
 
+    @Query(
+        "UPDATE task SET status = 'REVIEW', updatedAt = :updatedAt WHERE nextReviewAt IS NOT NULL " +
+            "AND nextReviewAt <= :now AND status IN ('LEARNING', 'MASTERED')",
+    )
+    suspend fun markDueForReview(now: Long, updatedAt: Long)
+
     @Query("SELECT COUNT(*) FROM task")
     suspend fun count(): Int
 }
