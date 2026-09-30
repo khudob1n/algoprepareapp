@@ -18,4 +18,57 @@
     <string name="placeholder_stats_body">Здесь появятся прогресс и слабые темы (фаза 8).</string>
     <string name="placeholder_profile_title">Профиль</string>
     <string name="placeholder_profile_body">Здесь появятся напоминания и настройки (фаза 9).</string>
+
+    <string name="action_get_started">Начать</string>
+    <string name="action_next">Далее</string>
+    <string name="action_back">Назад</string>
+    <string name="action_build_plan">Составить план</string>
+    <string name="action_ok">ОК</string>
+    <string name="action_cancel">Отмена</string>
+
+    <string name="duration_h_m">%1$dч %2$dмин</string>
+    <string name="duration_h">%1$dч</string>
+    <string name="duration_m">%1$dмин</string>
+
+    <string name="onboarding_step_indicator">Шаг %1$d из %2$d</string>
+    <string name="onboarding_welcome_title">Персональный тренер по алгоритмическим интервью</string>
+    <string name="onboarding_welcome_body">30 дней и один план, который подстраивается под то, как вы реально решаете задачи. Работает без интернета и без регистрации.</string>
+    <string name="onboarding_welcome_point1">Ежедневный план с понятной причиной для каждой задачи</string>
+    <string name="onboarding_welcome_point2">Интервальные повторения того, что вы забываете</string>
+    <string name="onboarding_welcome_point3">Ваши собственные задачи с интервью: импорт и анализ прямо на устройстве</string>
+
+    <string name="onboarding_goals_title">О вас</string>
+    <string name="onboarding_level_title">Ваш уровень</string>
+    <string name="level_beginner">Начинающий</string>
+    <string name="level_beginner_desc">Только знакомлюсь с алгоритмами и структурами данных</string>
+    <string name="level_intermediate">Средний</string>
+    <string name="level_intermediate_desc">Знаю основы, хочу скорость и стабильность</string>
+    <string name="level_advanced">Продвинутый</string>
+    <string name="level_advanced_desc">Крепкая база, готовлюсь к сложным раундам</string>
+    <string name="onboarding_goal_title">Ваша цель</string>
+    <string name="goal_big_tech">Собеседования в крупные IT-компании</string>
+    <string name="goal_any_company">Собеседования в любую компанию</string>
+    <string name="goal_refresh">Освежить навыки</string>
+    <string name="onboarding_daily_title">Время в день</string>
+    <string name="onboarding_start_title">Начало плана</string>
+    <string name="start_today">Сегодня</string>
+    <string name="start_tomorrow">Завтра</string>
+    <string name="start_next_monday">Со следующего понедельника</string>
+
+    <string name="onboarding_topics_title">Насколько вы уверены в темах?</string>
+    <string name="onboarding_topics_subtitle">Оцените каждую тему от 1 (не знаком) до 5 (уверенно). Пропущенные темы получат значение по умолчанию для вашего уровня. План подстроится по мере практики.</string>
+    <string name="onboarding_topics_loading">Загружаем темы…</string>
+
+    <string name="onboarding_reminders_title">Напоминания</string>
+    <string name="onboarding_reminders_subtitle">Выберите, когда приложение будет напоминать о занятиях. Всё можно изменить или отключить позже.</string>
+    <string name="reminder_morning">Утренний план</string>
+    <string name="reminder_morning_desc">План на сегодня и сколько он займёт</string>
+    <string name="reminder_evening">Вечерний итог</string>
+    <string name="reminder_evening_desc">Сколько сделано и что осталось</string>
+    <string name="reminder_review">Повторение</string>
+    <string name="reminder_review_desc">Сколько задач пора повторить</string>
+    <string name="reminder_streak">Предупреждение о серии</string>
+    <string name="reminder_streak_desc">Если сегодня ещё не было тренировки</string>
+    <string name="onboarding_saving">Составляем план…</string>
+    <string name="onboarding_save_failed">Не удалось составить план. Попробуйте ещё раз.</string>
 </resources>

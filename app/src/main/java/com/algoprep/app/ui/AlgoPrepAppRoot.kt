@@ -10,32 +10,44 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavDestination.Companion.hierarchy
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import com.algoprep.app.R
 import com.algoprep.app.ui.components.PlaceholderScreen
+import com.algoprep.app.ui.navigation.MainGraphRoute
+import com.algoprep.app.ui.navigation.OnboardingGraphRoute
 import com.algoprep.app.ui.navigation.PlanRoute
 import com.algoprep.app.ui.navigation.ProfileRoute
 import com.algoprep.app.ui.navigation.StatsRoute
 import com.algoprep.app.ui.navigation.TasksRoute
 import com.algoprep.app.ui.navigation.TodayRoute
 import com.algoprep.app.ui.navigation.TopLevelDestination
+import com.algoprep.app.ui.screens.onboarding.onboardingGraph
 
 @Composable
-fun AlgoPrepAppRoot() {
+fun AlgoPrepAppRoot(rootViewModel: RootViewModel = hiltViewModel()) {
+    val start by rootViewModel.start.collectAsStateWithLifecycle()
+    // The Surface in MainActivity paints the background while we resolve the start destination.
+    val resolvedStart = start ?: return
+    AppScaffold(startOnboarding = resolvedStart == AppStart.ONBOARDING)
+}
+
+@Composable
+private fun AppScaffold(startOnboarding: Boolean) {
     val navController = rememberNavController()
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = backStackEntry?.destination
 
     Scaffold(
         bottomBar = {
-            // Full-screen flows (session, result, onboarding) will hide the bar in later phases:
-            // show it only when the current destination is one of the top-level tabs.
+            // Shown only on the five tabs; onboarding and full-screen flows hide it.
             val isTopLevel = TopLevelDestination.entries.any { dest ->
                 currentDestination?.hierarchy?.any { it.hasRoute(dest.routeClass) } == true
             }
@@ -48,9 +60,7 @@ fun AlgoPrepAppRoot() {
                             selected = selected,
                             onClick = {
                                 navController.navigate(dest.route) {
-                                    popUpTo(navController.graph.findStartDestination().id) {
-                                        saveState = true
-                                    }
+                                    popUpTo(TodayRoute) { saveState = true }
                                     launchSingleTop = true
                                     restoreState = true
                                 }
@@ -65,23 +75,26 @@ fun AlgoPrepAppRoot() {
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = TodayRoute,
+            startDestination = if (startOnboarding) OnboardingGraphRoute else MainGraphRoute,
             modifier = Modifier.padding(innerPadding),
         ) {
-            composable<TodayRoute> {
-                PlaceholderScreen(R.string.placeholder_today_title, R.string.placeholder_today_body)
-            }
-            composable<PlanRoute> {
-                PlaceholderScreen(R.string.placeholder_plan_title, R.string.placeholder_plan_body)
-            }
-            composable<TasksRoute> {
-                PlaceholderScreen(R.string.placeholder_tasks_title, R.string.placeholder_tasks_body)
-            }
-            composable<StatsRoute> {
-                PlaceholderScreen(R.string.placeholder_stats_title, R.string.placeholder_stats_body)
-            }
-            composable<ProfileRoute> {
-                PlaceholderScreen(R.string.placeholder_profile_title, R.string.placeholder_profile_body)
+            onboardingGraph(navController)
+            navigation<MainGraphRoute>(startDestination = TodayRoute) {
+                composable<TodayRoute> {
+                    PlaceholderScreen(R.string.placeholder_today_title, R.string.placeholder_today_body)
+                }
+                composable<PlanRoute> {
+                    PlaceholderScreen(R.string.placeholder_plan_title, R.string.placeholder_plan_body)
+                }
+                composable<TasksRoute> {
+                    PlaceholderScreen(R.string.placeholder_tasks_title, R.string.placeholder_tasks_body)
+                }
+                composable<StatsRoute> {
+                    PlaceholderScreen(R.string.placeholder_stats_title, R.string.placeholder_stats_body)
+                }
+                composable<ProfileRoute> {
+                    PlaceholderScreen(R.string.placeholder_profile_title, R.string.placeholder_profile_body)
+                }
             }
         }
     }

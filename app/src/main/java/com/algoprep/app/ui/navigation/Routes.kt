@@ -3,9 +3,21 @@ package com.algoprep.app.ui.navigation
 import kotlinx.serialization.Serializable
 
 /**
- * Type-safe routes (Navigation Compose 2.8+). Top-level destinations are objects;
- * destinations with arguments (session/{taskId}, ...) are added as data classes in later phases.
+ * Type-safe routes (Navigation Compose 2.8+). Destinations with arguments
+ * (session/{taskId}, ...) are added as data classes in later phases.
  */
+
+// Graphs
+@Serializable data object OnboardingGraphRoute
+@Serializable data object MainGraphRoute
+
+// Onboarding
+@Serializable data object WelcomeRoute
+@Serializable data object GoalsRoute
+@Serializable data object TopicsRoute
+@Serializable data object RemindersRoute
+
+// Main tabs
 @Serializable data object TodayRoute
 @Serializable data object PlanRoute
 @Serializable data object TasksRoute

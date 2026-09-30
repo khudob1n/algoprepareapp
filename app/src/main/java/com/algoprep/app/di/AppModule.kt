@@ -1,6 +1,9 @@
 package com.algoprep.app.di
 
 import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.room.Room
 import com.algoprep.app.data.db.AppDatabase
 import com.algoprep.app.data.db.dao.CatalogDao
@@ -20,6 +23,8 @@ import java.time.Clock
 import javax.inject.Qualifier
 import javax.inject.Singleton
 
+private val Context.settingsDataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
+
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
 annotation class ApplicationScope
@@ -37,6 +42,10 @@ object AppModule {
     fun provideDatabase(@ApplicationContext context: Context): AppDatabase =
         // No destructive fallback: every schema change must ship a Migration.
         Room.databaseBuilder(context, AppDatabase::class.java, AppDatabase.NAME).build()
+
+    @Provides @Singleton
+    fun provideSettingsDataStore(@ApplicationContext context: Context): DataStore<Preferences> =
+        context.settingsDataStore
 
     @Provides fun provideCatalogDao(db: AppDatabase): CatalogDao = db.catalogDao()
     @Provides fun provideTaskDao(db: AppDatabase): TaskDao = db.taskDao()

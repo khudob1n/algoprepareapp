@@ -2,6 +2,7 @@ package com.algoprep.app.domain.repository
 
 import com.algoprep.app.domain.model.ErrorEntry
 import com.algoprep.app.domain.model.Pattern
+import com.algoprep.app.domain.model.ReminderSettings
 import com.algoprep.app.domain.model.PlanDay
 import com.algoprep.app.domain.model.PlanDayStatus
 import com.algoprep.app.domain.model.PlannedStatus
@@ -84,4 +85,9 @@ interface TrainingRepository {
 /** Runs several repository calls atomically (backed by a Room transaction). */
 interface TransactionRunner {
     suspend fun <T> run(block: suspend () -> T): T
+}
+
+interface SettingsRepository {
+    fun observeReminders(): Flow<ReminderSettings>
+    suspend fun saveReminders(settings: ReminderSettings)
 }
