@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
+    alias(libs.plugins.androidx.room)
 }
 
 android {
@@ -45,9 +46,9 @@ android {
     }
 }
 
-ksp {
-    // Exported Room schemas (commit app/schemas/ after the first build; needed for migration tests).
-    arg("room.schemaLocation", "$projectDir/schemas")
+room {
+    // Exported Room schemas live in git (app/schemas) and are needed for migration tests.
+    schemaDirectory("$projectDir/schemas")
 }
 
 kotlin {
